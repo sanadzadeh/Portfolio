@@ -393,12 +393,13 @@
   let overlayOpen = false;
 
   function openOverlay(href, title) {
-    overlayFrame.src = href;
     overlayTitle.textContent = title;
     overlay.classList.add("active");
     document.body.style.overflow = "hidden";
     overlayOpen = true;
     history.pushState({ overlay: true }, "");
+    // Load iframe after push so it doesn't add its own history entry
+    overlayFrame.contentWindow.location.replace(href);
   }
 
   function closeOverlay() {
