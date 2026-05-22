@@ -1,17 +1,589 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Forecasting Dashboard</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background: #141414; color: #f5f2ed; }
-    h1 { margin: 0 0 0.75rem; }
-    p { color: rgba(245,242,237,0.75); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecasting Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  /* ─── Design Tokens ─────────────────────────────────────────── */
+  :root {
+    --bg:           #141414;
+    --surface:      #1c1c1c;
+    --surface-alt:  #222222;
+    --border:       rgba(255,255,255,0.07);
+    --border-soft:  rgba(255,255,255,0.04);
+    --ink:          #f5f2ed;
+    --ink-2:        rgba(245,242,237,0.65);
+    --ink-3:        rgba(245,242,237,0.35);
+    --gold:         #c9a96e;
+    --gold-dim:     rgba(201,169,110,0.12);
+    --gold-mid:     rgba(201,169,110,0.25);
+    --font-serif:   'Cormorant Garamond', Georgia, serif;
+    --font-mono:    'DM Mono', 'Courier New', monospace;
+    --radius:       4px;
+    --radius-sm:    3px;
+    --tr:           160ms ease;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-mono);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── Header ────────────────────────────────────────────────── */
+  .site-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-shrink: 0;
+  }
+  .header-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .site-logo {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: 1.1rem;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .site-logo em { font-style: normal; color: var(--gold); }
+  .header-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    border-left: 1px solid var(--border);
+    padding-left: 1rem;
+    display: none;
+  }
+  @media (min-width: 600px) { .header-tag { display: block; } }
+
+  /* ─── Main Views ─────────────────────────────────────────────── */
+  /* 
+     PATTERN: This shell uses the same view-switching approach as Ledger.
+     #main-view    — the primary content view (list, dashboard, grid, etc.)
+     #detail-view  — the secondary content view (detail panel, article, etc.)
+
+     Toggle between them using showDetail() / showMain() rather than
+     any history.pushState or location changes. This keeps the artefact
+     self-contained and prevents iframe history conflicts in the parent.
+  */
+  #main-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  #main-view.hidden { display: none; }
+
+  #detail-view {
+    flex: 1;
+    display: none;
+    flex-direction: column;
+  }
+  #detail-view.active {
+    display: flex;
+    animation: fadeUp 0.2s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── Detail Header Bar ─────────────────────────────────────── */
+  .detail-header-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+    flex-shrink: 0;
+  }
+  .detail-header-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .back-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: color var(--tr), border-color var(--tr), background var(--tr);
+  }
+  .back-btn:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+    background: var(--gold-dim);
+  }
+  .detail-meta {
+    font-size: 0.65rem;
+    color: var(--ink-3);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── Page Wrap ─────────────────────────────────────────────── */
+  .page-wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    width: 100%;
+  }
+
+  /* ─── Controls / Filter Bar ─────────────────────────────────── */
+  .controls-bar {
+    border-bottom: 1px solid var(--border-soft);
+    padding: 16px 0;
+    background: var(--bg);
+    position: sticky;
+    top: 53px;
+    z-index: 90;
+  }
+  .controls-inner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* Search input */
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    max-width: 400px;
+    min-width: 180px;
+  }
+  .search-icon {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-3);
+    pointer-events: none;
+  }
+  .search-input {
+    width: 100%;
+    padding: 8px 32px 8px 34px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    background: var(--surface);
+    color: var(--ink);
+    outline: none;
+    transition: border-color var(--tr), box-shadow var(--tr);
+  }
+  .search-input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-dim);
+  }
+  .search-input::placeholder { color: var(--ink-3); }
+
+  /* Filter pills */
+  .filter-pill {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: all var(--tr);
+    white-space: nowrap;
+  }
+  .filter-pill:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
+  .filter-pill.active { background: var(--gold); border-color: var(--gold); color: var(--bg); }
+
+  /* ─── Content Section ───────────────────────────────────────── */
+  .content-section {
+    padding: 2rem 0 5rem;
+    flex: 1;
+  }
+
+  /* ─── Generic Card Grid ─────────────────────────────────────── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 900px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .card-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--bg);
+    padding: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    cursor: pointer;
+    transition: background var(--tr);
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.3s ease both;
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+  }
+  .card:hover { background: var(--surface-alt); }
+  .card:hover::after { transform: scaleX(1); }
+  .card:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+
+  .card-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .card-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .card-desc {
+    font-size: 0.7rem;
+    line-height: 1.7;
+    color: var(--ink-2);
+    flex: 1;
+  }
+  .card-footer {
+    margin-top: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--border-soft);
+  }
+  .card-meta {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+  }
+  .card-arrow {
+    font-size: 0.75rem;
+    color: var(--ink-3);
+    transition: transform var(--tr), color var(--tr);
+  }
+  .card:hover .card-arrow { transform: translate(3px,-3px); color: var(--gold); }
+
+  /* ─── Detail Body ───────────────────────────────────────────── */
+  .detail-body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+  .detail-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .detail-title {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .detail-content {
+    font-size: 0.875rem;
+    line-height: 1.85;
+    color: var(--ink-2);
+  }
+  .detail-content h2 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin: 2.5rem 0 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .detail-content p { margin-bottom: 1rem; }
+  .detail-content strong { color: var(--ink); }
+
+  /* ─── Empty / Placeholder State ─────────────────────────────── */
+  .placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem;
+    text-align: center;
+    gap: 1rem;
+    grid-column: 1 / -1;
+  }
+  .placeholder-title {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: 1.5rem;
+    color: var(--ink-3);
+  }
+  .placeholder-sub {
+    font-size: 0.7rem;
+    color: var(--ink-3);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── Footer ────────────────────────────────────────────────── */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.2rem 0;
+    flex-shrink: 0;
+  }
+  .footer-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 0.65rem;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+  }
+</style>
 </head>
 <body>
-  <h1>Forecasting Dashboard</h1>
-  <p>This artefact page is intentionally left as a placeholder for future implementation.</p>
+
+<!-- ─── Site Header ──────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="site-logo">Khaled Sanad: <em>Forecasting Dashboard</em></div>
+    <!-- REPLACE: update tag text to match artefact -->
+    <span class="header-tag">Planning · Forecasting</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MAIN VIEW
+     This is what shows by default. Replace the contents of
+     .content-section with your actual dashboard, grid, or list UI.
+     The controls-bar is optional — remove if not needed.
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="main-view">
+
+  <!-- Controls Bar (optional — remove if not needed) -->
+  <div class="controls-bar">
+    <div class="page-wrap">
+      <div class="controls-inner">
+
+        <!-- Search (optional) -->
+        <div class="search-wrap">
+          <svg class="search-icon" width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="8.5" cy="8.5" r="5.5"/><path d="M15 15l-3.5-3.5"/>
+          </svg>
+          <input class="search-input" id="search-input" type="search" placeholder="Search…" autocomplete="off">
+        </div>
+
+        <!-- Filter pills (optional — duplicate as needed) -->
+        <button class="filter-pill active" data-filter="all">All</button>
+        <button class="filter-pill" data-filter="baseline">Baseline</button>
+        <button class="filter-pill" data-filter="optimistic">Optimistic</button>
+        <button class="filter-pill" data-filter="conservative">Conservative</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <section class="content-section">
+    <div class="page-wrap">
+
+      <!-- REPLACE: swap this card-grid for your actual content -->
+      <div class="card-grid" id="card-grid">
+        <div class="placeholder">
+          <div class="placeholder-title">Content goes here</div>
+          <div class="placeholder-sub">Replace this section with your dashboard, charts, or data grid</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /#main-view -->
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     DETAIL VIEW
+     Hidden by default. Call showDetail(title, metaText, contentHTML)
+     to reveal it with populated content.
+     Call showMain() or wire up #back-btn to return.
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="detail-view">
+
+  <div class="detail-header-bar">
+    <div class="detail-header-inner">
+      <button class="back-btn" id="back-btn">
+        <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M13 4l-7 6 7 6"/>
+        </svg>
+        Back
+      </button>
+      <span class="detail-meta" id="detail-meta"></span>
+    </div>
+  </div>
+
+  <div class="detail-body">
+    <div class="detail-label" id="detail-label"></div>
+    <h1 class="detail-title" id="detail-title"></h1>
+    <div class="detail-content" id="detail-content"></div>
+  </div>
+
+</div><!-- /#detail-view -->
+
+
+<!-- ─── Footer ───────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <!-- REPLACE: update footer text -->
+    <span>Forecasting Dashboard — Enterprise planning workspace.</span>
+    <span>Khaled Sanad · Portfolio</span>
+  </div>
+</footer>
+
+
+<script>
+/*
+  ═══════════════════════════════════════════════════════════════════
+  SHELL NAVIGATION PATTERN
+  ═══════════════════════════════════════════════════════════════════
+
+  CRITICAL: Never use history.pushState, history.back(), or
+  location.href inside this file. All navigation must be internal
+  state switching only. This keeps the artefact well-behaved when
+  loaded inside the portfolio's iframe overlay.
+
+  Two views: #main-view and #detail-view.
+  Switch between them using showDetail() and showMain() below.
+*/
+
+const mainView    = document.getElementById("main-view");
+const detailView  = document.getElementById("detail-view");
+const backBtn     = document.getElementById("back-btn");
+const detailLabel = document.getElementById("detail-label");
+const detailTitle = document.getElementById("detail-title");
+const detailMeta  = document.getElementById("detail-meta");
+const detailContent = document.getElementById("detail-content");
+
+/* Show the detail view with populated content */
+function showDetail(label, title, meta, contentHTML) {
+  detailLabel.textContent   = label  || "";
+  detailTitle.textContent   = title  || "";
+  detailMeta.textContent    = meta   || "";
+  detailContent.innerHTML   = contentHTML || "";
+  mainView.classList.add("hidden");
+  detailView.classList.add("active");
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+/* Return to the main view */
+function showMain() {
+  detailView.classList.remove("active");
+  mainView.classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+
+/* Back button */
+backBtn.addEventListener("click", showMain);
+
+/* Escape key to close detail */
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && detailView.classList.contains("active")) showMain();
+});
+
+
+/*
+  ═══════════════════════════════════════════════════════════════════
+  EXAMPLE: building a card and opening detail on click.
+  Replace this block entirely with your real data and rendering logic.
+  ═══════════════════════════════════════════════════════════════════
+
+  const DATA = [
+    { label: "Scenario", title: "Baseline", meta: "FY2025–2027", desc: "Conservative central case…", content: "<p>…</p>" },
+    { label: "Scenario", title: "Optimistic", meta: "FY2025–2027", desc: "High-growth assumptions…", content: "<p>…</p>" },
+  ];
+
+  const grid = document.getElementById("card-grid");
+
+  DATA.forEach((item, i) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.style.animationDelay = `${i * 60}ms`;
+    card.innerHTML = `
+      <div class="card-label">${item.label}</div>
+      <div class="card-title">${item.title}</div>
+      <div class="card-desc">${item.desc}</div>
+      <div class="card-footer">
+        <span class="card-meta">${item.meta}</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    `;
+    card.addEventListener("click", () => showDetail(item.label, item.title, item.meta, item.content));
+    grid.appendChild(card);
+  });
+*/
+
+/*
+  ─── Filter pills (wire up to your own filter logic) ───────────
+  document.querySelectorAll(".filter-pill").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const filter = btn.dataset.filter;
+      // apply filter to your rendered cards
+    });
+  });
+*/
+
+</script>
 </body>
 </html>
