@@ -30,7 +30,6 @@
     flex-direction: column;
   }
 
-  /* ── Header ── */
   header {
     padding: 3rem 5rem 1rem;
     display: flex;
@@ -76,7 +75,6 @@
     background: var(--gold-dim);
   }
 
-  /* ── Divider ── */
   .divider {
     height: 1px;
     background: var(--border);
@@ -85,7 +83,6 @@
     animation: rise 0.5s ease 0.3s forwards;
   }
 
-  /* ── Grid ── */
   main {
     padding: 1rem 5rem 5rem;
     flex: 1;
@@ -101,7 +98,6 @@
     border: 1px solid var(--border);
   }
 
-  /* ── Tile ── */
   .tile {
     background: var(--bg);
     padding: 2.2rem 2rem 1.8rem;
@@ -113,7 +109,7 @@
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    cursor: default;
+    cursor: pointer;
     transition: background 0.25s ease;
   }
 
@@ -134,13 +130,6 @@
 
   .tile:hover::after {
     transform: scaleX(1);
-  }
-
-  .tile-num {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: var(--text-dim);
-    margin-bottom: 1.4rem;
   }
 
   .tile-title {
@@ -189,12 +178,10 @@
     color: var(--gold);
   }
 
-  /* Featured tile spans 2 columns */
   .tile.wide {
     grid-column: span 2;
   }
 
-  /* ── Animations ── */
   @keyframes rise {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -206,11 +193,7 @@
   .tile:nth-child(3) { animation-delay: 0.72s; }
   .tile:nth-child(4) { animation-delay: 0.79s; }
   .tile:nth-child(5) { animation-delay: 0.86s; }
-  .tile:nth-child(6) { animation-delay: 0.93s; }
-  .tile:nth-child(7) { animation-delay: 1.0s; }
-  .tile:nth-child(8) { animation-delay: 1.07s; }
 
-  /* ── Responsive ── */
   @media (max-width: 900px) {
     header { padding: 2.5rem 2rem 2rem; }
     .divider { margin: 0 2rem; }
@@ -229,7 +212,7 @@
 <body>
 
 <header>
-  <h1>Khaled Sanad<br><em>Portfolio</em></h1>
+  <h1>Khaled Sanad: <em>Portfolio</em></h1>
   <a class="cv-btn" href="#" title="Download CV">View CV</a>
 </header>
 
@@ -238,93 +221,60 @@
 <main>
   <div class="grid">
 
-    <div class="tile wide">
+    <a class="tile wide" href="forecasting-dashboard.html" target="_blank" rel="noopener">
       <div>
-        <div class="tile-title">Forecasting Tool</div>
-        <div class="tile-desc">Interactive time-series forecasting engine. Upload data, configure model parameters, and visualise projections with confidence intervals — entirely in the browser.</div>
+        <div class="tile-title">Forecasting Dashboard</div>
+        <div class="tile-desc">Enterprise planning workspace for demand, capacity, and investment scenarios. Compare baseline and alternative futures with executive-ready visuals and clear planning narratives.</div>
       </div>
       <div class="tile-footer">
-        <span class="tile-tag active">Data · Forecasting</span>
+        <span class="tile-tag active">Planning · Forecasting</span>
         <span class="tile-arrow">↗</span>
       </div>
-    </div>
+    </a>
 
-    <a class="tile" href="https://sanadzadeh.github.io/Ledger/" target="_blank" rel="noopener" style="cursor:pointer;">
+    <a class="tile" href="deployment-strategy-dashboard.html" target="_blank" rel="noopener">
+      <div>
+        <div class="tile-title">Deployment Strategy Dashboard</div>
+        <div class="tile-desc">Transformation governance command centre for tracking workstreams, milestones, risks, budget usage, readiness, and delivery confidence.</div>
+      </div>
+      <div class="tile-footer">
+        <span class="tile-tag active">Programme · Governance</span>
+        <span class="tile-arrow">↗</span>
+      </div>
+    </a>
+
+    <a class="tile" href="decision-matrix.html" target="_blank" rel="noopener">
+      <div>
+        <div class="tile-title">Decision Matrix</div>
+        <div class="tile-desc">Weighted-criteria evaluation tool for high-stakes business choices. Adjust criteria weights and compare options with transparent, explainable scoring.</div>
+      </div>
+      <div class="tile-footer">
+        <span class="tile-tag active">Decision · Consulting</span>
+        <span class="tile-arrow">↗</span>
+      </div>
+    </a>
+
+    <a class="tile" href="https://sanadzadeh.github.io/Ledger/" target="_blank" rel="noopener">
       <div>
         <div class="tile-title">Ledger</div>
         <div class="tile-desc">Structured explanations of blockchain, DeFi, stablecoins, RWAs, custody, regulation, and the financial systems being rebuilt on top of cryptocurrencies.</div>
       </div>
       <div class="tile-footer">
-        <span class="tile-tag active">Reference · Crypto</span>
+        <span class="tile-tag active">Reference · Knowledge</span>
         <span class="tile-arrow">↗</span>
       </div>
     </a>
 
-    <div class="tile">
+    <a class="tile" href="data-risk-assessment.html" target="_blank" rel="noopener">
       <div>
-        <div class="tile-title">Paranoid</div>
-        <div class="tile-desc">Browser remake of the classic MS-DOS brick breaker. Animated backgrounds, particle effects, escalating difficulty.</div>
+        <div class="tile-title">Data Risk Assessment</div>
+        <div class="tile-desc">Structured framework for identifying, scoring, and prioritising data-related risks across a programme or organisation. Maps exposure, likelihood, and impact into a clear governance view.</div>
       </div>
       <div class="tile-footer">
-        <span class="tile-tag active">Game · Browser</span>
+        <span class="tile-tag active">Risk · Governance</span>
         <span class="tile-arrow">↗</span>
       </div>
-    </div>
-
-    <div class="tile">
-      <div>
-        <div class="tile-title">Prompt Lab</div>
-        <div class="tile-desc">Structured sandbox for testing and documenting LLM prompt patterns across models and tasks.</div>
-      </div>
-      <div class="tile-footer">
-        <span class="tile-tag">AI · NLP</span>
-        <span class="tile-arrow" style="opacity:0.25;">↗</span>
-      </div>
-    </div>
-
-    <div class="tile">
-      <div>
-        <div class="tile-title">Deployment Strategy Dashboard</div>
-        <div class="tile-desc">Executive-level view of enterprise deployment pipelines. Track rollout phases, risk flags, stakeholder sign-offs, and go-live readiness across workstreams in real time.</div>
-      </div>
-      <div class="tile-footer">
-        <span class="tile-tag">Strategy · Enterprise</span>
-        <span class="tile-arrow" style="opacity:0.25;">↗</span>
-      </div>
-    </div>
-
-    <div class="tile">
-      <div>
-        <div class="tile-title">Decision Matrix</div>
-        <div class="tile-desc">Weighted-criteria decision framework. Add options, weight your criteria, get a scored recommendation.</div>
-      </div>
-      <div class="tile-footer">
-        <span class="tile-tag">Productivity</span>
-        <span class="tile-arrow" style="opacity:0.25;">↗</span>
-      </div>
-    </div>
-
-    <div class="tile">
-      <div>
-        <div class="tile-title">Neural Mapper</div>
-        <div class="tile-desc">Interactive visualisation of neural network architectures. Define layers and watch data flow in real time.</div>
-      </div>
-      <div class="tile-footer">
-        <span class="tile-tag">AI · Visualisation</span>
-        <span class="tile-arrow" style="opacity:0.25;">↗</span>
-      </div>
-    </div>
-
-    <div class="tile">
-      <div>
-        <div class="tile-title">Visualisation Suggester</div>
-        <div class="tile-desc">An interactive cheat sheet for choosing the right chart. Browse by goal — trend, relationship, distribution, flow — and get the right visualisation with when to use it and why.</div>
-      </div>
-      <div class="tile-footer">
-        <span class="tile-tag">Data · Visualisation</span>
-        <span class="tile-arrow" style="opacity:0.25;">↗</span>
-      </div>
-    </div>
+    </a>
 
   </div>
 </main>
