@@ -393,20 +393,18 @@
   let overlayOpen = false;
 
   function openOverlay(href, title) {
-    overlayFrame.src = "about:blank";
     overlayTitle.textContent = title;
     overlay.classList.add("active");
     document.body.style.overflow = "hidden";
     overlayOpen = true;
     history.pushState({ overlay: true }, "");
-    setTimeout(() => { overlayFrame.src = href; }, 50);
+    overlayFrame.src = href;
   }
 
   function closeOverlay() {
     overlay.classList.remove("active");
     document.body.style.overflow = "";
     overlayOpen = false;
-    overlayFrame.src = "about:blank";
   }
 
   document.querySelectorAll("a.tile").forEach(tile => {
