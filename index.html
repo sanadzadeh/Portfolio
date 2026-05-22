@@ -390,12 +390,15 @@
   const overlayTitle = document.getElementById("overlayTitle");
   const overlayClose = document.getElementById("overlayClose");
 
+  // Always ensure a clean base state on load
+  history.replaceState({ base: true }, "", "");
+
   function openOverlay(href, title) {
     overlayFrame.src = href;
     overlayTitle.textContent = title;
     overlay.classList.add("active");
     document.body.style.overflow = "hidden";
-    history.pushState({ overlay: true, href, title }, "", "");
+    history.pushState({ overlay: true }, "", "");
   }
 
   function closeOverlay() {
@@ -412,19 +415,21 @@
   });
 
   overlayClose.addEventListener("click", () => {
-    closeOverlay();
-    history.replaceState(null, "", "");
+    if (history.state && history.state.overlay) {
+      history.back();
+    } else {
+      closeOverlay();
+    }
   });
 
-  window.addEventListener("popstate", () => {
+  window.addEventListener("popstate", e => {
     if (overlay.classList.contains("active")) closeOverlay();
   });
 
-  // Esc key closes overlay
   document.addEventListener("keydown", e => {
     if (e.key === "Escape" && overlay.classList.contains("active")) {
-      closeOverlay();
-      history.replaceState(null, "", "");
+      if (history.state && history.state.overlay) history.back();
+      else closeOverlay();
     }
   });
 </script>
