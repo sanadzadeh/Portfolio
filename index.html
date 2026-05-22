@@ -152,19 +152,21 @@
   .tile.narrow {
     grid-column: span 3;
     min-height: auto;
-    padding: 0.85rem 2rem;
-    border-top: 1px solid var(--border);
+    padding: 0.7rem 2rem;
+    background: transparent;
   }
+  .tile.narrow::after { display: none; }
   .tile.narrow .tile-title {
     margin: 0;
-    font-size: 0.62rem;
+    font-size: 0.68rem;
     line-height: 1;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    letter-spacing: 0.05em;
     color: var(--text-dim);
     font-family: 'DM Mono', monospace;
     font-weight: 400;
+    font-style: italic;
   }
+  .tile.narrow:hover { background: transparent; }
   .tile.narrow:hover .tile-title { color: var(--text-sub); }
   .tile.narrow .tile-footer,
   .tile.narrow .tile-desc { display: none; }
@@ -264,7 +266,7 @@
     </a>
 
     <button class="tile narrow" id="moreToggle" type="button" aria-expanded="false">
-      <div><div class="tile-title">+ more</div></div>
+      <div><div class="tile-title">..more</div></div>
     </button>
 
     <a class="tile extra-tile" href="initiative-tracker.html" target="_blank" rel="noopener">
@@ -308,7 +310,7 @@
   toggle.addEventListener("click", () => {
     const expanded = grid.classList.toggle("expanded");
     toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
-    toggle.querySelector(".tile-title").textContent = expanded ? "− less" : "+ more";
+    toggle.querySelector(".tile-title").textContent = expanded ? "..less" : "..more";
   });
 </script>
 </body>
