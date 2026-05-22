@@ -390,21 +390,21 @@
   const overlayTitle = document.getElementById("overlayTitle");
   const overlayClose = document.getElementById("overlayClose");
 
-  // Seed the base state so we always have something to sit on
-  history.replaceState({ overlay: false }, "", location.href);
+  let overlayOpen = false;
 
   function openOverlay(href, title) {
     overlayFrame.src = href;
     overlayTitle.textContent = title;
     overlay.classList.add("active");
     document.body.style.overflow = "hidden";
-    // Push so back button has somewhere to pop to
-    history.pushState({ overlay: true }, "", location.href);
+    overlayOpen = true;
+    history.pushState({ overlay: true }, "");
   }
 
   function closeOverlay() {
     overlay.classList.remove("active");
     document.body.style.overflow = "";
+    overlayOpen = false;
     setTimeout(() => { overlayFrame.src = ""; }, 300);
   }
 
@@ -415,15 +415,20 @@
     });
   });
 
-  // Close button manually goes back — popstate will fire and call closeOverlay
-  overlayClose.addEventListener("click", () => history.back());
+  overlayClose.addEventListener("click", () => {
+    closeOverlay();
+    history.back();
+  });
 
-  window.addEventListener("popstate", e => {
-    if (overlay.classList.contains("active")) closeOverlay();
+  window.addEventListener("popstate", () => {
+    if (overlayOpen) closeOverlay();
   });
 
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && overlay.classList.contains("active")) history.back();
+    if (e.key === "Escape" && overlayOpen) {
+      closeOverlay();
+      history.back();
+    }
   });
 </script>
 </body>
