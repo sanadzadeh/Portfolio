@@ -390,20 +390,20 @@
   const overlayTitle = document.getElementById("overlayTitle");
   const overlayClose = document.getElementById("overlayClose");
 
-  // Always ensure a clean base state on load
-  history.replaceState({ base: true }, "", "");
+  history.replaceState({ overlay: false }, "", location.href);
 
   function openOverlay(href, title) {
     overlayFrame.src = href;
     overlayTitle.textContent = title;
     overlay.classList.add("active");
     document.body.style.overflow = "hidden";
-    history.pushState({ overlay: true }, "", "");
+    history.replaceState({ overlay: true }, "", location.href);
   }
 
   function closeOverlay() {
     overlay.classList.remove("active");
     document.body.style.overflow = "";
+    history.replaceState({ overlay: false }, "", location.href);
     setTimeout(() => { overlayFrame.src = ""; }, 300);
   }
 
@@ -414,23 +414,10 @@
     });
   });
 
-  overlayClose.addEventListener("click", () => {
-    if (history.state && history.state.overlay) {
-      history.back();
-    } else {
-      closeOverlay();
-    }
-  });
-
-  window.addEventListener("popstate", e => {
-    if (overlay.classList.contains("active")) closeOverlay();
-  });
+  overlayClose.addEventListener("click", closeOverlay);
 
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && overlay.classList.contains("active")) {
-      if (history.state && history.state.overlay) history.back();
-      else closeOverlay();
-    }
+    if (e.key === "Escape" && overlay.classList.contains("active")) closeOverlay();
   });
 </script>
 </body>
