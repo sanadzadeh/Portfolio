@@ -415,20 +415,14 @@
     });
   });
 
-  overlayClose.addEventListener("click", () => {
-    closeOverlay();
-    history.back();
-  });
+  overlayClose.addEventListener("click", () => history.back());
 
   window.addEventListener("popstate", () => {
     if (overlayOpen) closeOverlay();
   });
 
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && overlayOpen) {
-      closeOverlay();
-      history.back();
-    }
+    if (e.key === "Escape" && overlayOpen) history.back();
   });
 </script>
 </body>
