@@ -413,10 +413,10 @@
 
   overlayClose.addEventListener("click", () => {
     closeOverlay();
-    if (history.state && history.state.overlay) history.back();
+    history.replaceState(null, "", "");
   });
 
-  window.addEventListener("popstate", e => {
+  window.addEventListener("popstate", () => {
     if (overlay.classList.contains("active")) closeOverlay();
   });
 
@@ -424,7 +424,7 @@
   document.addEventListener("keydown", e => {
     if (e.key === "Escape" && overlay.classList.contains("active")) {
       closeOverlay();
-      if (history.state && history.state.overlay) history.back();
+      history.replaceState(null, "", "");
     }
   });
 </script>
