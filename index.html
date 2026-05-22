@@ -88,6 +88,8 @@
     border: 1px solid var(--border);
   }
   .tile {
+    border: 0;
+    text-align: left;
     background: var(--bg);
     padding: 2.2rem 2rem 1.8rem;
     display: flex;
@@ -154,6 +156,8 @@
   .tile.narrow { grid-column: span 3; min-height: 36px; padding: 0.5rem 2rem; }
   .tile.narrow .tile-title { margin: 0; font-size: 0.72rem; line-height: 1; letter-spacing: 0.14em; text-transform: uppercase; }
   .tile.narrow .tile-footer, .tile.narrow .tile-desc { display: none; }
+  .extra-tile { display: none; }
+  .grid.expanded .extra-tile { display: flex; }
   @keyframes rise {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -244,13 +248,45 @@
         <span class="tile-arrow">↗</span>
       </div>
     </a>
-    <a class="tile narrow" href="more-artefacts.html" target="_blank" rel="noopener">
+    <button class="tile narrow" id="moreToggle" type="button" aria-expanded="false">
       <div>
         <div class="tile-title">..more</div>
+      </div>
+    </button>
+
+    <a class="tile extra-tile" href="visualisation-suggester.html" target="_blank" rel="noopener">
+      <div>
+        <div class="tile-title">Visualisation Suggester</div>
+        <div class="tile-desc">Interactive guidance for selecting charts based on audience, objective, and data structure.</div>
+      </div>
+      <div class="tile-footer">
+        <span class="tile-tag active">Data · Storytelling</span>
+        <span class="tile-arrow">↗</span>
+      </div>
+    </a>
+
+    <a class="tile extra-tile" href="more-artefacts.html" target="_blank" rel="noopener">
+      <div>
+        <div class="tile-title">More Artefacts Hub</div>
+        <div class="tile-desc">Browse additional prototypes, references, and upcoming practical decision-support tools.</div>
+      </div>
+      <div class="tile-footer">
+        <span class="tile-tag active">Explore · Library</span>
+        <span class="tile-arrow">↗</span>
       </div>
     </a>
 
   </div>
 </main>
+
+<script>
+  const toggle = document.getElementById("moreToggle");
+  const grid = document.querySelector(".grid");
+  toggle.addEventListener("click", () => {
+    const expanded = grid.classList.toggle("expanded");
+    toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+    toggle.querySelector(".tile-title").textContent = expanded ? "..less" : "..more";
+  });
+</script>
 </body>
 </html>
