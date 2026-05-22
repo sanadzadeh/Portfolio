@@ -152,22 +152,19 @@
   .tile.narrow {
     grid-column: span 3;
     min-height: auto;
-    padding: 0.7rem 2rem;
-    background: transparent;
+    padding: 0.9rem 2rem;
   }
-  .tile.narrow::after { display: none; }
   .tile.narrow .tile-title {
     margin: 0;
-    font-size: 0.68rem;
+    font-size: 0.55rem;
     line-height: 1;
-    letter-spacing: 0.05em;
-    color: var(--text-dim);
-    font-family: 'DM Mono', monospace;
-    font-weight: 400;
-    font-style: italic;
+    letter-spacing: 0.08em;
+    color: var(--text-sub);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    text-transform: uppercase;
   }
-  .tile.narrow:hover { background: transparent; }
-  .tile.narrow:hover .tile-title { color: var(--text-sub); }
+  .extra-tile { display: none; animation: none !important; opacity: 1 !important; }
   .tile.narrow .tile-footer,
   .tile.narrow .tile-desc { display: none; }
   .extra-tile { display: none; }
