@@ -8,20 +8,20 @@
   /* ─── Design Tokens ─────────────────────────────────────────── */
   @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap');
   :root {
-    --bg:           #141414;
+    --bg:           #131313;
     --surface:      #1a1a1a;
     --surface-alt:  #1f1f1f;
     --border:       rgba(255,255,255,0.07);
     --border-soft:  rgba(255,255,255,0.04);
-    --ink:          #f5f2ed;
-    --ink-2:        rgba(245,242,237,0.65);
-    --ink-3:        rgba(245,242,237,0.35);
-    --accent:       #c9a96e;
-    --accent-hover: #d4b87e;
-    --accent-light: rgba(201,169,110,0.1);
-    --accent-mid:   rgba(201,169,110,0.25);
+    --ink:          #f0eeea;
+    --ink-2:        rgba(240,238,234,0.75);
+    --ink-3:        rgba(240,238,234,0.5);
+    --accent:       #4a9e9e;
+    --accent-hover: #5ab4b4;
+    --accent-light: rgba(74,158,158,0.1);
+    --accent-mid:   rgba(74,158,158,0.25);
     --tag-bg:       rgba(255,255,255,0.05);
-    --tag-ink:      rgba(245,242,237,0.45);
+    --tag-ink:      rgba(240,238,234,0.45);
     --card-shadow:  0 1px 3px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.2);
     --card-shadow-hover: 0 4px 12px rgba(0,0,0,.4), 0 12px 40px rgba(0,0,0,.3);
     --radius:       4px;
@@ -30,6 +30,46 @@
     --font-mono:    'DM Mono', 'Courier New', monospace;
     --tr:           160ms ease;
   }
+
+  /* ─── Light Theme ───────────────────────────────────────────── */
+  html.light {
+    --bg:           #f0efea;
+    --surface:      #faf9f7;
+    --surface-alt:  #eceae4;
+    --border:       rgba(28,43,53,0.1);
+    --border-soft:  rgba(28,43,53,0.06);
+    --ink:          #1c2b35;
+    --ink-2:        rgba(28,43,53,0.7);
+    --ink-3:        rgba(28,43,53,0.4);
+    --accent:       #4a7c7e;
+    --accent-hover: #3a6466;
+    --accent-light: rgba(74,124,126,0.08);
+    --accent-mid:   rgba(74,124,126,0.2);
+    --tag-bg:       rgba(28,43,53,0.06);
+    --tag-ink:      rgba(28,43,53,0.55);
+    --card-shadow:  0 1px 3px rgba(28,43,53,.06), 0 4px 16px rgba(28,43,53,.04);
+    --card-shadow-hover: 0 4px 12px rgba(28,43,53,.1), 0 12px 40px rgba(28,43,53,.07);
+  }
+
+  /* ─── Theme Toggle ──────────────────────────────────────────── */
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .72rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 5px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: color var(--tr), border-color var(--tr);
+    white-space: nowrap;
+  }
+  .theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+  .theme-toggle .toggle-icon { font-size: .8rem; line-height: 1; }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { font-size: 16px; scroll-behavior: smooth; }
@@ -109,110 +149,83 @@
 
   /* ─── Hero ──────────────────────────────────────────────────── */
   .hero {
-    padding: 72px 0 56px;
+    padding: 20px 0 18px;
     border-bottom: 1px solid var(--border-soft);
-    position: relative;
-    overflow: hidden;
   }
 
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
-    background-size: 28px 28px;
-    opacity: .35;
-    pointer-events: none;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 120px;
-    background: linear-gradient(to bottom, transparent, var(--bg));
-    pointer-events: none;
-  }
-
-  .hero-inner { position: relative; z-index: 1; }
-
-  .hero-label {
-    display: inline-flex;
+  .hero-inner {
+    display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: .7rem;
-    font-weight: 700;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--accent-light);
-    border: 1px solid var(--accent-mid);
-    padding: 5px 14px;
-    border-radius: 100px;
-    margin-bottom: 20px;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
   }
 
-  .hero-label-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
+  .hero-left {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
   }
+
+  .hero-label { display: none; }
+  .hero-label-dot { display: none; }
 
   .hero-title {
-    font-size: clamp(1.4rem, 3vw, 2rem);
-    font-weight: 700;
-    line-height: 1.12;
-    letter-spacing: -.04em;
+    font-size: clamp(1rem, 1.8vw, 1.25rem);
+    font-weight: 300;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
     color: var(--ink);
-    margin-bottom: 18px;
+    margin-bottom: 0;
     font-family: var(--font-serif);
-    max-width: 700px;
+    white-space: nowrap;
   }
 
-  .hero-sub {
-    font-size: 1.05rem;
-    color: var(--ink-2);
-    max-width: 580px;
-    line-height: 1.7;
-    margin-bottom: 40px;
+  .hero-title strong {
+    font-weight: 600;
   }
+
+  .hero-sub { display: none; }
 
   .hero-stats {
     display: flex;
-    flex-wrap: wrap;
     gap: 0;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     background: var(--surface);
     overflow: hidden;
-    width: fit-content;
-    box-shadow: var(--card-shadow);
+    flex-shrink: 0;
   }
 
   .hero-stat {
-    padding: 14px 24px;
+    padding: 6px 14px;
     border-right: 1px solid var(--border);
-    min-width: 120px;
   }
   .hero-stat:last-child { border-right: none; }
 
   .hero-stat-num {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: 0.9rem;
+    font-weight: 600;
     color: var(--ink);
-    letter-spacing: -.04em;
+    letter-spacing: -.02em;
     font-family: var(--font-serif);
     line-height: 1;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
   }
 
   .hero-stat-label {
-    font-size: .72rem;
+    font-size: .58rem;
     color: var(--ink-3);
-    font-weight: 500;
+    font-family: var(--font-mono);
+    letter-spacing: 0.05em;
+  }
+
+  .hero-search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
   }
 
   /* ─── Controls Bar ──────────────────────────────────────────── */
@@ -225,12 +238,7 @@
     border-bottom: 1px solid var(--border-soft);
   }
 
-  .search-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
+  .search-row { display: none; }
 
   .search-wrap {
     position: relative;
@@ -285,11 +293,7 @@
   #clear-search:hover { color: var(--ink); background: var(--surface-alt); }
   #clear-search.visible { display: flex; }
 
-  .result-count {
-    font-size: .81rem;
-    color: var(--ink-3);
-    white-space: nowrap;
-  }
+  .result-count { display: none; }
 
   /* ─── Category Filters ──────────────────────────────────────── */
   .filter-row {
@@ -385,18 +389,18 @@
   }
 
   .card-title {
-    font-size: 1rem;
-    font-weight: 650;
+    font-size: 1.1rem;
+    font-weight: 600;
     line-height: 1.35;
     color: var(--ink);
     font-family: var(--font-serif);
     letter-spacing: -.01em;
   }
-  .article-card.featured .card-title { font-size: 1.3rem; }
+  .article-card.featured .card-title { font-size: 1.4rem; }
 
   .card-summary {
     font-size: .86rem;
-    color: var(--ink-2);
+    color: rgba(240,238,234,0.55);
     line-height: 1.65;
     flex: 1;
   }
@@ -766,14 +770,12 @@
     <div class="header-inner">
       <div class="header-left">
         <div class="site-logo" id="logo-home" tabindex="0" role="button" aria-label="Return to library">Ledger<span>.</span></div>
-        <div class="header-tagline">A mechanics-first reference library for crypto, blockchain, and digital asset infrastructure.</div>
+        <div class="header-tagline">A mechanics-first reference library — <strong>100 essential concepts</strong> in crypto, blockchain, and digital asset infrastructure.</div>
       </div>
       <div class="header-right">
-        <button class="random-btn" id="random-btn" aria-label="Open a random concept">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <path d="M2 12h20M12 2l8 10-8 10"/>
-          </svg>
-          Random
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <span class="toggle-icon" id="toggle-icon">○</span>
+          <span id="toggle-label">light</span>
         </button>
       </div>
     </div>
@@ -787,26 +789,24 @@
   <section class="hero">
     <div class="page-wrap">
       <div class="hero-inner">
-        <div class="hero-label"><span class="hero-label-dot"></span>Concept Library</div>
-        <h1 class="hero-title">Mechanics, not market noise.</h1>
-        <p class="hero-sub">Structured explanations of crypto, blockchain, DeFi, stablecoins, RWAs, custody, regulation, and the financial systems being rebuilt on top of them.</p>
-        <div class="hero-stats">
-          <div class="hero-stat">
-            <div class="hero-stat-num" id="stat-articles">—</div>
-            <div class="hero-stat-label">Concepts</div>
+        <div class="hero-search">
+          <div class="search-wrap">
+            <svg class="search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="8.5" cy="8.5" r="5.5"/><path d="M15 15l-3.5-3.5"/>
+            </svg>
+            <input type="search" id="search-input" placeholder="Search concepts, tags, categories…" autocomplete="off" spellcheck="false" aria-label="Search concepts">
+            <button id="clear-search" aria-label="Clear search">
+              <svg width="13" height="13" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 5l10 10M15 5L5 15"/>
+              </svg>
+            </button>
           </div>
-          <div class="hero-stat">
-            <div class="hero-stat-num" id="stat-categories">—</div>
-            <div class="hero-stat-label">Categories</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-num">~5 min</div>
-            <div class="hero-stat-label">Avg. read time</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-num">0</div>
-            <div class="hero-stat-label">Hype</div>
-          </div>
+          <button class="random-btn" id="random-btn" aria-label="Open a random concept">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M2 12h20M12 2l8 10-8 10"/>
+            </svg>
+            Random
+          </button>
         </div>
       </div>
     </div>
@@ -1159,8 +1159,6 @@ const emptyResetBtn     = document.getElementById("empty-reset-btn");
 const randomBtn         = document.getElementById("random-btn");
 
 /* ─── INIT STATS ─────────────────────────────────────────────────*/
-document.getElementById("stat-articles").textContent  = ARTICLES.length;
-document.getElementById("stat-categories").textContent = new Set(ARTICLES.map(a => a.category)).size;
 
 /* ─── FILTERS ────────────────────────────────────────────────────*/
 function buildFilters() {
@@ -1383,6 +1381,16 @@ logoHome.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === 
 
 document.addEventListener("keydown", e => {
   if (e.key === "Escape" && articleView.classList.contains("active")) closeArticleView();
+});
+
+/* ─── THEME TOGGLE ───────────────────────────────────────────────*/
+const themeToggle = document.getElementById("theme-toggle");
+const toggleIcon  = document.getElementById("toggle-icon");
+const toggleLabel = document.getElementById("toggle-label");
+themeToggle.addEventListener("click", () => {
+  const isLight = document.documentElement.classList.toggle("light");
+  toggleIcon.textContent  = isLight ? "●" : "○";
+  toggleLabel.textContent = isLight ? "dark" : "light";
 });
 
 /* ─── INIT ───────────────────────────────────────────────────────*/
