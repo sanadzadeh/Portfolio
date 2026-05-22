@@ -27,42 +27,31 @@ Each artefact is intended to feel like a professional tool that could be used by
 - Browser-only execution.
 - GitHub Pages deployable.
 
-## Core artefacts
+## All artefacts
 
 ### 1) Forecasting Dashboard
 Enterprise planning and scenario analysis environment using synthetic datasets.
 
-Typical dimensions:
-- demand and capacity,
-- staffing and investment,
-- utilisation and confidence,
-- scenario comparisons (baseline, optimistic, conservative, constrained, accelerated).
-
-### 2) Deployment Strategy Dashboard
-Executive transformation governance dashboard built on synthetic programme data.
-
-Typical dimensions:
-- milestones and delivery stages,
-- budget vs actual expenditure,
-- risk and dependency exposure,
-- readiness and confidence indicators.
-
-### 3) Decision Matrix
-Weighted-criteria decision support tool for structured option evaluation.
-
-Typical use cases:
-- vendor selection,
-- initiative prioritisation,
-- technology assessment,
-- investment trade-off analysis.
-
-## Extended artefacts
-
-### Ledger
+### 2) Ledger
 A structured knowledge platform for blockchain, digital assets, regulation, tokenisation, custody, DeFi, and financial infrastructure.
 
-### Visualisation Suggester
-An interactive guide for selecting the right chart based on analytical objective, data structure, and audience needs.
+### 3) Deployment Strategy Dashboard
+Executive transformation governance dashboard built on synthetic programme data.
+
+### 4) Decision Matrix
+Weighted-criteria decision support tool for structured option evaluation.
+
+### 5) Data Risk Assessment
+Framework for identifying, scoring, and prioritising data-related risks across programmes and organisations.
+
+### 6) Initiative Tracker
+Portfolio view of active initiatives by status, owner, priority, and strategic theme.
+
+### 7) Stakeholder Mapping Tool
+Influence-interest mapping tool for stakeholder segmentation and engagement strategy planning.
+
+### 8) Business Case Builder
+Structured builder for problem framing, options, costs, benefits, risks, and recommendation.
 
 ## Portfolio narrative
 

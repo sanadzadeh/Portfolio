@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Case Builder</title>
+  <style>
+    :root{ --bg:#141414; --surface:#1c1c1c; --border:rgba(255,255,255,.08); --text:#f5f2ed; --sub:rgba(245,242,237,.62); --gold:#c9a96e; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; background:var(--bg); color:var(--text); font-family:Inter,system-ui,sans-serif; }
+    .wrap{ max-width:1050px; margin:auto; padding:2rem; }
+    h1{ margin:0 0 .5rem; }
+    p{ color:var(--sub); margin:0 0 1.25rem; }
+    .grid{ display:grid; grid-template-columns: repeat(2,1fr); gap:1rem; }
+    .block{ background:var(--surface); border:1px solid var(--border); padding:1rem; }
+    h2{ margin:0 0 .5rem; font-size:1rem; color:var(--gold); }
+    .line{ color:var(--sub); line-height:1.55; font-size:.95rem; }
+    .full{ grid-column:1/-1; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Business Case Builder</h1>
+    <p>Structured framework to document strategic rationale, options, costs, benefits, and recommendation.</p>
+
+    <section class="grid">
+      <article class="block"><h2>Problem Statement</h2><div class="line">Current planning cycle is fragmented, causing inconsistent assumptions and delayed decisions.</div></article>
+      <article class="block"><h2>Options</h2><div class="line">1) Do nothing, 2) Incremental tooling, 3) Unified planning platform.</div></article>
+      <article class="block"><h2>Costs</h2><div class="line">Implementation: $420k · Annual run-rate: $90k.</div></article>
+      <article class="block"><h2>Benefits</h2><div class="line">Cycle time -30%, forecast accuracy +12%, improved governance visibility.</div></article>
+      <article class="block full"><h2>Recommendation</h2><div class="line">Proceed with option 3 using phased rollout and quarterly value checkpoints.</div></article>
+    </section>
+  </main>
+</body>
+</html>

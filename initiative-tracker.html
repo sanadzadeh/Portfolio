@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Initiative Tracker</title>
+  <style>
+    :root {
+      --bg: #141414;
+      --surface: #1c1c1c;
+      --border: rgba(255,255,255,0.08);
+      --text: #f5f2ed;
+      --sub: rgba(245,242,237,0.6);
+      --gold: #c9a96e;
+      --ok: #8bcf9b;
+      --warn: #e6c16b;
+      --risk: #dc807a;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    h1 { margin: 0 0 .4rem; font-size: 2rem; }
+    p { margin: 0 0 1.25rem; color: var(--sub); }
+    .grid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); padding: 1rem; }
+    .k { font-size:.75rem; color: var(--sub); text-transform: uppercase; letter-spacing:.08em; }
+    .v { font-size:1.6rem; margin-top:.25rem; color: var(--gold); }
+    table { width:100%; border-collapse: collapse; background: var(--surface); border:1px solid var(--border); }
+    th, td { padding:.8rem; border-bottom:1px solid var(--border); text-align:left; font-size:.92rem; }
+    th { color: var(--sub); font-weight:600; }
+    .tag { padding:.2rem .45rem; border-radius: 999px; font-size:.75rem; }
+    .on { background: rgba(139,207,155,.15); color: var(--ok); }
+    .hold { background: rgba(230,193,107,.15); color: var(--warn); }
+    .risk { background: rgba(220,128,122,.15); color: var(--risk); }
+    @media (max-width:900px){ .grid { grid-template-columns: repeat(2, 1fr);} }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <h1>Initiative Tracker</h1>
+    <p>Portfolio-level visibility across strategic initiatives, owners, priorities, and delivery status.</p>
+
+    <section class="grid">
+      <article class="card"><div class="k">Active Initiatives</div><div class="v">12</div></article>
+      <article class="card"><div class="k">On Track</div><div class="v">8</div></article>
+      <article class="card"><div class="k">At Risk</div><div class="v">3</div></article>
+      <article class="card"><div class="k">On Hold</div><div class="v">1</div></article>
+    </section>
+
+    <table>
+      <thead>
+        <tr><th>Initiative</th><th>Owner</th><th>Priority</th><th>Status</th><th>Theme</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>CRM Migration</td><td>A. Noor</td><td>High</td><td><span class="tag on">On Track</span></td><td>Customer</td></tr>
+        <tr><td>Forecasting Refresh</td><td>D. Taylor</td><td>High</td><td><span class="tag risk">At Risk</span></td><td>Planning</td></tr>
+        <tr><td>Supplier Rationalisation</td><td>M. Reed</td><td>Medium</td><td><span class="tag hold">On Hold</span></td><td>Cost</td></tr>
+      </tbody>
+    </table>
+  </main>
+</body>
+</html>
