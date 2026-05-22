@@ -26,6 +26,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
   }
   header {
     padding: 3rem 5rem 1rem;
@@ -165,11 +166,71 @@
     font-weight: 300;
     text-transform: uppercase;
   }
-  .extra-tile { display: none; animation: none !important; opacity: 1 !important; }
   .tile.narrow .tile-footer,
   .tile.narrow .tile-desc { display: none; }
-  .extra-tile { display: none; }
+  .extra-tile { display: none; animation: none !important; opacity: 1 !important; }
   .grid.expanded .extra-tile { display: flex; }
+
+  /* ── Overlay ── */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .overlay-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .overlay-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1rem;
+    color: var(--text-sub);
+    letter-spacing: 0.04em;
+  }
+  .overlay-title em {
+    font-style: normal;
+    color: var(--gold);
+  }
+  .overlay-close {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-sub);
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.9rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .overlay-close:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+    background: var(--gold-dim);
+  }
+  .overlay iframe {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background: var(--bg);
+  }
+
   @keyframes rise {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -200,6 +261,7 @@
 </style>
 </head>
 <body>
+
 <header>
   <h1>Khaled Sanad: <em>Portfolio</em></h1>
   <a class="cv-btn" href="CV.pdf" title="Download CV" target="_blank" rel="noopener">View CV</a>
@@ -208,7 +270,7 @@
 <main>
   <div class="grid">
 
-    <a class="tile wide" href="forecasting-dashboard.html" target="_blank" rel="noopener">
+    <a class="tile wide" href="forecasting-dashboard.html" data-title="Forecasting Dashboard">
       <div>
         <div class="tile-title">Forecasting Dashboard</div>
         <div class="tile-desc">Enterprise planning workspace for demand, capacity, and investment scenarios. Compare baseline and alternative futures with executive-ready visuals and clear planning narratives.</div>
@@ -219,7 +281,7 @@
       </div>
     </a>
 
-    <a class="tile" href="deployment-strategy-dashboard.html" target="_blank" rel="noopener">
+    <a class="tile" href="deployment-strategy-dashboard.html" data-title="Deployment Strategy">
       <div>
         <div class="tile-title">Deployment Strategy</div>
         <div class="tile-desc">Transformation governance dashboard for tracking workstreams, milestones, risks, budget usage, readiness, and delivery confidence.</div>
@@ -230,7 +292,7 @@
       </div>
     </a>
 
-    <a class="tile" href="decision-matrix.html" target="_blank" rel="noopener">
+    <a class="tile" href="decision-matrix.html" data-title="Decision Matrix">
       <div>
         <div class="tile-title">Decision Matrix</div>
         <div class="tile-desc">Weighted-criteria evaluation tool for high-stakes business choices. Adjust criteria weights and compare options with transparent, explainable scoring.</div>
@@ -241,7 +303,7 @@
       </div>
     </a>
 
-    <a class="tile" href="data-risk-assessment.html" target="_blank" rel="noopener">
+    <a class="tile" href="data-risk-assessment.html" data-title="Data Risk Assessment">
       <div>
         <div class="tile-title">Data Risk Assessment</div>
         <div class="tile-desc">Structured framework for identifying, scoring, and prioritising data-related risks across a programme or organisation. Maps exposure, likelihood, and impact into a clear governance view.</div>
@@ -252,7 +314,7 @@
       </div>
     </a>
 
-    <a class="tile" href="ledger.html" target="_blank" rel="noopener">
+    <a class="tile" href="ledger.html" data-title="Ledger">
       <div>
         <div class="tile-title">Ledger</div>
         <div class="tile-desc">Structured explanations of blockchain, DeFi, stablecoins, RWAs, custody, regulation, and the financial systems being rebuilt on top of cryptocurrencies.</div>
@@ -267,7 +329,7 @@
       <div><div class="tile-title">..more</div></div>
     </button>
 
-    <a class="tile extra-tile" href="initiative-tracker.html" target="_blank" rel="noopener">
+    <a class="tile extra-tile" href="initiative-tracker.html" data-title="Initiative Tracker">
       <div>
         <div class="tile-title">Initiative Tracker</div>
         <div class="tile-desc">Portfolio view of active initiatives by status, owner, priority, and strategic theme. A one-page governance summary built for leadership review and board reporting.</div>
@@ -278,7 +340,7 @@
       </div>
     </a>
 
-    <a class="tile extra-tile" href="stakeholder-mapping.html" target="_blank" rel="noopener">
+    <a class="tile extra-tile" href="stakeholder-mapping.html" data-title="Stakeholder Mapping Tool">
       <div>
         <div class="tile-title">Stakeholder Mapping Tool</div>
         <div class="tile-desc">Maps stakeholders by influence and interest, assigns engagement strategies, and produces a clean visual grid — a standard consulting deliverable rebuilt as a browser tool.</div>
@@ -289,7 +351,7 @@
       </div>
     </a>
 
-    <a class="tile extra-tile" href="business-case-builder.html" target="_blank" rel="noopener">
+    <a class="tile extra-tile" href="business-case-builder.html" data-title="Business Case Builder">
       <div>
         <div class="tile-title">Business Case Builder</div>
         <div class="tile-desc">Structured framework for framing a business case: problem statement, options, costs, benefits, risks, and recommendation — outputting a clean executive summary view.</div>
@@ -302,13 +364,53 @@
 
   </div>
 </main>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay">
+  <div class="overlay-bar">
+    <div class="overlay-title">Khaled Sanad: <em id="overlayTitle"></em></div>
+    <button class="overlay-close" id="overlayClose">← Back</button>
+  </div>
+  <iframe id="overlayFrame" src="" title="Artefact"></iframe>
+</div>
+
 <script>
+  // More/less toggle
   const toggle = document.getElementById("moreToggle");
   const grid = document.querySelector(".grid");
   toggle.addEventListener("click", () => {
     const expanded = grid.classList.toggle("expanded");
     toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
     toggle.querySelector(".tile-title").textContent = expanded ? "..less" : "..more";
+  });
+
+  // Overlay
+  const overlay = document.getElementById("overlay");
+  const overlayFrame = document.getElementById("overlayFrame");
+  const overlayTitle = document.getElementById("overlayTitle");
+  const overlayClose = document.getElementById("overlayClose");
+
+  document.querySelectorAll("a.tile").forEach(tile => {
+    tile.addEventListener("click", e => {
+      e.preventDefault();
+      const href = tile.getAttribute("href");
+      const title = tile.getAttribute("data-title");
+      overlayFrame.src = href;
+      overlayTitle.textContent = title;
+      overlay.classList.add("active");
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  overlayClose.addEventListener("click", () => {
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+    setTimeout(() => { overlayFrame.src = ""; }, 300);
+  });
+
+  // Esc key closes overlay
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") overlayClose.click();
   });
 </script>
 </body>
