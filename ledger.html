@@ -6,27 +6,28 @@
 <title>Ledger — Crypto & Blockchain Concept Library</title>
 <style>
   /* ─── Design Tokens ─────────────────────────────────────────── */
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap');
   :root {
-    --bg:           #f7f6f3;
-    --surface:      #ffffff;
-    --surface-alt:  #f0ede8;
-    --border:       #e2ddd7;
-    --border-soft:  #eceae5;
-    --ink:          #1a1814;
-    --ink-2:        #4a4540;
-    --ink-3:        #8a837a;
-    --accent:       #2a5caa;
-    --accent-hover: #1e448a;
-    --accent-light: #e8edf7;
-    --accent-mid:   #c5d4ee;
-    --tag-bg:       #eceae5;
-    --tag-ink:      #5a5450;
-    --card-shadow:  0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.04);
-    --card-shadow-hover: 0 4px 12px rgba(0,0,0,.09), 0 12px 40px rgba(0,0,0,.07);
-    --radius:       10px;
-    --radius-sm:    6px;
-    --font-serif:   'Georgia', 'Times New Roman', serif;
-    --font-mono:    'Courier New', monospace;
+    --bg:           #141414;
+    --surface:      #1a1a1a;
+    --surface-alt:  #1f1f1f;
+    --border:       rgba(255,255,255,0.07);
+    --border-soft:  rgba(255,255,255,0.04);
+    --ink:          #f5f2ed;
+    --ink-2:        rgba(245,242,237,0.65);
+    --ink-3:        rgba(245,242,237,0.35);
+    --accent:       #c9a96e;
+    --accent-hover: #d4b87e;
+    --accent-light: rgba(201,169,110,0.1);
+    --accent-mid:   rgba(201,169,110,0.25);
+    --tag-bg:       rgba(255,255,255,0.05);
+    --tag-ink:      rgba(245,242,237,0.45);
+    --card-shadow:  0 1px 3px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.2);
+    --card-shadow-hover: 0 4px 12px rgba(0,0,0,.4), 0 12px 40px rgba(0,0,0,.3);
+    --radius:       4px;
+    --radius-sm:    3px;
+    --font-serif:   'Cormorant Garamond', 'Georgia', serif;
+    --font-mono:    'DM Mono', 'Courier New', monospace;
     --tr:           160ms ease;
   }
 
@@ -118,7 +119,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, #c8c2bb 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
     background-size: 28px 28px;
     opacity: .35;
     pointer-events: none;
@@ -161,7 +162,7 @@
   }
 
   .hero-title {
-    font-size: clamp(2.1rem, 5.5vw, 3.4rem);
+    font-size: clamp(1.4rem, 3vw, 2rem);
     font-weight: 700;
     line-height: 1.12;
     letter-spacing: -.04em;
@@ -251,7 +252,7 @@
   #search-input {
     width: 100%;
     padding: 10px 38px 10px 38px;
-    border: 1.5px solid var(--border);
+    border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     font-size: .93rem;
     background: var(--surface);
@@ -261,7 +262,7 @@
   }
   #search-input:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(42,92,170,.1);
+    box-shadow: 0 0 0 3px var(--accent-light);
   }
   #search-input::placeholder { color: var(--ink-3); }
 
@@ -478,9 +479,9 @@
     font-weight: 700;
     letter-spacing: .1em;
     text-transform: uppercase;
-    color: #6b5b00;
-    background: #fef9c3;
-    border: 1px solid #fde047;
+    color: var(--accent);
+    background: var(--accent-light);
+    border: 1px solid var(--accent-mid);
     padding: 3px 10px;
     border-radius: 100px;
   }
@@ -542,10 +543,6 @@
     left: 0;
     height: 3px;
     background: var(--accent);
-    z-index: 200;
-    width: 0%;
-    transition: width .1s linear;
-    border-radius: 0 2px 2px 0;
   }
 
   .article-header-bar {
@@ -791,7 +788,7 @@
     <div class="page-wrap">
       <div class="hero-inner">
         <div class="hero-label"><span class="hero-label-dot"></span>Concept Library</div>
-        <h1 class="hero-title">Understand the mechanics,<br>not just the market.</h1>
+        <h1 class="hero-title">Mechanics, not market noise.</h1>
         <p class="hero-sub">Structured explanations of crypto, blockchain, DeFi, stablecoins, RWAs, custody, regulation, and the financial systems being rebuilt on top of them.</p>
         <div class="hero-stats">
           <div class="hero-stat">
