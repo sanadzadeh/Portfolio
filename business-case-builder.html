@@ -3,27 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Business Case Builder</title>
+<title>Business Case Builder — Khaled Sanad</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:          #0e1117;
-    --surface:     #141920;
-    --surface-alt: #1a2029;
-    --surface-hi:  #1f2633;
-    --border:      rgba(168,196,184,0.1);
-    --border-soft: rgba(168,196,184,0.05);
-    --ink:         #e8ede9;
-    --ink-2:       rgba(232,237,233,0.65);
-    --ink-3:       rgba(232,237,233,0.35);
-    --sage:        #a8c4b8;
-    --sage-dim:    rgba(168,196,184,0.08);
-    --sage-mid:    rgba(168,196,184,0.18);
-    --font-serif:  'Cormorant Garamond', Georgia, serif;
-    --font-mono:   'DM Mono', 'Courier New', monospace;
-    --tr:          160ms ease;
+    --bg:           #141414;
+    --surface:      #1c1c1c;
+    --surface-alt:  #222222;
+    --surface-hi:   #262626;
+    --border:       rgba(255,255,255,0.07);
+    --border-soft:  rgba(255,255,255,0.04);
+    --ink:          #f5f2ed;
+    --ink-2:        rgba(245,242,237,0.65);
+    --ink-3:        rgba(245,242,237,0.35);
+    --accent:       #c9b88a;
+    --accent-dim:   rgba(201,184,138,0.09);
+    --accent-mid:   rgba(201,184,138,0.2);
+    --font-serif:   'Cormorant Garamond', Georgia, serif;
+    --font-mono:    'DM Mono', 'Courier New', monospace;
+    --radius:       4px;
+    --tr:           160ms ease;
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { font-size: 16px; scroll-behavior: smooth; }
   body {
@@ -35,8 +35,6 @@
     display: flex;
     flex-direction: column;
   }
-
-  /* ─── Header ────────────────────────────────────────────────── */
   .site-header {
     background: var(--surface);
     border-bottom: 1px solid var(--border);
@@ -56,23 +54,19 @@
     color: var(--ink);
     letter-spacing: 0.02em;
   }
-  .site-logo em { font-style: normal; color: var(--sage); }
+  .site-logo em { font-style: normal; color: var(--accent); }
   .header-tag {
     font-size: 0.58rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--ink-3);
   }
-
-  /* ─── App Shell ─────────────────────────────────────────────── */
   .app {
     flex: 1;
     display: flex;
     overflow: hidden;
     height: calc(100vh - 47px);
   }
-
-  /* ─── Sidebar ───────────────────────────────────────────────── */
   .sidebar {
     width: 220px;
     flex-shrink: 0;
@@ -82,9 +76,7 @@
     flex-direction: column;
     overflow-y: auto;
   }
-  .sidebar-section {
-    padding: 1.5rem 0 0.5rem;
-  }
+  .sidebar-section { padding: 1.5rem 0 0.5rem; }
   .sidebar-heading {
     font-size: 0.52rem;
     letter-spacing: 0.2em;
@@ -100,17 +92,9 @@
     cursor: pointer;
     transition: background var(--tr), color var(--tr);
     border-left: 2px solid transparent;
-    position: relative;
   }
-  .nav-item:hover {
-    background: var(--sage-dim);
-    color: var(--sage);
-  }
-  .nav-item.active {
-    background: var(--sage-dim);
-    border-left-color: var(--sage);
-    color: var(--sage);
-  }
+  .nav-item:hover { background: var(--accent-dim); color: var(--accent); }
+  .nav-item.active { background: var(--accent-dim); border-left-color: var(--accent); color: var(--accent); }
   .nav-item-num {
     font-size: 0.55rem;
     color: var(--ink-3);
@@ -119,28 +103,17 @@
     transition: color var(--tr);
   }
   .nav-item.active .nav-item-num,
-  .nav-item:hover .nav-item-num { color: var(--sage); }
-  .nav-item-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-    line-height: 1.3;
-  }
+  .nav-item:hover .nav-item-num { color: var(--accent); }
+  .nav-item-label { font-size: 0.7rem; letter-spacing: 0.04em; line-height: 1.3; }
   .nav-item-status {
     margin-left: auto;
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: var(--sage-mid);
+    background: var(--accent-mid);
     flex-shrink: 0;
   }
-  .nav-item.active .nav-item-status { background: var(--sage); }
-
-  .sidebar-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 0.75rem 1.25rem;
-  }
-
+  .nav-item.active .nav-item-status { background: var(--accent); }
   .sidebar-meta {
     padding: 1rem 1.25rem;
     margin-top: auto;
@@ -153,10 +126,7 @@
     color: var(--ink-3);
     margin-bottom: 0.35rem;
   }
-  .sidebar-meta-value {
-    font-size: 0.68rem;
-    color: var(--ink-2);
-  }
+  .sidebar-meta-value { font-size: 0.68rem; color: var(--ink-2); }
   .progress-bar-wrap {
     margin-top: 0.6rem;
     height: 2px;
@@ -166,12 +136,10 @@
   }
   .progress-bar-fill {
     height: 100%;
-    background: var(--sage);
+    background: var(--accent);
     border-radius: 2px;
     transition: width 0.4s ease;
   }
-
-  /* ─── Content Panel ─────────────────────────────────────────── */
   .content-panel {
     flex: 1;
     overflow-y: auto;
@@ -179,8 +147,6 @@
     display: flex;
     flex-direction: column;
   }
-
-  /* ─── Section View ──────────────────────────────────────────── */
   .section-view {
     display: none;
     flex: 1;
@@ -188,12 +154,10 @@
     animation: fadeSlide 0.2s ease both;
   }
   .section-view.active { display: flex; }
-
   @keyframes fadeSlide {
     from { opacity: 0; transform: translateX(12px); }
     to   { opacity: 1; transform: translateX(0); }
   }
-
   .section-header {
     padding: 2.5rem 3rem 1.5rem;
     border-bottom: 1px solid var(--border-soft);
@@ -202,7 +166,7 @@
     font-size: 0.58rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--sage);
+    color: var(--accent);
     margin-bottom: 0.6rem;
   }
   .section-title {
@@ -219,13 +183,7 @@
     color: var(--ink-2);
     max-width: 640px;
   }
-
-  .section-body {
-    padding: 2rem 3rem 4rem;
-    flex: 1;
-  }
-
-  /* ─── Content Blocks ────────────────────────────────────────── */
+  .section-body { padding: 2rem 3rem 4rem; flex: 1; }
   .block {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -237,12 +195,11 @@
   .block:last-child  { border-radius: 0 0 var(--radius) var(--radius); margin-bottom: 0; }
   .block:only-child  { border-radius: var(--radius); }
   .block:hover { background: var(--surface-alt); }
-
   .block-label {
     font-size: 0.55rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--sage);
+    color: var(--accent);
     margin-bottom: 0.4rem;
   }
   .block-title {
@@ -252,20 +209,10 @@
     color: var(--ink);
     margin-bottom: 0.5rem;
   }
-  .block-body {
-    font-size: 0.75rem;
-    line-height: 1.8;
-    color: var(--ink-2);
-  }
+  .block-body { font-size: 0.75rem; line-height: 1.8; color: var(--ink-2); }
   .block-body strong { color: var(--ink); font-weight: 400; }
-
-  --radius: 4px;
-
-  /* ─── Two-col grid inside body ──────────────────────────────── */
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
   @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
-
-  /* ─── Stat row ──────────────────────────────────────────────── */
   .stat-row {
     display: flex;
     gap: 1px;
@@ -286,7 +233,7 @@
     font-family: var(--font-serif);
     font-size: 1.6rem;
     font-weight: 300;
-    color: var(--sage);
+    color: var(--accent);
     line-height: 1;
     margin-bottom: 0.3rem;
   }
@@ -296,19 +243,15 @@
     text-transform: uppercase;
     color: var(--ink-3);
   }
-
-  /* ─── Recommendation highlight ──────────────────────────────── */
   .rec-block {
-    border: 1px solid var(--sage-mid);
-    background: var(--sage-dim);
+    border: 1px solid var(--accent-mid);
+    background: var(--accent-dim);
     border-radius: var(--radius);
     padding: 1.75rem;
     margin-bottom: 1.5rem;
   }
-  .rec-block .block-label { color: var(--sage); }
+  .rec-block .block-label { color: var(--accent); }
   .rec-block .block-body { color: var(--ink-2); }
-
-  /* ─── Nav footer ─────────────────────────────────────────────── */
   .section-nav {
     display: flex;
     justify-content: space-between;
@@ -331,15 +274,9 @@
     cursor: pointer;
     transition: all var(--tr);
   }
-  .nav-btn:hover { color: var(--sage); border-color: var(--sage); background: var(--sage-dim); }
+  .nav-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
   .nav-btn:disabled { opacity: 0.25; cursor: default; pointer-events: none; }
-  .section-counter {
-    font-size: 0.6rem;
-    color: var(--ink-3);
-    letter-spacing: 0.1em;
-  }
-
-  /* ─── Footer ────────────────────────────────────────────────── */
+  .section-counter { font-size: 0.6rem; color: var(--ink-3); letter-spacing: 0.1em; }
   .site-footer {
     border-top: 1px solid var(--border);
     padding: 1rem 2rem;
@@ -350,7 +287,6 @@
     letter-spacing: 0.06em;
     flex-shrink: 0;
   }
-
   @media (max-width: 640px) {
     .sidebar { display: none; }
     .section-header, .section-body, .section-nav { padding-left: 1.5rem; padding-right: 1.5rem; }
@@ -358,19 +294,14 @@
 </style>
 </head>
 <body>
-
 <header class="site-header">
   <div class="site-logo">Khaled Sanad: <em>Business Case Builder</em></div>
   <span class="header-tag">Strategy · Justification</span>
 </header>
-
 <div class="app">
-
-  <!-- ─── Sidebar ───────────────────────────────────────────── -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-section">
       <div class="sidebar-heading">Sections</div>
-      <!-- nav items injected by JS -->
     </div>
     <div class="sidebar-meta">
       <div class="sidebar-meta-label">Completion</div>
@@ -380,19 +311,12 @@
       </div>
     </div>
   </nav>
-
-  <!-- ─── Content Panel ─────────────────────────────────────── -->
-  <div class="content-panel" id="content-panel">
-    <!-- section views injected by JS -->
-  </div>
-
+  <div class="content-panel" id="content-panel"></div>
 </div>
-
 <footer class="site-footer">
   <span>Business Case Builder — Structured framework for strategic justification.</span>
   <span>Khaled Sanad · Portfolio</span>
 </footer>
-
 <script>
 const SECTIONS = [
   {
@@ -527,10 +451,8 @@ const SECTIONS = [
   }
 ];
 
-/* ─── State ─────────────────────────────────────────────────── */
 let current = 0;
 
-/* ─── Build sidebar nav ─────────────────────────────────────── */
 const sidebarSection = document.querySelector(".sidebar-section");
 SECTIONS.forEach((sec, i) => {
   const item = document.createElement("div");
@@ -545,7 +467,6 @@ SECTIONS.forEach((sec, i) => {
   sidebarSection.appendChild(item);
 });
 
-/* ─── Build section views ───────────────────────────────────── */
 const contentPanel = document.getElementById("content-panel");
 SECTIONS.forEach((sec, i) => {
   const view = document.createElement("div");
@@ -565,31 +486,23 @@ SECTIONS.forEach((sec, i) => {
     </div>
   `;
   contentPanel.appendChild(view);
-
   view.querySelector(`#prev-${i}`)?.addEventListener("click", () => goTo(i - 1));
   view.querySelector(`#next-${i}`)?.addEventListener("click", () => goTo(i + 1));
 });
 
-/* ─── Navigation ────────────────────────────────────────────── */
 function goTo(index) {
   if (index < 0 || index >= SECTIONS.length) return;
-
   document.getElementById(`section-${current}`).classList.remove("active");
   document.querySelectorAll(".nav-item")[current].classList.remove("active");
-
   current = index;
-
-  const next = document.getElementById(`section-${current}`);
-  next.classList.add("active");
+  document.getElementById(`section-${current}`).classList.add("active");
   document.querySelectorAll(".nav-item")[current].classList.add("active");
   contentPanel.scrollTo({ top: 0, behavior: "instant" });
-
   const pct = Math.round(((current + 1) / SECTIONS.length) * 100);
   document.getElementById("progress-fill").style.width = pct + "%";
   document.getElementById("progress-label").textContent = `${current + 1} of ${SECTIONS.length} sections`;
 }
 
-/* ─── Keyboard ──────────────────────────────────────────────── */
 document.addEventListener("keydown", e => {
   if (e.key === "ArrowRight" || e.key === "ArrowDown") goTo(current + 1);
   if (e.key === "ArrowLeft"  || e.key === "ArrowUp")   goTo(current - 1);
