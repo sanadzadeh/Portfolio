@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deployment Strategy — Khaled Sanad</title>
+<title>Blockchain Settlement Deployment — Khaled Sanad</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
@@ -769,6 +769,15 @@ footer{
     grid-template-columns:1fr;
   }
 
+  .budget-row{
+    grid-template-columns:1fr;
+    gap:.35rem;
+  }
+
+  .budget-num{
+    text-align:left;
+  }
+
   footer{
     flex-direction:column;
   }
@@ -779,10 +788,10 @@ footer{
 <body>
 
 <header class="site-header">
-  <div class="site-logo">Khaled Sanad: <em>Deployment Strategy</em></div>
+  <div class="site-logo">Khaled Sanad: <em>Blockchain Settlement Deployment</em></div>
   <div class="header-right">
     <span class="as-of">As of Q2 2025</span>
-    <span class="prog-badge">Live Programme</span>
+    <span class="prog-badge">Global Fund Programme</span>
   </div>
 </header>
 
@@ -801,43 +810,43 @@ footer{
 
   <div class="ov-grid">
     <div class="ov-cell gauge-cell">
-      <div class="card-title" style="margin-bottom:.75rem;">Delivery Confidence</div>
+      <div class="card-title" style="margin-bottom:.75rem;">Deployment Confidence</div>
       <canvas id="gauge-canvas" width="190" height="112"></canvas>
-      <div style="font-family:var(--font-serif);font-size:2.15rem;font-weight:300;color:var(--amber);line-height:1;margin-top:.45rem;">6.2</div>
+      <div style="font-family:var(--font-serif);font-size:2.15rem;font-weight:300;color:var(--amber);line-height:1;margin-top:.45rem;">6.4</div>
       <div style="font-size:.55rem;color:var(--ink-3);margin-top:.22rem;">Actual confidence score</div>
       <div class="gauge-legend">
-        <div class="gauge-legend-row"><span>Actual</span><strong>6.2</strong></div>
-        <div class="gauge-legend-row"><span>Forecast</span><strong>6.8</strong></div>
-        <div class="gauge-legend-row"><span>Target</span><strong>8.0</strong></div>
+        <div class="gauge-legend-row"><span>Actual</span><strong>6.4</strong></div>
+        <div class="gauge-legend-row"><span>Forecast</span><strong>7.1</strong></div>
+        <div class="gauge-legend-row"><span>Target</span><strong>8.2</strong></div>
       </div>
     </div>
 
     <div class="ov-cell" style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);padding:0;">
       <div style="background:var(--surface-hi);padding:1.1rem 1.25rem;">
         <div class="kpi-label">Overall Progress</div>
-        <div class="kpi-val accent">62%</div>
-        <div class="prog-bar-wrap"><div class="prog-bar-fill fill-amber" style="width:62%"></div></div>
-        <div class="kpi-sub" style="margin-top:.3rem;">Target by Q2: 68%</div>
+        <div class="kpi-val accent">64%</div>
+        <div class="prog-bar-wrap"><div class="prog-bar-fill fill-amber" style="width:64%"></div></div>
+        <div class="kpi-sub" style="margin-top:.3rem;">Target by Q2: 70%</div>
       </div>
 
       <div style="background:var(--surface-hi);padding:1.1rem 1.25rem;">
         <div class="kpi-label">Milestones</div>
-        <div style="font-family:var(--font-serif);font-size:1.8rem;font-weight:300;color:var(--green);line-height:1;">14<span style="font-size:1rem;color:var(--ink-3);">/22</span></div>
-        <div class="kpi-sub" style="margin-top:.4rem;color:var(--red);">3 overdue</div>
+        <div style="font-family:var(--font-serif);font-size:1.8rem;font-weight:300;color:var(--green);line-height:1;">16<span style="font-size:1rem;color:var(--ink-3);">/25</span></div>
+        <div class="kpi-sub" style="margin-top:.4rem;color:var(--red);">4 overdue</div>
       </div>
 
       <div style="background:var(--surface-hi);padding:1.1rem 1.25rem;">
         <div class="kpi-label">Budget Burn</div>
-        <div class="kpi-val amber">68%</div>
-        <div class="prog-bar-wrap"><div class="prog-bar-fill fill-amber" style="width:68%"></div></div>
-        <div class="kpi-sub" style="margin-top:.3rem;">$3.4M of $5.0M</div>
+        <div class="kpi-val amber">71%</div>
+        <div class="prog-bar-wrap"><div class="prog-bar-fill fill-amber" style="width:71%"></div></div>
+        <div class="kpi-sub" style="margin-top:.3rem;">$6.4M of $9.0M</div>
       </div>
 
       <div style="background:var(--surface-hi);padding:1.1rem 1.25rem;">
         <div class="kpi-label">Open Risks</div>
-        <div class="kpi-val red">7</div>
+        <div class="kpi-val red">8</div>
         <div style="display:flex;gap:4px;margin-top:.4rem;flex-wrap:wrap;">
-          <span style="font-size:.5rem;padding:2px 6px;background:var(--red-dim);color:var(--red);border-radius:2px;">2 HIGH</span>
+          <span style="font-size:.5rem;padding:2px 6px;background:var(--red-dim);color:var(--red);border-radius:2px;">3 HIGH</span>
           <span style="font-size:.5rem;padding:2px 6px;background:var(--amber-dim);color:var(--amber);border-radius:2px;">3 MED</span>
           <span style="font-size:.5rem;padding:2px 6px;background:var(--green-dim);color:var(--green);border-radius:2px;">2 LOW</span>
         </div>
@@ -853,19 +862,19 @@ footer{
       </div>
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
-        <span style="font-size:.65rem;color:var(--ink-2);">Regulatory path</span>
+        <span style="font-size:.65rem;color:var(--ink-2);">Custody model</span>
         <span class="chip critical">Critical</span>
       </div>
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
-        <span style="font-size:.65rem;color:var(--ink-2);">Technology build</span>
+        <span style="font-size:.65rem;color:var(--ink-2);">Settlement rails</span>
         <span class="chip on-track">On Track</span>
       </div>
 
       <div style="margin-top:1rem;padding-top:.85rem;border-top:1px solid var(--border-soft);">
         <div class="card-title" style="margin-bottom:.5rem;">Next Hard Deadline</div>
-        <div style="font-family:var(--font-serif);font-size:1.15rem;font-weight:300;color:var(--red);">31 Oct 2025</div>
-        <div style="font-size:.6rem;color:var(--ink-3);margin-top:2px;">BIS Principles compliance filing</div>
+        <div style="font-family:var(--font-serif);font-size:1.15rem;font-weight:300;color:var(--red);">30 Sep 2025</div>
+        <div style="font-size:.6rem;color:var(--ink-3);margin-top:2px;">Pilot settlement attestation and board risk sign-off</div>
       </div>
     </div>
   </div>
@@ -874,23 +883,23 @@ footer{
     <div class="card">
       <div class="card-title">Programme Context</div>
       <p class="context-text">
-        This fictional programme migrates selected correspondent banking settlement flows from legacy Vostro/Nostro account structures toward blockchain-enabled settlement and regulated stablecoin liquidity rails. The objective is not to replace all SWIFT activity immediately, but to prove whether high-friction corridors can be settled faster, reconciled more cleanly, and governed within existing prudential, AML/CTF, and liquidity-control expectations.
+        This fictional programme supports a multinational wealth management fund moving selected fund-subscription, redemption, treasury, and inter-entity settlement flows from batch-based legacy processes toward blockchain-enabled settlement. The objective is not to tokenise the entire operating model at once. The first stage proves whether high-friction cross-border settlement can be completed faster, reconciled automatically, governed through permissioned controls, and integrated with custody, transfer-agency, fund-accounting, and liquidity-management processes.
       </p>
     </div>
 
     <div class="card">
       <div class="card-title">Executive Attention</div>
       <div class="attention-list">
-        <div><span style="color:var(--red);">Regulatory path:</span> APRA no-objection and BIS filing remain the main go-live constraints.</div>
-        <div><span style="color:var(--amber);">Migration risk:</span> reconciliation gaps may slow phased account cutover.</div>
-        <div><span style="color:var(--green);">Technology path:</span> core settlement build is progressing, subject to final audit.</div>
+        <div><span style="color:var(--red);">Custody and key control:</span> private-key governance, signer authority, and recovery procedures remain the main go-live constraints.</div>
+        <div><span style="color:var(--amber);">Operating-model risk:</span> legacy settlement and blockchain settlement must run in parallel until reconciliation confidence improves.</div>
+        <div><span style="color:var(--green);">Technology path:</span> permissioned settlement rail and tokenised cash workflow are progressing, subject to audit and legal finalisation.</div>
       </div>
     </div>
   </div>
 
   <div class="card overview-gantt-card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;gap:1rem;">
-      <div class="card-title" style="margin:0;">Migration Roadmap Snapshot</div>
+      <div class="card-title" style="margin:0;">Settlement Modernisation Roadmap</div>
       <button class="folder-tab" data-jump-tab="gantt" style="position:static;border:1px solid var(--border);border-radius:3px;padding:.45rem .8rem;background:var(--surface-hi);">Open Timeline</button>
     </div>
 
@@ -919,7 +928,7 @@ footer{
 
 <div class="tab-panel" id="tab-gantt">
   <p style="font-size:.65rem;color:var(--ink-3);margin-bottom:1.25rem;line-height:1.6;">
-    Programme timeline Jan 2025 — Dec 2025. Diamonds mark milestones. Red diamonds indicate hard regulatory deadlines.
+    Programme timeline Jan 2025 — Dec 2025. Diamonds mark milestones. Red diamonds indicate hard governance, audit, custody, or board-sign-off gates.
   </p>
 
   <div class="gantt-wrap">
@@ -944,8 +953,8 @@ footer{
 
 <div class="tab-panel" id="tab-risks">
   <div style="display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;">
-    <button class="risk-filter-btn active" data-risk-filter="all">All (7)</button>
-    <button class="risk-filter-btn" data-risk-filter="high">High (2)</button>
+    <button class="risk-filter-btn active" data-risk-filter="all">All (8)</button>
+    <button class="risk-filter-btn" data-risk-filter="high">High (3)</button>
     <button class="risk-filter-btn" data-risk-filter="med">Medium (3)</button>
     <button class="risk-filter-btn" data-risk-filter="low">Low (2)</button>
   </div>
@@ -955,7 +964,7 @@ footer{
       <tr>
         <th style="width:60px;">ID</th>
         <th>Risk</th>
-        <th style="width:120px;">Workstream</th>
+        <th style="width:130px;">Workstream</th>
         <th style="width:80px;">Likelihood</th>
         <th style="width:70px;">Impact</th>
         <th style="width:70px;">Score</th>
@@ -970,32 +979,32 @@ footer{
   <div class="kpi-row">
     <div class="kpi">
       <div class="kpi-label">Total Budget</div>
-      <div class="kpi-val accent">$5.0M</div>
+      <div class="kpi-val accent">$9.0M</div>
       <div class="kpi-sub">Approved FY2025</div>
     </div>
 
     <div class="kpi">
       <div class="kpi-label">Spent to Date</div>
-      <div class="kpi-val amber">$3.4M</div>
-      <div class="kpi-sub">68% consumed</div>
+      <div class="kpi-val amber">$6.4M</div>
+      <div class="kpi-sub">71% consumed</div>
     </div>
 
     <div class="kpi">
       <div class="kpi-label">Remaining</div>
-      <div class="kpi-val green">$1.6M</div>
+      <div class="kpi-val green">$2.6M</div>
       <div class="kpi-sub">6 months left</div>
     </div>
 
     <div class="kpi">
       <div class="kpi-label">Forecast Variance</div>
-      <div class="kpi-val red">+$180k</div>
+      <div class="kpi-val red">+$420k</div>
       <div class="kpi-sub">Overrun risk</div>
     </div>
 
     <div class="kpi">
       <div class="kpi-label">Contingency Used</div>
-      <div class="kpi-val amber">42%</div>
-      <div class="kpi-sub">$210k of $500k</div>
+      <div class="kpi-val amber">46%</div>
+      <div class="kpi-sub">$460k of $1.0M</div>
     </div>
   </div>
 
@@ -1030,135 +1039,156 @@ footer{
 </div>
 
 <footer>
-  <span>Deployment Strategy — Correspondent Banking Migration · Synthetic data</span>
+  <span>Deployment Strategy — Blockchain Settlement Modernisation · Synthetic data</span>
   <span>Khaled Sanad · Portfolio</span>
 </footer>
 
 <script>
 const WORKSTREAMS = [
   {
-    id:"infra",
-    name:"Core Settlement Infrastructure",
+    id:"rail",
+    name:"Permissioned Settlement Rail",
     owner:"T. Walsh",
     status:"on-track",
-    pct:75,
-    budget:{alloc:1400,spent:980},
-    desc:"Blockchain node deployment, wallet architecture, and smart contract framework for Vostro/Nostro settlement.",
+    pct:78,
+    budget:{alloc:2100,spent:1450},
+    desc:"Permissioned ledger environment, settlement smart contracts, node topology, transaction finality model, and integration with the fund’s settlement orchestration layer.",
     milestones:[
-      {name:"Node architecture approved",date:"15 Feb 2025",done:true,critical:false},
-      {name:"Testnet deployment complete",date:"28 Mar 2025",done:true,critical:false},
-      {name:"Smart contract audit passed",date:"30 Apr 2025",done:true,critical:false},
-      {name:"Mainnet soft launch",date:"30 Jun 2025",done:false,critical:false},
-      {name:"Full settlement capability live",date:"30 Sep 2025",done:false,critical:false}
+      {name:"Ledger architecture approved",date:"14 Feb 2025",done:true,critical:false},
+      {name:"Private test network deployed",date:"28 Mar 2025",done:true,critical:false},
+      {name:"Settlement contract audit passed",date:"30 Apr 2025",done:true,critical:false},
+      {name:"Pilot rail connected to settlement hub",date:"30 Jun 2025",done:false,critical:false},
+      {name:"Production rail approved for limited use",date:"30 Sep 2025",done:false,critical:true}
     ],
     ganttStart:0,
     ganttEnd:9
   },
   {
-    id:"migration",
-    name:"Vostro/Nostro Account Migration",
-    owner:"S. Okonkwo",
+    id:"cash",
+    name:"Tokenised Cash & Liquidity",
+    owner:"R. Nakamura",
     status:"at-risk",
-    pct:55,
-    budget:{alloc:1200,spent:880},
-    desc:"Account mapping, balance reconciliation, counterparty consent, and phased cutover from SWIFT to on-chain settlement.",
+    pct:58,
+    budget:{alloc:1600,spent:1210},
+    desc:"Tokenised cash workflow, stable-value settlement asset selection, treasury funding rules, redemption procedures, liquidity buffers, and intraday settlement monitoring.",
     milestones:[
-      {name:"Account inventory complete",date:"28 Feb 2025",done:true,critical:false},
-      {name:"Reconciliation framework signed",date:"15 Apr 2025",done:true,critical:false},
-      {name:"Phase 1 accounts migrated",date:"30 Jun 2025",done:false,critical:false},
-      {name:"Phase 2 accounts migrated",date:"30 Sep 2025",done:false,critical:false},
-      {name:"Full cutover complete",date:"30 Nov 2025",done:false,critical:false}
+      {name:"Settlement asset shortlist complete",date:"28 Feb 2025",done:true,critical:false},
+      {name:"Liquidity model approved",date:"15 Apr 2025",done:true,critical:false},
+      {name:"Redemption procedure validated",date:"30 Jun 2025",done:false,critical:false},
+      {name:"Intraday liquidity dashboard live",date:"31 Aug 2025",done:false,critical:false},
+      {name:"Treasury sign-off received",date:"30 Sep 2025",done:false,critical:true}
     ],
     ganttStart:1,
-    ganttEnd:11
+    ganttEnd:9
   },
   {
-    id:"regulatory",
-    name:"Regulatory & Compliance",
+    id:"custody",
+    name:"Custody & Key Governance",
     owner:"M. Chen",
     status:"critical",
-    pct:48,
-    budget:{alloc:700,spent:520},
-    desc:"APRA notification, AUSTRAC AML/CTF framework update, BIS Principles compliance, and hard regulatory deadlines.",
+    pct:46,
+    budget:{alloc:1500,spent:1180},
+    desc:"Digital asset custody operating model, signer authority, multi-party approval flows, recovery procedures, hardware security controls, and segregation of duties.",
     milestones:[
-      {name:"APRA notification submitted",date:"31 Jan 2025",done:true,critical:false},
-      {name:"AUSTRAC framework updated",date:"28 Mar 2025",done:true,critical:false},
-      {name:"APRA no-objection received",date:"31 Jul 2025",done:false,critical:true},
-      {name:"BIS Principles compliance filed",date:"31 Oct 2025",done:false,critical:true},
-      {name:"Final regulatory sign-off",date:"30 Nov 2025",done:false,critical:true}
+      {name:"Custody options assessment complete",date:"31 Jan 2025",done:true,critical:false},
+      {name:"Key-control policy drafted",date:"28 Mar 2025",done:true,critical:false},
+      {name:"MPC signing workflow tested",date:"31 Jul 2025",done:false,critical:true},
+      {name:"Recovery procedure independently reviewed",date:"30 Sep 2025",done:false,critical:true},
+      {name:"Custody board sign-off",date:"31 Oct 2025",done:false,critical:true}
     ],
     ganttStart:0,
-    ganttEnd:11
-  },
-  {
-    id:"counterparty",
-    name:"Counterparty Onboarding",
-    owner:"A. Patel",
-    status:"at-risk",
-    pct:40,
-    budget:{alloc:900,spent:620},
-    desc:"Legal agreements with correspondent banks, API integration, digital wallet provisioning, and bilateral testing.",
-    milestones:[
-      {name:"Legal framework agreed",date:"28 Feb 2025",done:true,critical:false},
-      {name:"4 banks onboarded",date:"30 May 2025",done:false,critical:false},
-      {name:"API integration complete",date:"31 Jul 2025",done:false,critical:false},
-      {name:"12 banks onboarded",date:"31 Oct 2025",done:false,critical:false}
-    ],
-    ganttStart:1,
     ganttEnd:10
   },
   {
-    id:"liquidity",
-    name:"Liquidity & FX Management",
-    owner:"R. Nakamura",
-    status:"on-track",
-    pct:70,
-    budget:{alloc:800,spent:440},
-    desc:"Stablecoin liquidity pool architecture, FX conversion layer, intraday liquidity monitoring, and treasury integration.",
+    id:"migration",
+    name:"Legacy Settlement Migration",
+    owner:"S. Okonkwo",
+    status:"at-risk",
+    pct:52,
+    budget:{alloc:1800,spent:1320},
+    desc:"Mapping of existing transfer-agent, custodian, administrator, and fund-accounting settlement processes into phased blockchain-enabled settlement workflows.",
     milestones:[
-      {name:"Liquidity model approved",date:"28 Feb 2025",done:true,critical:false},
-      {name:"FX conversion layer built",date:"30 Apr 2025",done:true,critical:false},
-      {name:"Intraday monitoring live",date:"30 Jun 2025",done:false,critical:false},
-      {name:"Treasury integration complete",date:"31 Aug 2025",done:false,critical:false}
+      {name:"Legacy settlement inventory complete",date:"28 Feb 2025",done:true,critical:false},
+      {name:"Parallel-run design approved",date:"30 Apr 2025",done:true,critical:false},
+      {name:"Pilot funds selected",date:"30 Jun 2025",done:false,critical:false},
+      {name:"First fund subscription settled on-chain",date:"30 Sep 2025",done:false,critical:true},
+      {name:"Parallel-run exit criteria approved",date:"30 Nov 2025",done:false,critical:false}
+    ],
+    ganttStart:1,
+    ganttEnd:11
+  },
+  {
+    id:"legal",
+    name:"Legal, Tax & Investor Disclosure",
+    owner:"A. Patel",
+    status:"critical",
+    pct:49,
+    budget:{alloc:1000,spent:720},
+    desc:"Fund documentation updates, investor disclosure, cross-border settlement permissions, tax treatment review, legal opinion packs, and jurisdiction-by-jurisdiction restrictions.",
+    milestones:[
+      {name:"Jurisdiction map completed",date:"28 Feb 2025",done:true,critical:false},
+      {name:"Investor disclosure draft issued",date:"30 Apr 2025",done:true,critical:false},
+      {name:"External legal opinion received",date:"31 Jul 2025",done:false,critical:true},
+      {name:"Fund documentation updates approved",date:"30 Sep 2025",done:false,critical:true},
+      {name:"Investor notice pack released",date:"31 Oct 2025",done:false,critical:false}
     ],
     ganttStart:0,
-    ganttEnd:8
+    ganttEnd:10
+  },
+  {
+    id:"ops",
+    name:"Operations & Reconciliation",
+    owner:"L. Romero",
+    status:"on-track",
+    pct:72,
+    budget:{alloc:1000,spent:520},
+    desc:"Operational runbooks, exception handling, transaction reconciliation, settlement-failure procedures, dispute management, and audit evidence capture.",
+    milestones:[
+      {name:"Runbook structure approved",date:"31 Jan 2025",done:true,critical:false},
+      {name:"Reconciliation engine configured",date:"30 Apr 2025",done:true,critical:false},
+      {name:"Exception workflow tested",date:"30 Jun 2025",done:false,critical:false},
+      {name:"Audit evidence pack approved",date:"31 Aug 2025",done:false,critical:false},
+      {name:"Operations go-live rehearsal complete",date:"31 Oct 2025",done:false,critical:true}
+    ],
+    ganttStart:0,
+    ganttEnd:10
   }
 ];
 
 const RISKS = [
-  {id:"R01",desc:"APRA no-objection delayed beyond July deadline",mitigation:"Weekly engagement with APRA liaison; legal counsel on standby.",ws:"Regulatory",likelihood:"High",impact:"High",score:"high",status:"open"},
-  {id:"R02",desc:"Stablecoin liquidity insufficient during peak settlement windows",mitigation:"Increase reserve ratio; negotiate contingency credit lines with three banks.",ws:"Liquidity",likelihood:"Medium",impact:"High",score:"high",status:"open"},
-  {id:"R03",desc:"Counterparty bank refuses digital wallet terms",mitigation:"Escalate to relationship management; offer hybrid SWIFT/blockchain operating mode.",ws:"Counterparty",likelihood:"Medium",impact:"Medium",score:"med",status:"open"},
-  {id:"R04",desc:"Smart contract vulnerability identified post-audit",mitigation:"Secondary audit engaged; freeze new deployments until resolved.",ws:"Infrastructure",likelihood:"Low",impact:"High",score:"med",status:"mitigated"},
-  {id:"R05",desc:"Account reconciliation gaps discovered during migration",mitigation:"Manual reconciliation team on standby; extend Phase 1 window by four weeks.",ws:"Migration",likelihood:"Medium",impact:"Medium",score:"med",status:"open"},
-  {id:"R06",desc:"BIS Principles interpretation differs from internal legal view",mitigation:"External counsel engaged; filing drafted under conservative interpretation.",ws:"Regulatory",likelihood:"Low",impact:"Medium",score:"low",status:"open"},
-  {id:"R07",desc:"Key programme personnel departure during critical phase",mitigation:"Knowledge transfer documentation underway; succession plan drafted.",ws:"Cross-cutting",likelihood:"Low",impact:"Low",score:"low",status:"open"}
+  {id:"R01",desc:"Custody operating model not approved before pilot settlement gate",mitigation:"Escalate signer authority model to board risk committee; prepare fallback qualified-custodian structure.",ws:"Custody",likelihood:"High",impact:"High",score:"high",status:"open"},
+  {id:"R02",desc:"Tokenised cash instrument lacks sufficient liquidity during redemption windows",mitigation:"Maintain fiat fallback, increase pre-funded liquidity buffer, and set corridor limits for pilot funds.",ws:"Liquidity",likelihood:"Medium",impact:"High",score:"high",status:"open"},
+  {id:"R03",desc:"Legal treatment differs across investor jurisdictions",mitigation:"Apply jurisdiction-by-jurisdiction restrictions; require external opinions before investor-facing activation.",ws:"Legal",likelihood:"High",impact:"High",score:"high",status:"open"},
+  {id:"R04",desc:"On-chain and legacy records fail to reconcile during parallel run",mitigation:"Daily reconciliation bridge, exception queue ownership, and settlement freeze threshold for unresolved breaks.",ws:"Migration",likelihood:"Medium",impact:"Medium",score:"med",status:"open"},
+  {id:"R05",desc:"Smart contract defect discovered after audit",mitigation:"Secondary audit booked; emergency pause function and controlled upgrade path retained for pilot phase.",ws:"Settlement Rail",likelihood:"Low",impact:"High",score:"med",status:"mitigated"},
+  {id:"R06",desc:"Fund administrator cannot consume on-chain settlement data in required format",mitigation:"Create translation layer and maintain conventional reporting extracts until native integration is complete.",ws:"Operations",likelihood:"Medium",impact:"Medium",score:"med",status:"open"},
+  {id:"R07",desc:"Investor communications misrepresent blockchain settlement as investment product exposure",mitigation:"Separate operational settlement disclosure from asset-allocation disclosure; legal review all public language.",ws:"Disclosure",likelihood:"Low",impact:"Medium",score:"low",status:"open"},
+  {id:"R08",desc:"Specialist blockchain operations staff unavailable during cutover",mitigation:"Cross-train settlement operations team and maintain vendor support cover during pilot windows.",ws:"Operations",likelihood:"Low",impact:"Low",score:"low",status:"open"}
 ];
 
 const READINESS = [
-  {area:"Technology Infrastructure",score:7,max:10,color:"amber",desc:"Node deployment is on track. Smart contract framework requires one additional audit cycle before production sign-off."},
-  {area:"Regulatory Alignment",score:5,max:10,color:"red",desc:"APRA no-objection is pending. BIS Principles filing remains the highest-priority gate item."},
-  {area:"Counterparty Readiness",score:6,max:10,color:"amber",desc:"Four of twelve banks are onboarded. API integration is partially complete. Two banks remain unsigned."},
-  {area:"Operational Readiness",score:8,max:10,color:"green",desc:"Runbooks are complete. Staff training is advanced. Treasury integration remains on track."},
-  {area:"Data & Reconciliation",score:6,max:10,color:"amber",desc:"Account inventory is complete. Automated reconciliation framework is partially deployed."},
-  {area:"Risk & Controls",score:7,max:10,color:"amber",desc:"Risk framework is approved. Five of seven open risks have active mitigations."}
+  {area:"Settlement Rail",score:8,max:10,color:"green",desc:"Permissioned rail is technically advanced. Production approval depends on final contract audit and pilot settlement attestation."},
+  {area:"Custody & Keys",score:5,max:10,color:"red",desc:"Signer authority, key recovery, and segregation of duties remain the most material go-live constraints."},
+  {area:"Liquidity Model",score:6,max:10,color:"amber",desc:"Tokenised cash workflow is viable, but liquidity buffers and redemption procedures need further validation."},
+  {area:"Legal & Disclosure",score:5,max:10,color:"red",desc:"Fund documentation, investor disclosure, and jurisdictional opinions are not yet complete."},
+  {area:"Legacy Integration",score:6,max:10,color:"amber",desc:"Transfer-agent, custodian, administrator, and fund-accounting integrations remain partially dependent on translation layers."},
+  {area:"Operations Control",score:7,max:10,color:"amber",desc:"Runbooks, reconciliation, and exception handling are progressing. Audit evidence packs require final review."}
 ];
 
 const GATE_CHECKLIST = [
-  {item:"APRA no-objection letter received",done:false,critical:true},
-  {item:"Smart contract final audit passed",done:false,critical:true},
-  {item:"All Tier 1 correspondent banks onboarded",done:false,critical:true},
-  {item:"Reconciliation framework signed off",done:true,critical:false},
-  {item:"BIS Principles compliance filed",done:false,critical:true},
-  {item:"Intraday liquidity monitoring live",done:false,critical:false},
-  {item:"Disaster recovery test completed",done:true,critical:false},
-  {item:"Staff training above 90% complete",done:false,critical:false},
-  {item:"Executive steering committee approval",done:false,critical:true}
+  {item:"Board risk committee approves custody and key-control model",done:false,critical:true},
+  {item:"Final settlement smart contract audit passed",done:false,critical:true},
+  {item:"Pilot fund subscription settled on-chain and reconciled",done:false,critical:true},
+  {item:"Tokenised cash redemption procedure validated",done:false,critical:true},
+  {item:"Fund administrator receives compliant settlement extract",done:true,critical:false},
+  {item:"Investor disclosure and legal opinion pack approved",done:false,critical:true},
+  {item:"Parallel-run exception process tested",done:true,critical:false},
+  {item:"Treasury liquidity dashboard live",done:false,critical:false},
+  {item:"Executive steering committee approves limited production rollout",done:false,critical:true}
 ];
 
 const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const BURN_BY_MONTH = [210,320,380,410,480,520,0,0,0,0,0,0];
+const BURN_BY_MONTH = [420,560,690,760,880,930,0,0,0,0,0,0];
 
 function statusChip(s){
   const label = {
@@ -1208,9 +1238,9 @@ document.querySelectorAll("[data-jump-tab]").forEach(btn => {
   const cy = 94;
   const r = 72;
   const lw = 11;
-  const actual = 6.2;
-  const forecast = 6.8;
-  const target = 8.0;
+  const actual = 6.4;
+  const forecast = 7.1;
+  const target = 8.2;
   const max = 10;
   const start = Math.PI;
   const end = Math.PI * 2;
@@ -1332,7 +1362,7 @@ const ovMs = document.getElementById("ov-milestones");
 
 WORKSTREAMS
   .flatMap(ws => ws.milestones.filter(m => !m.done).map(m => ({...m, ws:ws.name})))
-  .slice(0,6)
+  .slice(0,7)
   .forEach(m => {
     const el = document.createElement("div");
     el.style.cssText = "display:flex;align-items:center;gap:.75rem;padding:.55rem 0;border-bottom:1px solid var(--border-soft);font-size:.63rem;";
@@ -1340,7 +1370,7 @@ WORKSTREAMS
     el.innerHTML = `
       <div style="flex:1;color:var(--ink-2);">${m.name}</div>
       <div style="color:var(--ink-3);white-space:nowrap;">${m.date}</div>
-      ${m.critical ? `<span style="color:var(--red);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;">Hard deadline</span>` : ""}
+      ${m.critical ? `<span style="color:var(--red);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;">Gate item</span>` : ""}
     `;
 
     ovMs.appendChild(el);
@@ -1397,7 +1427,7 @@ WORKSTREAMS.forEach(ws => {
       <div class="ms-name" style="display:flex;align-items:center;gap:6px;">
         <span style="width:8px;height:8px;border-radius:50%;background:${m.done ? "var(--green)" : m.critical ? "var(--red)" : "var(--border)"};border:1px solid ${m.done ? "var(--green)" : m.critical ? "var(--red)" : "var(--ink-3)"};display:inline-block;flex-shrink:0;"></span>
         ${m.name}
-        ${m.critical ? `<span style="font-size:.5rem;color:var(--red);letter-spacing:.1em;text-transform:uppercase;">Deadline</span>` : ""}
+        ${m.critical ? `<span style="font-size:.5rem;color:var(--red);letter-spacing:.1em;text-transform:uppercase;">Gate</span>` : ""}
       </div>
       <div class="ms-date">${m.date}</div>
       <div>${m.done ? `<span class="chip complete">Done</span>` : `<span class="chip not-started">Pending</span>`}</div>
@@ -1499,7 +1529,7 @@ BURN_BY_MONTH.forEach((b,i) => {
   const bar = document.createElement("div");
   const h = b > 0 ? Math.round((b / maxBurn) * 70) : 2;
 
-  bar.style.cssText = `flex:1;height:${h}px;background:${b > 450 ? "var(--red)" : b > 0 ? "var(--amber)" : "var(--border)"};border-radius:2px 2px 0 0;align-self:flex-end;min-height:2px;`;
+  bar.style.cssText = `flex:1;height:${h}px;background:${b > 850 ? "var(--red)" : b > 0 ? "var(--amber)" : "var(--border)"};border-radius:2px 2px 0 0;align-self:flex-end;min-height:2px;`;
   bar.title = b > 0 ? `${MONTHS[i]}: $${b}k` : `${MONTHS[i]}: forecast`;
 
   burnChart.appendChild(bar);
