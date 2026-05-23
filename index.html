@@ -195,34 +195,29 @@
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
   }
-  .overlay-title {
+  .overlay-home {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
     font-size: 1rem;
     color: var(--text-sub);
     letter-spacing: 0.04em;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    transition: color 0.2s;
   }
-  .overlay-title em {
+  .overlay-home:hover { color: var(--text); }
+  .overlay-home em {
     font-style: normal;
     color: var(--gold);
   }
-  .overlay-close {
+  .overlay-artefact {
     font-family: 'DM Mono', monospace;
     font-size: 0.6rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--text-sub);
-    background: transparent;
-    border: 1px solid var(--border);
-    padding: 0.4rem 0.9rem;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
-  }
-  .overlay-close:hover {
-    color: var(--gold);
-    border-color: var(--gold);
-    background: var(--gold-dim);
+    color: var(--text-dim);
   }
   .overlay iframe {
     flex: 1;
@@ -368,8 +363,8 @@
 <!-- Overlay -->
 <div class="overlay" id="overlay">
   <div class="overlay-bar">
-    <div class="overlay-title">Khaled Sanad: <em id="overlayTitle"></em></div>
-    <button class="overlay-close" id="overlayClose">← Back</button>
+    <button class="overlay-home" id="overlayClose">..back to <em>Portfolio</em></button>
+    <span class="overlay-artefact" id="overlayTitle"></span>
   </div>
   <iframe id="overlayFrame" src="" title="Artefact"></iframe>
 </div>
@@ -406,6 +401,7 @@
     document.body.style.overflow = "";
     overlayOpen = false;
     overlayTitle.textContent = "";
+    overlayFrame.src = "";
   }
 
   document.querySelectorAll("a.tile").forEach(tile => {
@@ -420,14 +416,16 @@
     openOverlay("cv.html", "Curriculum Vitae");
   });
 
-  overlayClose.addEventListener("click", () => history.back());
+  overlayClose.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
 
   window.addEventListener("popstate", () => {
-    if (overlayOpen) closeOverlay();
+    if (overlayOpen) window.location.href = "index.html";
   });
 
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && overlayOpen) history.back();
+    if (e.key === "Escape" && overlayOpen) window.location.href = "index.html";
   });
 </script>
 </body>
