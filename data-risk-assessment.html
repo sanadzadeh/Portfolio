@@ -7,14 +7,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:        #141414;
-      --surface:   #1a1a1a;
-      --border:    rgba(255,255,255,0.07);
-      --text:      #f5f2ed;
-      --text-sub:  rgba(245,242,237,0.45);
-      --text-dim:  rgba(245,242,237,0.2);
-      --gold:      #c9a96e;
-      --gold-dim:  rgba(201,169,110,0.12);
+      --bg:           #141414;
+      --surface:      #1c1c1c;
+      --border:       rgba(255,255,255,0.07);
+      --text:         #f5f2ed;
+      --text-sub:     rgba(245,242,237,0.45);
+      --text-dim:     rgba(245,242,237,0.2);
+      --accent:       #b06050;
+      --accent-dim:   rgba(176,96,80,0.1);
+      --accent-mid:   rgba(176,96,80,0.25);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
@@ -47,11 +48,11 @@
       font-size: 0.58rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid rgba(201,169,110,0.3);
+      color: var(--accent);
+      border: 1px solid var(--accent-mid);
       padding: 0.3rem 0.7rem;
       border-radius: 2px;
-      background: var(--gold-dim);
+      background: var(--accent-dim);
     }
     main {
       flex: 1;
