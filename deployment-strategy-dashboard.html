@@ -3,15 +3,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Deployment Strategy Dashboard</title>
+  <title>Deployment Strategy — Khaled Sanad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 2rem; background: #141414; color: #f5f2ed; }
-    h1 { margin: 0 0 0.75rem; }
-    p { color: rgba(245,242,237,0.75); }
+    :root {
+      --bg:        #141414;
+      --surface:   #1a1a1a;
+      --border:    rgba(255,255,255,0.07);
+      --text:      #f5f2ed;
+      --text-sub:  rgba(245,242,237,0.45);
+      --text-dim:  rgba(245,242,237,0.2);
+      --gold:      #c9a96e;
+      --gold-dim:  rgba(201,169,110,0.12);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    header {
+      padding: 1.5rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .artefact-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      letter-spacing: 0.02em;
+      color: var(--text-sub);
+    }
+    .artefact-name strong { font-weight: 400; color: var(--text); }
+    .status-badge {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,169,110,0.3);
+      padding: 0.3rem 0.7rem;
+      border-radius: 2px;
+      background: var(--gold-dim);
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2.5rem;
+      text-align: center;
+    }
+    .placeholder-icon {
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      color: var(--text-dim);
+    }
+    .placeholder-icon svg { width: 22px; height: 22px; }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      letter-spacing: 0.01em;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+    .descriptor {
+      font-size: 0.72rem;
+      line-height: 1.8;
+      color: var(--text-sub);
+      max-width: 480px;
+      margin: 0 auto 3rem;
+    }
+    .meta-row {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .meta-item { text-align: left; }
+    .meta-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.3rem;
+    }
+    .meta-value { font-size: 0.68rem; color: var(--text-sub); }
+    footer {
+      padding: 1.5rem 2.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .footer-text, .footer-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
   </style>
 </head>
 <body>
-  <h1>Deployment Strategy Dashboard</h1>
-  <p>This artefact page is intentionally left as a placeholder for future implementation.</p>
+  <header>
+    <div class="artefact-name">Khaled Sanad: <strong>Deployment Strategy</strong></div>
+    <span class="status-badge">In Development</span>
+  </header>
+  <main>
+    <div class="placeholder-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+        <circle cx="7" cy="6" r="1.5" fill="currentColor" stroke="none"/>
+        <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/>
+        <circle cx="17" cy="18" r="1.5" fill="currentColor" stroke="none"/>
+      </svg>
+    </div>
+    <h1>Deployment Strategy</h1>
+    <p class="descriptor">Executive transformation governance dashboard tracking workstreams, milestones, risks, budget consumption, readiness scores, and delivery confidence across a fictional enterprise programme modelled on synthetic data.</p>
+    <div class="meta-row">
+      <div class="meta-item">
+        <div class="meta-label">Category</div>
+        <div class="meta-value">Programme · Governance</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Status</div>
+        <div class="meta-value">In development</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label">Data model</div>
+        <div class="meta-value">Synthetic · Embedded</div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <span class="footer-text">Khaled Sanad — Portfolio</span>
+    <span class="footer-tag">Programme · Governance</span>
+  </footer>
 </body>
 </html>

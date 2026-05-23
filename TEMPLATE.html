@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Decision Matrix — Khaled Sanad</title>
+  <title>ARTEFACT_TITLE — Khaled Sanad</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -16,8 +16,13 @@
       --gold:      #c9a96e;
       --gold-dim:  rgba(201,169,110,0.12);
     }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
+
+    html, body {
+      height: 100%;
+    }
+
     body {
       background: var(--bg);
       color: var(--text);
@@ -27,6 +32,8 @@
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
+
+    /* ── Header ── */
     header {
       padding: 1.5rem 2.5rem;
       border-bottom: 1px solid var(--border);
@@ -35,6 +42,7 @@
       align-items: center;
       flex-shrink: 0;
     }
+
     .artefact-name {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 300;
@@ -42,7 +50,12 @@
       letter-spacing: 0.02em;
       color: var(--text-sub);
     }
-    .artefact-name strong { font-weight: 400; color: var(--text); }
+
+    .artefact-name strong {
+      font-weight: 400;
+      color: var(--text);
+    }
+
     .status-badge {
       font-size: 0.58rem;
       letter-spacing: 0.2em;
@@ -53,6 +66,8 @@
       border-radius: 2px;
       background: var(--gold-dim);
     }
+
+    /* ── Body ── */
     main {
       flex: 1;
       display: flex;
@@ -62,6 +77,7 @@
       padding: 4rem 2.5rem;
       text-align: center;
     }
+
     .placeholder-icon {
       width: 48px;
       height: 48px;
@@ -73,7 +89,12 @@
       margin: 0 auto 2rem;
       color: var(--text-dim);
     }
-    .placeholder-icon svg { width: 22px; height: 22px; }
+
+    .placeholder-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
     h1 {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 300;
@@ -83,6 +104,7 @@
       margin-bottom: 1rem;
       line-height: 1.1;
     }
+
     .descriptor {
       font-size: 0.72rem;
       line-height: 1.8;
@@ -90,13 +112,18 @@
       max-width: 480px;
       margin: 0 auto 3rem;
     }
+
     .meta-row {
       display: flex;
       gap: 2rem;
       justify-content: center;
       flex-wrap: wrap;
     }
-    .meta-item { text-align: left; }
+
+    .meta-item {
+      text-align: left;
+    }
+
     .meta-label {
       font-size: 0.55rem;
       letter-spacing: 0.2em;
@@ -104,7 +131,13 @@
       color: var(--text-dim);
       margin-bottom: 0.3rem;
     }
-    .meta-value { font-size: 0.68rem; color: var(--text-sub); }
+
+    .meta-value {
+      font-size: 0.68rem;
+      color: var(--text-sub);
+    }
+
+    /* ── Footer ── */
     footer {
       padding: 1.5rem 2.5rem;
       border-top: 1px solid var(--border);
@@ -113,7 +146,15 @@
       align-items: center;
       flex-shrink: 0;
     }
-    .footer-text, .footer-tag {
+
+    .footer-text {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .footer-tag {
       font-size: 0.6rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
@@ -122,25 +163,34 @@
   </style>
 </head>
 <body>
+
   <header>
-    <div class="artefact-name">Khaled Sanad: <strong>Decision Matrix</strong></div>
+    <div class="artefact-name">Khaled Sanad: <strong>ARTEFACT_TITLE</strong></div>
     <span class="status-badge">In Development</span>
   </header>
+
   <main>
     <div class="placeholder-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <!-- REPLACE THIS SVG PATH with one relevant to the artefact -->
+        <!-- Decision Matrix: grid icon -->
+        <!-- Deployment Strategy: layers/milestone icon -->
+        <!-- Data Risk Assessment: shield icon -->
         <rect x="3" y="3" width="7" height="7" rx="1"/>
         <rect x="14" y="3" width="7" height="7" rx="1"/>
         <rect x="3" y="14" width="7" height="7" rx="1"/>
         <rect x="14" y="14" width="7" height="7" rx="1"/>
       </svg>
     </div>
-    <h1>Decision Matrix</h1>
-    <p class="descriptor">Weighted-criteria evaluation tool for high-stakes business choices. Define options, assign criteria weights, and surface a transparent, explainable scoring and ranking framework for vendor selection, investment evaluation, initiative prioritisation, and strategic trade-off analysis.</p>
+
+    <h1>ARTEFACT_TITLE</h1>
+
+    <p class="descriptor">ARTEFACT_DESCRIPTION</p>
+
     <div class="meta-row">
       <div class="meta-item">
         <div class="meta-label">Category</div>
-        <div class="meta-value">Decision · Consulting</div>
+        <div class="meta-value">ARTEFACT_CATEGORY</div>
       </div>
       <div class="meta-item">
         <div class="meta-label">Status</div>
@@ -148,13 +198,15 @@
       </div>
       <div class="meta-item">
         <div class="meta-label">Data model</div>
-        <div class="meta-value">Embedded · No backend</div>
+        <div class="meta-value">ARTEFACT_DATA_MODEL</div>
       </div>
     </div>
   </main>
+
   <footer>
     <span class="footer-text">Khaled Sanad — Portfolio</span>
-    <span class="footer-tag">Decision · Consulting</span>
+    <span class="footer-tag">ARTEFACT_TAG</span>
   </footer>
+
 </body>
 </html>
