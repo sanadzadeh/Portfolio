@@ -679,12 +679,12 @@
 <div class="page">
 
   <div class="section-eyebrow">Strategic Evaluation</div>
-  <h1 class="section-title">Vendor Selection — Resource Management</h1>
-  <p class="section-sub">Three options evaluated across six weighted criteria. Independent assessment across technical, commercial, and delivery dimensions.</p>
+  <h1 class="section-title">Platform Selection — Knowledge Workspace</h1>
+  <p class="section-sub">Three options evaluated across six weighted criteria. Independent assessment across workflow, governance, usability, and delivery dimensions.</p>
 
   <div class="recommendation-strip">
     <span class="recommendation-name">Meridian Core</span>
-    <span class="recommendation-label">is the recommended vendor</span>
+    <span class="recommendation-label">is the recommended option</span>
     <span class="recommendation-score">74.7 <span>/ 100</span></span>
     <a class="details-link" href="#rec-detail">Details ↓</a>
   </div>
@@ -693,7 +693,7 @@
 
     <div class="context-box mobile-hide-context">
       <div class="section-eyebrow" style="margin-bottom:0.75rem;">Programme</div>
-      <div class="programme-title">Resource Management<br><span>FY2025</span></div>
+      <div class="programme-title">Knowledge Workspace<br><span>FY2025</span></div>
 
       <div class="context-list">
         <div class="context-row">
@@ -768,28 +768,28 @@
       <div class="rec-panel">
         <div class="rec-panel-title">Strengths</div>
         <div class="rec-panel-text">
-          Highest score on Vendor Maturity (9/10) — strongest local support network and APRA engagement record of the three options. Technical Fit score of 8/10 confirms alignment with target-state architecture. Implementation risk rated manageable at 7/10, with an existing delivery team in-market.
+          Highest score on Provider Maturity (9/10), with the strongest documentation, support model, and implementation playbook of the three options. Workflow Fit score of 8/10 confirms alignment with the target operating model. Implementation risk is rated manageable at 7/10, supported by a clear onboarding path and reusable configuration patterns.
         </div>
       </div>
 
       <div class="rec-panel">
         <div class="rec-panel-title">Conditions</div>
         <div class="rec-panel-text">
-          Approval is conditional on: (1) reference check with two comparable APRA-regulated institutions completed within 30 days; (2) fixed-price delivery commitment from vendor covering Phase 1 and Phase 2; (3) independent review of TCO assumptions by Group Finance prior to contract execution.
+          Approval is conditional on: (1) completion of two comparable reference checks within 30 days; (2) confirmed delivery plan covering setup, configuration, and onboarding; (3) independent review of maintenance effort, support requirements, and internal ownership before rollout.
         </div>
       </div>
 
       <div class="rec-panel">
         <div class="rec-panel-title">Risks</div>
         <div class="rec-panel-text">
-          TCO is the weakest dimension at 6/10 — licensing and integration costs are above benchmark. If cost assumptions are not locked before contract, overrun risk is material. UX score of 7/10 warrants a targeted change management programme ahead of rollout to minimise adoption friction.
+          Ongoing Effort is the weakest dimension at 6/10, with configuration, training, and administration requirements above the preferred benchmark. If ownership is not clarified before rollout, adoption may drift. UX score of 7/10 also warrants a targeted change-management plan.
         </div>
       </div>
 
       <div class="rec-panel">
         <div class="rec-panel-title">Fallback</div>
         <div class="rec-panel-text">
-          If reference checks reveal material concerns or vendor cannot commit to fixed-price terms, Crestline Suite (score 68.4) is the recommended fallback. Its TCO advantage and strong regulatory compliance posture (9/10) make it viable under a cost-constrained scenario, subject to a separate technical fit assessment.
+          If reference checks reveal material concerns or the delivery plan cannot be confirmed, Crestline Suite is the recommended fallback. Its lower ongoing effort and strong governance posture make it viable under a simpler operating model, subject to a separate workflow-fit assessment.
         </div>
       </div>
     </div>
@@ -804,29 +804,29 @@
 
 <script>
 const CRITERIA = [
-  { name: "Technical Fit", weight: 25, desc: "Architecture alignment and integration capability" },
-  { name: "Implementation Risk", weight: 20, desc: "Delivery complexity, timeline, and change risk" },
-  { name: "Total Cost of Ownership", weight: 20, desc: "Licensing, integration, and 5-year run cost" },
-  { name: "Vendor Maturity", weight: 15, desc: "Market presence, financial stability, and support model" },
-  { name: "Regulatory Compliance", weight: 12, desc: "APRA, AML/CTF, and data sovereignty requirements" },
-  { name: "User Experience", weight: 8, desc: "Operator interface and end-user journey quality" },
+  { name: "Workflow Fit", weight: 25, desc: "Alignment with current team routines and operating model" },
+  { name: "Implementation Risk", weight: 20, desc: "Setup complexity, timeline, and adoption risk" },
+  { name: "Ongoing Effort", weight: 20, desc: "Training, maintenance, configuration, and support effort" },
+  { name: "Provider Maturity", weight: 15, desc: "Track record, documentation quality, and support model" },
+  { name: "Data Governance", weight: 12, desc: "Access control, auditability, privacy, and retention controls" },
+  { name: "User Experience", weight: 8, desc: "Interface clarity and day-to-day usability" },
 ];
 
 const OPTIONS = [
   {
     name: "Meridian Core",
     scores: [8, 7, 6, 9, 8, 7],
-    desc: "Established enterprise platform with strong APRA alignment and deep local support network. Higher TCO offset by low implementation risk."
+    desc: "Established workspace platform with strong documentation, reliable support, and good alignment to structured team workflows. Higher operating effort is offset by lower delivery uncertainty."
   },
   {
     name: "Nexum Platform",
     scores: [9, 5, 8, 7, 7, 9],
-    desc: "Modern cloud-native architecture with excellent UX. Implementation risk elevated due to limited local delivery capability and newer regulatory certifications."
+    desc: "Modern lightweight platform with excellent usability and flexible configuration. Implementation risk is higher because the operating model would need more redesign before rollout."
   },
   {
     name: "Crestline Suite",
     scores: [6, 8, 9, 6, 9, 6],
-    desc: "Lowest TCO and strong compliance posture. Technical fit is adequate but below benchmark. Best suited as a conservative fallback option."
+    desc: "Lower-effort option with strong governance controls. Workflow fit is adequate but less flexible, making it better suited as a conservative fallback."
   }
 ];
 
@@ -939,9 +939,9 @@ const gap = (winner.total - runnerup.total).toFixed(1);
 
 document.getElementById("rec-text").innerHTML = `
   <strong>${winner.name}</strong> is the recommended option with a weighted score of <strong>${winner.total} / 100</strong> — a margin of <strong>${gap} points</strong> over the next-ranked option.
-  It leads on Technical Fit and Vendor Maturity, which carry the highest combined weighting (40%).
+  It leads on Workflow Fit and Provider Maturity, which carry the highest combined weighting (40%).
   Implementation risk is moderate and manageable within the programme timeline.
-  A conditional approval is recommended subject to successful reference checks with two comparable APRA-regulated institutions and a fixed-price delivery commitment from the vendor.
+  A conditional approval is recommended subject to successful reference checks, a confirmed delivery plan, and clear internal ownership for configuration and ongoing support.
 `;
 
 const OPTION_COLOURS = [
@@ -1001,10 +1001,12 @@ ctx.textBaseline = "middle";
 CRITERIA.forEach((c, i) => {
   const p = axisPoint(i, R + 18);
   const shortName = c.name
-    .replace("Total Cost of Ownership", "TCO")
     .replace("Implementation Risk", "Impl. Risk")
-    .replace("Regulatory Compliance", "Regulatory")
-    .replace("Vendor Maturity", "Maturity");
+    .replace("Ongoing Effort", "Effort")
+    .replace("Provider Maturity", "Maturity")
+    .replace("Data Governance", "Governance")
+    .replace("User Experience", "UX")
+    .replace("Workflow Fit", "Workflow");
 
   ctx.fillText(shortName, p.x, p.y);
 });
