@@ -393,13 +393,12 @@
   let overlayOpen = false;
 
   function openOverlay(href, title) {
-    overlayFrame.src = "about:blank";
     overlayTitle.textContent = title;
     overlay.classList.add("active");
     document.body.style.overflow = "hidden";
     overlayOpen = true;
     history.pushState({ overlay: true }, "");
-    setTimeout(() => { overlayFrame.src = href; }, 0);
+    overlayFrame.src = href;
   }
 
   function closeOverlay() {
@@ -407,7 +406,7 @@
     document.body.style.overflow = "";
     overlayOpen = false;
     overlayTitle.textContent = "";
-    overlayFrame.src = "about:blank";
+    overlayFrame.src = "";
   }
 
   document.querySelectorAll("a.tile").forEach(tile => {
@@ -430,6 +429,16 @@
 
   document.addEventListener("keydown", e => {
     if (e.key === "Escape" && overlayOpen) history.back();
+  });
+
+  // Prevent iframe navigation from adding history entries
+  overlayFrame.addEventListener("load", () => {
+    if (overlayOpen && overlayFrame.src && overlayFrame.src !== "about:blank") {
+      try {
+        overlayFrame.contentWindow.history.pushState = () => {};
+        overlayFrame.contentWindow.history.replaceState = () => {};
+      } catch(e) {}
+    }
   });
 </script>
 </body>
