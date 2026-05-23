@@ -1,34 +1,914 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stakeholder Mapping Tool</title>
-  <style>
-    :root { --bg:#141414; --surface:#1c1c1c; --border:rgba(255,255,255,.08); --text:#f5f2ed; --sub:rgba(245,242,237,.62); --gold:#c9a96e; }
-    *{ box-sizing:border-box; }
-    body{ margin:0; font-family:Inter,system-ui,sans-serif; background:var(--bg); color:var(--text); }
-    .wrap{ max-width:1100px; margin:auto; padding:2rem; }
-    h1{ margin:0 0 .4rem; }
-    p{ color:var(--sub); margin:0 0 1.3rem; }
-    .matrix{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-    .quad{ background:var(--surface); border:1px solid var(--border); min-height:220px; padding:1rem; }
-    .quad h2{ margin:0 0 .75rem; font-size:1rem; color:var(--gold); }
-    ul{ margin:0; padding-left:1.1rem; color:var(--sub); }
-    li{ margin:.35rem 0; }
-  </style>
-</head>
-<body>
-  <main class="wrap">
-    <h1>Stakeholder Mapping Tool</h1>
-    <p>Influence-interest matrix with practical engagement strategy guidance.</p>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stakeholder Mapping Tool — Khaled Sanad</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-    <section class="matrix">
-      <article class="quad"><h2>Manage Closely (High Influence / High Interest)</h2><ul><li>Executive Sponsor</li><li>Programme Director</li><li>Finance Lead</li></ul></article>
-      <article class="quad"><h2>Keep Satisfied (High Influence / Low Interest)</h2><ul><li>Board Risk Committee</li><li>External Audit</li></ul></article>
-      <article class="quad"><h2>Keep Informed (Low Influence / High Interest)</h2><ul><li>Operations Managers</li><li>Product Teams</li><li>Change Champions</li></ul></article>
-      <article class="quad"><h2>Monitor (Low Influence / Low Interest)</h2><ul><li>General Staff</li><li>Vendors (non-critical)</li></ul></article>
-    </section>
-  </main>
+<style>
+:root{
+  --bg:#141414;
+  --surface:#1c1c1c;
+  --surface-alt:#222222;
+  --surface-hi:#272522;
+  --border:rgba(255,255,255,.075);
+  --border-soft:rgba(255,255,255,.045);
+  --ink:#f5f2ed;
+  --ink-2:rgba(245,242,237,.66);
+  --ink-3:rgba(245,242,237,.36);
+
+  --accent:#b99562;
+  --accent-dim:rgba(185,149,98,.12);
+  --accent-mid:rgba(185,149,98,.28);
+
+  --green:#789f7a;
+  --green-dim:rgba(120,159,122,.13);
+  --amber:#d0a75d;
+  --amber-dim:rgba(208,167,93,.13);
+  --red:#b76c62;
+  --red-dim:rgba(183,108,98,.13);
+  --blue:#6f8fa7;
+  --blue-dim:rgba(111,143,167,.13);
+  --purple:#8b7aa6;
+  --purple-dim:rgba(139,122,166,.13);
+
+  --font-serif:'Cormorant Garamond', Georgia, serif;
+  --font-mono:'DM Mono','Courier New',monospace;
+  --radius:4px;
+  --tr:160ms ease;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-mono);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+}
+
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+}
+
+.header-inner{
+  max-width:1180px;
+  margin:0 auto;
+  padding:14px 2rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:1rem;
+}
+
+.logo{
+  font-family:var(--font-serif);
+  font-weight:300;
+  font-size:1.1rem;
+  letter-spacing:.02em;
+}
+
+.logo em{
+  color:var(--accent);
+  font-style:normal;
+}
+
+.header-meta{
+  color:var(--ink-3);
+  font-size:.58rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:2rem;
+}
+
+.hero{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  margin-bottom:1.35rem;
+}
+
+.panel{
+  background:var(--surface);
+  padding:1.35rem 1.55rem;
+}
+
+.eyebrow{
+  font-size:.55rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:.55rem;
+}
+
+h1{
+  font-family:var(--font-serif);
+  font-size:2rem;
+  line-height:1.1;
+  font-weight:300;
+}
+
+.signal-stack{
+  display:flex;
+  flex-direction:column;
+  gap:.65rem;
+}
+
+.signal{
+  display:flex;
+  justify-content:space-between;
+  gap:1rem;
+  padding-bottom:.65rem;
+  border-bottom:1px solid var(--border-soft);
+}
+
+.signal:last-child{
+  border-bottom:0;
+  padding-bottom:0;
+}
+
+.signal span:first-child{
+  color:var(--ink-3);
+  font-size:.62rem;
+}
+
+.signal span:last-child{
+  color:var(--ink-2);
+  font-size:.66rem;
+  text-align:right;
+}
+
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.55rem;
+  margin-bottom:1.35rem;
+}
+
+.pill{
+  font-family:var(--font-mono);
+  font-size:.58rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:.42rem .8rem;
+  border-radius:999px;
+  background:var(--surface);
+  color:var(--ink-2);
+  border:1px solid var(--border);
+  cursor:pointer;
+  transition:all var(--tr);
+}
+
+.pill:hover{
+  color:var(--accent);
+  border-color:var(--accent-mid);
+  background:var(--accent-dim);
+}
+
+.pill.active{
+  background:var(--accent);
+  color:var(--bg);
+  border-color:var(--accent);
+}
+
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  margin-bottom:1.35rem;
+}
+
+.kpi{
+  background:var(--surface);
+  padding:1.05rem 1.15rem;
+}
+
+.kpi-label{
+  font-size:.5rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-bottom:.4rem;
+}
+
+.kpi-value{
+  font-family:var(--font-serif);
+  font-size:1.75rem;
+  line-height:1;
+  font-weight:300;
+  color:var(--accent);
+}
+
+.kpi-sub{
+  margin-top:.3rem;
+  color:var(--ink-3);
+  font-size:.55rem;
+}
+
+.main-grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  margin-bottom:1.35rem;
+}
+
+.section-title{
+  font-size:.55rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-bottom:1rem;
+}
+
+.map{
+  position:relative;
+  height:470px;
+  border:1px solid var(--border-soft);
+  background:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size:42px 42px;
+  overflow:hidden;
+}
+
+.map::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:1px;
+  background:rgba(255,255,255,.08);
+}
+
+.map::after{
+  content:'';
+  position:absolute;
+  top:50%;
+  left:0;
+  right:0;
+  height:1px;
+  background:rgba(255,255,255,.08);
+}
+
+.axis{
+  position:absolute;
+  color:var(--ink-3);
+  font-size:.48rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  z-index:2;
+}
+
+.axis-top{left:1rem;top:.8rem}
+.axis-bottom{right:1rem;bottom:.7rem}
+.axis-left{left:1rem;bottom:.7rem}
+.axis-right{right:1rem;top:.8rem}
+
+.quad-label{
+  position:absolute;
+  font-family:var(--font-serif);
+  font-size:1.05rem;
+  font-weight:300;
+  color:rgba(245,242,237,.16);
+  z-index:1;
+}
+
+.q1{right:1rem;top:1rem}
+.q2{left:1rem;top:1rem}
+.q3{left:1rem;bottom:1rem}
+.q4{right:1rem;bottom:1rem}
+
+.stakeholder{
+  position:absolute;
+  width:var(--size);
+  height:var(--size);
+  left:var(--x);
+  top:var(--y);
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.12);
+  background:var(--dot-bg);
+  color:var(--dot-col);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:4;
+  transition:opacity var(--tr), transform var(--tr), box-shadow var(--tr), border-color var(--tr);
+}
+
+.stakeholder:hover,.stakeholder.selected{
+  transform:translate(-50%,-50%) scale(1.1);
+  box-shadow:0 0 0 8px rgba(255,255,255,.035);
+}
+
+.stakeholder.selected{
+  border-color:var(--accent);
+}
+
+.stakeholder.dim{
+  opacity:.16;
+}
+
+.stakeholder span{
+  font-size:.52rem;
+  letter-spacing:.08em;
+}
+
+.stakeholder::after{
+  content:attr(data-name);
+  position:absolute;
+  left:50%;
+  top:calc(100% + 7px);
+  transform:translateX(-50%);
+  color:var(--ink-3);
+  font-size:.5rem;
+  width:max-content;
+  max-width:135px;
+  text-align:center;
+  pointer-events:none;
+}
+
+.detail-card{
+  position:sticky;
+  top:86px;
+}
+
+.status{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:.22rem .55rem;
+  border-radius:999px;
+  font-size:.52rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+.status::before{
+  content:'';
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:currentColor;
+}
+
+.ally{background:var(--green-dim);color:var(--green)}
+.neutral{background:var(--blue-dim);color:var(--blue)}
+.sceptic{background:var(--amber-dim);color:var(--amber)}
+.blocker{background:var(--red-dim);color:var(--red)}
+
+.detail-title{
+  font-family:var(--font-serif);
+  font-size:1.65rem;
+  line-height:1.1;
+  font-weight:300;
+  margin:.55rem 0 .85rem;
+}
+
+.detail-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:.45rem;
+  margin-bottom:1rem;
+}
+
+.detail-chip{
+  border:1px solid var(--border-soft);
+  padding:.28rem .55rem;
+  font-size:.52rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+}
+
+.detail-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  margin-bottom:1rem;
+}
+
+.detail-stat{
+  background:var(--surface-hi);
+  padding:.8rem;
+}
+
+.detail-stat-label{
+  color:var(--ink-3);
+  font-size:.48rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.detail-stat-value{
+  font-family:var(--font-serif);
+  font-size:1.25rem;
+  color:var(--ink);
+  font-weight:300;
+}
+
+.bar-row{
+  display:grid;
+  grid-template-columns:100px 1fr 36px;
+  gap:.65rem;
+  align-items:center;
+  padding:.45rem 0;
+  border-bottom:1px solid var(--border-soft);
+}
+
+.bar-row:last-child{
+  border-bottom:0;
+}
+
+.bar-label{
+  color:var(--ink-2);
+  font-size:.6rem;
+}
+
+.track{
+  height:6px;
+  background:var(--border);
+  border-radius:3px;
+  overflow:hidden;
+}
+
+.fill{
+  height:100%;
+  border-radius:3px;
+}
+
+.bar-score{
+  color:var(--ink-3);
+  font-size:.58rem;
+  text-align:right;
+}
+
+.engagement-note{
+  color:var(--ink-2);
+  font-size:.65rem;
+  line-height:1.65;
+  padding:.85rem;
+  border-left:2px solid var(--accent);
+  background:var(--accent-dim);
+  margin-top:1rem;
+}
+
+.lower-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+}
+
+.rhythm{
+  display:grid;
+  gap:.65rem;
+}
+
+.rhythm-card{
+  border:1px solid var(--border-soft);
+  background:rgba(255,255,255,.018);
+  padding:.75rem .8rem;
+  cursor:pointer;
+  transition:background var(--tr), border-color var(--tr);
+}
+
+.rhythm-card:hover{
+  border-color:var(--accent-mid);
+  background:var(--surface-alt);
+}
+
+.rhythm-top{
+  display:flex;
+  justify-content:space-between;
+  gap:1rem;
+  margin-bottom:.35rem;
+}
+
+.rhythm-name{
+  color:var(--ink);
+  font-size:.66rem;
+}
+
+.rhythm-cadence{
+  color:var(--ink-3);
+  font-size:.54rem;
+  white-space:nowrap;
+}
+
+.rhythm-note{
+  color:var(--ink-3);
+  font-size:.6rem;
+  line-height:1.55;
+}
+
+.coalition{
+  position:relative;
+  height:290px;
+  border:1px solid var(--border-soft);
+  background:radial-gradient(circle at center, rgba(185,149,98,.08), transparent 58%);
+}
+
+.coalition-node{
+  position:absolute;
+  width:78px;
+  min-height:44px;
+  border:1px solid var(--border);
+  background:var(--surface-hi);
+  padding:.45rem;
+  text-align:center;
+}
+
+.coalition-node strong{
+  display:block;
+  font-family:var(--font-serif);
+  font-weight:300;
+  font-size:1rem;
+}
+
+.coalition-node span{
+  display:block;
+  color:var(--ink-3);
+  font-size:.48rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.coalition-svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+
+.footer{
+  border-top:1px solid var(--border);
+  padding:1rem 0;
+  margin-top:2rem;
+  color:var(--ink-3);
+  font-size:.6rem;
+  letter-spacing:.08em;
+  display:flex;
+  justify-content:space-between;
+  gap:1rem;
+}
+
+@media(max-width:980px){
+  .hero,.main-grid,.lower-grid{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .detail-card{position:static}
+}
+
+@media(max-width:680px){
+  .wrap,.header-inner{padding-left:1rem;padding-right:1rem}
+  .kpi-grid{grid-template-columns:1fr}
+  h1{font-size:1.7rem}
+  .map{height:540px}
+}
+</style>
+</head>
+
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Khaled Sanad: <em>Stakeholder Mapping Tool</em></div>
+    <div class="header-meta">Influence · alignment · engagement</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="panel">
+      <div class="eyebrow">Stakeholder control map</div>
+      <h1>Map influence, alignment, friction, and coalition leverage.</h1>
+    </div>
+
+    <div class="panel">
+      <div class="section-title">Current Engagement Signal</div>
+      <div class="signal-stack">
+        <div class="signal"><span>Primary risk</span><span id="signal-risk">Passive resistance</span></div>
+        <div class="signal"><span>Coalition anchor</span><span id="signal-anchor">Executive Sponsor</span></div>
+        <div class="signal"><span>Engagement posture</span><span id="signal-posture">Convert sceptics before steering</span></div>
+        <div class="signal"><span>Next move</span><span id="signal-move">Separate blockers from undecided stakeholders</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <button class="pill active" data-filter="all">All</button>
+    <button class="pill" data-filter="ally">Allies</button>
+    <button class="pill" data-filter="neutral">Neutral</button>
+    <button class="pill" data-filter="sceptic">Sceptics</button>
+    <button class="pill" data-filter="blocker">Blockers</button>
+    <button class="pill" data-filter="high">High Influence</button>
+  </section>
+
+  <section class="kpi-grid">
+    <article class="kpi"><div class="kpi-label">Stakeholders</div><div class="kpi-value" id="kpi-count">12</div><div class="kpi-sub">Filtered population</div></article>
+    <article class="kpi"><div class="kpi-label">Coalition Strength</div><div class="kpi-value" id="kpi-coalition">71</div><div class="kpi-sub">Weighted support score</div></article>
+    <article class="kpi"><div class="kpi-label">Resistance Heat</div><div class="kpi-value" id="kpi-resistance">42</div><div class="kpi-sub">Influence-weighted friction</div></article>
+    <article class="kpi"><div class="kpi-label">Decision Access</div><div class="kpi-value" id="kpi-access">8</div><div class="kpi-sub">Can shape steering outcomes</div></article>
+    <article class="kpi"><div class="kpi-label">Engagement Debt</div><div class="kpi-value" id="kpi-debt">5</div><div class="kpi-sub">Needs intervention</div></article>
+  </section>
+
+  <section class="main-grid">
+    <div class="panel">
+      <div class="section-title">Influence–Alignment Map</div>
+      <div class="map" id="map">
+        <div class="quad-label q1">Manage closely</div>
+        <div class="quad-label q2">Convert carefully</div>
+        <div class="quad-label q3">Inform selectively</div>
+        <div class="quad-label q4">Keep satisfied</div>
+        <div class="axis axis-top">Higher alignment</div>
+        <div class="axis axis-bottom">Higher influence</div>
+        <div class="axis axis-left">Lower influence</div>
+        <div class="axis axis-right">Higher influence</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="detail-card">
+        <div class="section-title">Selected Stakeholder</div>
+        <div id="detail-panel"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lower-grid">
+    <div class="panel">
+      <div class="section-title">Engagement Rhythm</div>
+      <div class="rhythm" id="rhythm"></div>
+    </div>
+
+    <div class="panel">
+      <div class="section-title">Coalition Path</div>
+      <div class="coalition">
+        <svg class="coalition-svg" viewBox="0 0 500 290" preserveAspectRatio="none">
+          <path d="M85 72 C170 50, 245 80, 250 140" stroke="rgba(120,159,122,.35)" stroke-width="18" fill="none" stroke-linecap="round"/>
+          <path d="M250 140 C315 105, 380 94, 420 78" stroke="rgba(185,149,98,.32)" stroke-width="14" fill="none" stroke-linecap="round"/>
+          <path d="M250 140 C310 180, 375 205, 420 222" stroke="rgba(183,108,98,.28)" stroke-width="12" fill="none" stroke-linecap="round"/>
+          <path d="M85 218 C165 205, 220 180, 250 140" stroke="rgba(111,143,167,.28)" stroke-width="10" fill="none" stroke-linecap="round"/>
+        </svg>
+
+        <div class="coalition-node" style="left:28px;top:50px;"><strong>ES</strong><span>Sponsor</span></div>
+        <div class="coalition-node" style="left:210px;top:118px;"><strong>PD</strong><span>Director</span></div>
+        <div class="coalition-node" style="right:28px;top:55px;"><strong>FIN</strong><span>Finance</span></div>
+        <div class="coalition-node" style="left:28px;bottom:45px;"><strong>OPS</strong><span>Ops</span></div>
+        <div class="coalition-node" style="right:28px;bottom:43px;"><strong>BRC</strong><span>Risk</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <span>Stakeholder Mapping Tool — governance and engagement workspace</span>
+    <span>Khaled Sanad · Portfolio</span>
+  </div>
+</main>
+
+<script>
+const stakeholders = [
+  {code:"ES", name:"Executive Sponsor", role:"Accountable executive", group:"Steering", influence:94, alignment:86, trust:82, resistance:18, cadence:"Weekly", stance:"ally", note:"Use as coalition anchor. Keep the sponsor focused on decision timing rather than generic progress reporting."},
+  {code:"PD", name:"Programme Director", role:"Delivery authority", group:"Delivery", influence:88, alignment:76, trust:74, resistance:28, cadence:"Twice weekly", stance:"ally", note:"High-leverage operator. Needs clear escalation thresholds and visible dependency burn-down."},
+  {code:"FIN", name:"Finance Lead", role:"Funding and benefit control", group:"Finance", influence:78, alignment:54, trust:61, resistance:48, cadence:"Fortnightly", stance:"sceptic", note:"Not opposed, but unconvinced on benefit evidence. Convert with traceable assumptions and variance thresholds."},
+  {code:"RISK", name:"Board Risk Committee", role:"Risk appetite and assurance", group:"Risk", influence:91, alignment:42, trust:58, resistance:64, cadence:"Monthly", stance:"blocker", note:"Main friction point. Do not sell ambition; show controls, audit trail, and rollback options."},
+  {code:"AUD", name:"External Audit", role:"Independent assurance", group:"Assurance", influence:67, alignment:38, trust:52, resistance:62, cadence:"Monthly", stance:"blocker", note:"Needs early evidence walkthrough. Late engagement will convert audit into a delivery blocker."},
+  {code:"OPS", name:"Operations Managers", role:"Run-state ownership", group:"Operations", influence:58, alignment:79, trust:68, resistance:31, cadence:"Weekly", stance:"ally", note:"High interest and practical knowledge. Use them to identify adoption friction before go-live."},
+  {code:"PROD", name:"Product Teams", role:"Business process design", group:"Product", influence:52, alignment:73, trust:65, resistance:35, cadence:"Weekly", stance:"ally", note:"Useful coalition layer if scope and operating impacts are made explicit."},
+  {code:"CHG", name:"Change Champions", role:"Adoption network", group:"Change", influence:43, alignment:82, trust:71, resistance:22, cadence:"Weekly", stance:"ally", note:"Low formal power but high adoption leverage. Give them message discipline and escalation paths."},
+  {code:"LEGAL", name:"Legal Counsel", role:"Contract and obligation review", group:"Legal", influence:74, alignment:49, trust:59, resistance:52, cadence:"Fortnightly", stance:"sceptic", note:"Engage through precise decision questions. Avoid broad conceptual debate."},
+  {code:"VEND", name:"Critical Vendor", role:"Implementation dependency", group:"Vendor", influence:48, alignment:55, trust:46, resistance:44, cadence:"Weekly", stance:"neutral", note:"Neutral but commercially exposed. Use milestones, acceptance criteria, and delivery evidence."},
+  {code:"STAFF", name:"General Staff", role:"Affected users", group:"Business", influence:29, alignment:50, trust:54, resistance:46, cadence:"Monthly", stance:"neutral", note:"Do not over-engage early. Provide clear timing, impact, and support path when change becomes concrete."},
+  {code:"DATA", name:"Data Owners", role:"Source quality and sign-off", group:"Data", influence:63, alignment:44, trust:49, resistance:59, cadence:"Weekly", stance:"sceptic", note:"Potential hidden blocker. Their ownership gaps can become delivery risk if not surfaced early."}
+];
+
+let activeFilter = "all";
+let selectedCode = "FIN";
+
+const map = document.getElementById("map");
+const detail = document.getElementById("detail-panel");
+const rhythm = document.getElementById("rhythm");
+
+function filteredItems(){
+  if(activeFilter === "all") return stakeholders;
+  if(activeFilter === "high") return stakeholders.filter(s => s.influence >= 70);
+  return stakeholders.filter(s => s.stance === activeFilter);
+}
+
+function stanceLabel(s){
+  return {ally:"Ally", neutral:"Neutral", sceptic:"Sceptic", blocker:"Blocker"}[s];
+}
+
+function colourPair(stance){
+  return {
+    ally:["var(--green-dim)","var(--green)"],
+    neutral:["var(--blue-dim)","var(--blue)"],
+    sceptic:["var(--amber-dim)","var(--amber)"],
+    blocker:["var(--red-dim)","var(--red)"]
+  }[stance];
+}
+
+function colourFor(v){
+  if(v >= 70) return "var(--green)";
+  if(v >= 45) return "var(--amber)";
+  return "var(--red)";
+}
+
+function setSignals(items){
+  const coalition = items.length ? Math.round(items.reduce((a,b) => a + (b.alignment * b.influence / 100), 0) / items.length) : 0;
+  const resistance = items.length ? Math.round(items.reduce((a,b) => a + (b.resistance * b.influence / 100), 0) / items.length) : 0;
+  const access = items.filter(s => s.influence >= 60).length;
+  const debt = items.filter(s => s.stance === "sceptic" || s.stance === "blocker").length;
+
+  document.getElementById("kpi-count").textContent = items.length;
+  document.getElementById("kpi-coalition").textContent = coalition;
+  document.getElementById("kpi-resistance").textContent = resistance;
+  document.getElementById("kpi-access").textContent = access;
+  document.getElementById("kpi-debt").textContent = debt;
+
+  if(activeFilter === "blocker"){
+    document.getElementById("signal-risk").textContent = "Formal resistance";
+    document.getElementById("signal-anchor").textContent = "Risk Committee";
+    document.getElementById("signal-posture").textContent = "Evidence-first assurance";
+    document.getElementById("signal-move").textContent = "Convert objections into control requirements";
+  } else if(activeFilter === "sceptic"){
+    document.getElementById("signal-risk").textContent = "Unresolved doubt";
+    document.getElementById("signal-anchor").textContent = "Finance Lead";
+    document.getElementById("signal-posture").textContent = "Assumption transparency";
+    document.getElementById("signal-move").textContent = "Show trade-offs before asking for approval";
+  } else if(activeFilter === "ally"){
+    document.getElementById("signal-risk").textContent = "Over-confidence";
+    document.getElementById("signal-anchor").textContent = "Executive Sponsor";
+    document.getElementById("signal-posture").textContent = "Use coalition carefully";
+    document.getElementById("signal-move").textContent = "Turn support into specific decisions";
+  } else {
+    document.getElementById("signal-risk").textContent = "Passive resistance";
+    document.getElementById("signal-anchor").textContent = "Executive Sponsor";
+    document.getElementById("signal-posture").textContent = "Convert sceptics before steering";
+    document.getElementById("signal-move").textContent = "Separate blockers from undecided stakeholders";
+  }
+}
+
+function renderMap(items){
+  map.querySelectorAll(".stakeholder").forEach(n => n.remove());
+
+  stakeholders.forEach(s => {
+    const visible = items.includes(s);
+    const btn = document.createElement("button");
+    const pair = colourPair(s.stance);
+
+    btn.className = `stakeholder ${visible ? "" : "dim"} ${s.code === selectedCode ? "selected" : ""}`;
+    btn.dataset.name = s.name;
+    btn.style.setProperty("--x", `${8 + s.influence * .84}%`);
+    btn.style.setProperty("--y", `${92 - s.alignment * .84}%`);
+    btn.style.setProperty("--size", `${34 + (s.influence / 100) * 18}px`);
+    btn.style.setProperty("--dot-bg", pair[0]);
+    btn.style.setProperty("--dot-col", pair[1]);
+    btn.innerHTML = `<span>${s.code}</span>`;
+    btn.title = `${s.name} · ${stanceLabel(s.stance)} · Influence ${s.influence} · Alignment ${s.alignment}`;
+    btn.addEventListener("click", () => {
+      selectedCode = s.code;
+      render();
+    });
+
+    map.appendChild(btn);
+  });
+}
+
+function renderDetail(items){
+  let s = stakeholders.find(x => x.code === selectedCode);
+  if(!items.includes(s)) s = items[0] || stakeholders[0];
+  selectedCode = s.code;
+
+  const strategy = s.influence >= 70 && s.alignment >= 65
+    ? "Manage closely"
+    : s.influence >= 70 && s.alignment < 65
+      ? "Convert carefully"
+      : s.influence < 70 && s.alignment >= 65
+        ? "Mobilise as network support"
+        : "Monitor with targeted updates";
+
+  detail.innerHTML = `
+    <span class="status ${s.stance}">${stanceLabel(s.stance)}</span>
+    <div class="detail-title">${s.name}</div>
+
+    <div class="detail-meta">
+      <span class="detail-chip">${s.role}</span>
+      <span class="detail-chip">${s.group}</span>
+      <span class="detail-chip">${s.cadence}</span>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-stat">
+        <div class="detail-stat-label">Influence</div>
+        <div class="detail-stat-value">${s.influence}</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label">Alignment</div>
+        <div class="detail-stat-value">${s.alignment}</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label">Trust</div>
+        <div class="detail-stat-value">${s.trust}</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label">Resistance</div>
+        <div class="detail-stat-value">${s.resistance}</div>
+      </div>
+    </div>
+
+    <div class="bar-row">
+      <div class="bar-label">Influence</div>
+      <div class="track"><div class="fill" style="width:${s.influence}%;background:var(--accent);"></div></div>
+      <div class="bar-score">${s.influence}</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Alignment</div>
+      <div class="track"><div class="fill" style="width:${s.alignment}%;background:${colourFor(s.alignment)};"></div></div>
+      <div class="bar-score">${s.alignment}</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Trust</div>
+      <div class="track"><div class="fill" style="width:${s.trust}%;background:${colourFor(s.trust)};"></div></div>
+      <div class="bar-score">${s.trust}</div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Resistance</div>
+      <div class="track"><div class="fill" style="width:${s.resistance}%;background:${s.resistance > 55 ? "var(--red)" : "var(--amber)"};"></div></div>
+      <div class="bar-score">${s.resistance}</div>
+    </div>
+
+    <div class="engagement-note"><strong>${strategy}.</strong> ${s.note}</div>
+  `;
+}
+
+function renderRhythm(items){
+  const ordered = [...items]
+    .sort((a,b) => (b.influence + b.resistance) - (a.influence + a.resistance))
+    .slice(0,7);
+
+  rhythm.innerHTML = ordered.map(s => `
+    <div class="rhythm-card" data-code="${s.code}">
+      <div class="rhythm-top">
+        <div class="rhythm-name">${s.name}</div>
+        <div class="rhythm-cadence">${s.cadence}</div>
+      </div>
+      <div class="rhythm-note">${s.note}</div>
+    </div>
+  `).join("");
+
+  rhythm.querySelectorAll(".rhythm-card").forEach(card => {
+    card.addEventListener("click", () => {
+      selectedCode = card.dataset.code;
+      render();
+    });
+  });
+}
+
+function render(){
+  const items = filteredItems();
+  setSignals(items);
+  renderMap(items);
+  renderDetail(items);
+  renderRhythm(items);
+}
+
+document.querySelectorAll(".pill").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".pill").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeFilter = btn.dataset.filter;
+
+    const items = filteredItems();
+    if(items.length && !items.some(s => s.code === selectedCode)) selectedCode = items[0].code;
+
+    render();
+  });
+});
+
+render();
+</script>
 </body>
 </html>
