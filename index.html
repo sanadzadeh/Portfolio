@@ -195,6 +195,10 @@
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
   }
+  @media (max-width: 600px) {
+    .overlay-bar { justify-content: center; }
+    .overlay-artefact { display: none; }
+  }
   .overlay-home {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
@@ -212,13 +216,7 @@
     font-style: normal;
     color: var(--gold);
   }
-  .overlay-artefact {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-  }
+  .overlay-artefact { display: none; }
   .overlay iframe {
     flex: 1;
     width: 100%;
