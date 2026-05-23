@@ -317,6 +317,123 @@
   .filter-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
   .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
+  /* ─── Mobile filter trigger ─────────────────────────────────── */
+  .filter-mobile-trigger {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: .75rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.1em;
+    color: var(--ink-2);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 7px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: color var(--tr), border-color var(--tr);
+    white-space: nowrap;
+  }
+  .filter-mobile-trigger:hover { color: var(--accent); border-color: var(--accent); }
+  .filter-mobile-trigger svg { width: 12px; height: 12px; flex-shrink: 0; }
+  .filter-mobile-trigger .active-label {
+    color: var(--accent);
+    margin-left: 2px;
+  }
+
+  /* ─── Mobile filter panel ───────────────────────────────────── */
+  .filter-panel-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0,0,0,0.5);
+  }
+  .filter-panel-overlay.open { display: block; }
+
+  .filter-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 201;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-radius: 12px 12px 0 0;
+    padding: 0 0 env(safe-area-inset-bottom, 16px);
+    transform: translateY(100%);
+    transition: transform 0.28s ease;
+  }
+  .filter-panel-overlay.open .filter-panel {
+    transform: translateY(0);
+  }
+  .filter-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-panel-title {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .filter-panel-close {
+    background: none;
+    border: none;
+    color: var(--ink-3);
+    cursor: pointer;
+    padding: 4px;
+    font-size: 1rem;
+    line-height: 1;
+    transition: color var(--tr);
+  }
+  .filter-panel-close:hover { color: var(--ink); }
+  .filter-panel-list {
+    padding: 0.5rem 0 1rem;
+    overflow-y: auto;
+    max-height: 60vh;
+  }
+  .filter-panel-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    background: none;
+    border: none;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-2);
+    cursor: pointer;
+    text-align: left;
+    transition: color var(--tr), background var(--tr);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .filter-panel-btn:last-child { border-bottom: none; }
+  .filter-panel-btn:hover { background: var(--surface-alt); color: var(--ink); }
+  .filter-panel-btn.active { color: var(--accent); }
+  .filter-panel-btn .check {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    flex-shrink: 0;
+    transition: all var(--tr);
+  }
+  .filter-panel-btn.active .check {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 640px) {
+    .filter-row { display: none; }
+    .filter-mobile-trigger { display: flex; }
+  }
+
   /* ─── Library Grid ──────────────────────────────────────────── */
   .library-section { padding: 28px 0 80px; }
 
@@ -829,7 +946,26 @@
         </div>
         <span class="result-count" id="result-count"></span>
       </div>
-      <div class="filter-row" id="filter-row" role="group" aria-label="Category filters"></div>
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+        <button class="filter-mobile-trigger" id="filterMobileTrigger" aria-label="Open category filters">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 5h14M6 10h8M9 15h2"/>
+          </svg>
+          Categories<span class="active-label" id="mobileCategoryLabel"></span>
+        </button>
+        <div class="filter-row" id="filter-row" role="group" aria-label="Category filters"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile filter panel -->
+  <div class="filter-panel-overlay" id="filterPanelOverlay">
+    <div class="filter-panel" id="filterPanel">
+      <div class="filter-panel-header">
+        <span class="filter-panel-title">Categories</span>
+        <button class="filter-panel-close" id="filterPanelClose" aria-label="Close">✕</button>
+      </div>
+      <div class="filter-panel-list" id="filterPanelList"></div>
     </div>
   </div>
 
@@ -2627,19 +2763,53 @@ const randomBtn         = document.getElementById("random-btn");
 
 /* ─── FILTERS ────────────────────────────────────────────────────*/
 function buildFilters() {
+  const panelList = document.getElementById("filterPanelList");
+
   CATEGORIES.forEach(cat => {
+    // Desktop pill
     const btn = document.createElement("button");
     btn.className = "filter-btn" + (cat === "All" ? " active" : "");
     btn.textContent = cat;
-    btn.addEventListener("click", () => {
-      activeCategory = cat;
-      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      renderCards();
-    });
+    btn.addEventListener("click", () => selectCategory(cat));
     filterRow.appendChild(btn);
+
+    // Mobile panel button
+    const pBtn = document.createElement("button");
+    pBtn.className = "filter-panel-btn" + (cat === "All" ? " active" : "");
+    pBtn.dataset.cat = cat;
+    pBtn.innerHTML = `<span>${cat}</span><span class="check"></span>`;
+    pBtn.addEventListener("click", () => {
+      selectCategory(cat);
+      closeMobilePanel();
+    });
+    panelList.appendChild(pBtn);
   });
 }
+
+function selectCategory(cat) {
+  activeCategory = cat;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b.textContent === cat));
+  document.querySelectorAll(".filter-panel-btn").forEach(b => b.classList.toggle("active", b.dataset.cat === cat));
+  const label = document.getElementById("mobileCategoryLabel");
+  if (label) label.textContent = cat !== "All" ? `: ${cat}` : "";
+  renderCards();
+}
+
+function openMobilePanel() {
+  document.getElementById("filterPanelOverlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeMobilePanel() {
+  document.getElementById("filterPanelOverlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("filterMobileTrigger").addEventListener("click", openMobilePanel);
+document.getElementById("filterPanelClose").addEventListener("click", closeMobilePanel);
+document.getElementById("filterPanelOverlay").addEventListener("click", e => {
+  if (e.target === document.getElementById("filterPanelOverlay")) closeMobilePanel();
+});
 
 /* ─── SEARCH ─────────────────────────────────────────────────────*/
 function norm(s) { return s.toLowerCase(); }
@@ -2813,10 +2983,8 @@ function esc(str) {
 function resetAll() {
   searchInput.value = "";
   searchQuery = "";
-  activeCategory = "All";
   clearBtn.classList.remove("visible");
-  document.querySelectorAll(".filter-btn").forEach((b, i) => b.classList.toggle("active", i === 0));
-  renderCards();
+  selectCategory("All");
 }
 
 /* ─── EVENTS ─────────────────────────────────────────────────────*/
