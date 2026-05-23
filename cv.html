@@ -584,4 +584,10 @@
 </div>
 
 </body>
+<script>
+  if (window.self !== window.top) {
+    const backLink = document.querySelector('.back-link');
+    if (backLink) backLink.style.display = 'none';
+  }
+</script>
 </html>
