@@ -7,154 +7,833 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:        #141414;
-      --surface:   #1a1a1a;
-      --border:    rgba(255,255,255,0.07);
-      --text:      #f5f2ed;
-      --text-sub:  rgba(245,242,237,0.45);
-      --text-dim:  rgba(245,242,237,0.2);
-      --gold:      #c9a96e;
-      --gold-dim:  rgba(201,169,110,0.12);
+      --bg:           #141414;
+      --surface:      #1c1c1c;
+      --surface-alt:  #222222;
+      --border:       rgba(255,255,255,0.07);
+      --border-soft:  rgba(255,255,255,0.04);
+      --text:         #f5f2ed;
+      --text-sub:     rgba(245,242,237,0.55);
+      --text-dim:     rgba(245,242,237,0.25);
+      --accent:       #8b7ab0;
+      --accent-dim:   rgba(139,122,176,0.1);
+      --accent-mid:   rgba(139,122,176,0.22);
+      --font-serif:   'Cormorant Garamond', Georgia, serif;
+      --font-mono:    'DM Mono', 'Courier New', monospace;
+      --radius:       4px;
+      --tr:           160ms ease;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
+    html { font-size: 16px; }
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'DM Mono', monospace;
+      font-family: var(--font-mono);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
+
+    /* ── Header ── */
     header {
-      padding: 1.5rem 2.5rem;
+      background: var(--surface);
       border-bottom: 1px solid var(--border);
+      padding: 13px 2rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
       flex-shrink: 0;
     }
-    .artefact-name {
-      font-family: 'Cormorant Garamond', serif;
+    .site-logo {
+      font-family: var(--font-serif);
       font-weight: 300;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
+      color: var(--text);
       letter-spacing: 0.02em;
-      color: var(--text-sub);
     }
-    .artefact-name strong { font-weight: 400; color: var(--text); }
-    .status-badge {
+    .site-logo em { font-style: normal; color: var(--accent); }
+    .header-tag {
       font-size: 0.58rem;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid rgba(201,169,110,0.3);
-      padding: 0.3rem 0.7rem;
-      border-radius: 2px;
-      background: var(--gold-dim);
-    }
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 4rem 2.5rem;
-      text-align: center;
-    }
-    .placeholder-icon {
-      width: 48px;
-      height: 48px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 2rem;
       color: var(--text-dim);
     }
-    .placeholder-icon svg { width: 22px; height: 22px; }
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
+
+    /* ── Layout ── */
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 5rem;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* ── Section heading ── */
+    .section-eyebrow {
+      font-size: 0.55rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.4rem;
+    }
+    .section-title {
+      font-family: var(--font-serif);
       font-weight: 300;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      letter-spacing: 0.01em;
+      font-size: clamp(1.4rem, 3vw, 2rem);
       color: var(--text);
-      margin-bottom: 1rem;
-      line-height: 1.1;
+      margin-bottom: 0.5rem;
     }
-    .descriptor {
-      font-size: 0.72rem;
-      line-height: 1.8;
+    .section-sub {
+      font-size: 0.7rem;
       color: var(--text-sub);
-      max-width: 480px;
-      margin: 0 auto 3rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 580px;
     }
-    .meta-row {
+
+    /* ── Context bar ── */
+    .context-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.5rem;
+      margin-bottom: 2.5rem;
       display: flex;
-      gap: 2rem;
-      justify-content: center;
+      gap: 2.5rem;
       flex-wrap: wrap;
     }
-    .meta-item { text-align: left; }
-    .meta-label {
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
+    .ctx-item {}
+    .ctx-label {
+      font-size: 0.52rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-dim);
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.25rem;
     }
-    .meta-value { font-size: 0.68rem; color: var(--text-sub); }
-    footer {
-      padding: 1.5rem 2.5rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-shrink: 0;
+    .ctx-value {
+      font-size: 0.72rem;
+      color: var(--text-sub);
     }
-    .footer-text, .footer-tag {
-      font-size: 0.6rem;
+
+    /* ── Criteria weights ── */
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+    .criteria-card {
+      background: var(--surface);
+      padding: 1.1rem 1.25rem;
+      transition: background var(--tr);
+    }
+    .criteria-card:hover { background: var(--surface-alt); }
+    .criteria-name {
+      font-size: 0.68rem;
+      color: var(--text-sub);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    .criteria-weight {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .criteria-weight-label {
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-top: 0.2rem;
+    }
+
+    /* ── Matrix table ── */
+    .matrix-wrap {
+      overflow-x: auto;
+      margin-bottom: 2.5rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.68rem;
+    }
+    thead th {
+      text-align: left;
+      padding: 0.7rem 1rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.55rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--text-dim);
+      white-space: nowrap;
+    }
+    thead th.option-col { text-align: center; color: var(--accent); }
+    tbody tr {
+      border-bottom: 1px solid var(--border-soft);
+      transition: background var(--tr);
+    }
+    tbody tr:hover { background: var(--surface); }
+    tbody td {
+      padding: 0.75rem 1rem;
+      color: var(--text-sub);
+      vertical-align: middle;
+    }
+    tbody td.criteria-cell { color: var(--text); font-size: 0.7rem; }
+    tbody td.weight-cell {
+      color: var(--text-dim);
+      font-size: 0.62rem;
+      white-space: nowrap;
+    }
+    tbody td.score-cell {
+      text-align: center;
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      color: var(--text-sub);
+    }
+    tbody td.weighted-cell {
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+
+    /* ── Score bar inside cell ── */
+    .score-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+    }
+    .score-bar {
+      width: 36px;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    /* ── Results ── */
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    @media (max-width: 700px) { .results-grid { grid-template-columns: 1fr; } }
+
+    .result-card {
+      background: var(--surface);
+      padding: 1.5rem 1.75rem;
+      position: relative;
+      transition: background var(--tr);
+    }
+    .result-card:hover { background: var(--surface-alt); }
+    .result-card.winner {
+      background: var(--accent-dim);
+      border-left: 2px solid var(--accent);
+    }
+    .result-rank {
+      font-size: 0.52rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+    .result-card.winner .result-rank { color: var(--accent); }
+    .result-name {
+      font-family: var(--font-serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .result-score-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+    .result-score {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .result-score-max {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+    .result-bar-wrap {
+      height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+    .result-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.6s ease;
+    }
+    .result-desc {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+    .result-card.winner .result-desc { color: var(--text-sub); }
+
+    /* ── Criteria expandable ── */
+    .criteria-expand {
+      margin-bottom: 2.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .criteria-summary {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1.25rem;
+      background: var(--surface);
+      cursor: pointer;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .criteria-summary::-webkit-details-marker { display: none; }
+    .criteria-summary-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .criteria-pill {
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 3px 8px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .criteria-pill span { color: var(--accent); margin-left: 3px; }
+    .criteria-toggle-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      margin-left: auto;
+      white-space: nowrap;
+      transition: color var(--tr);
+    }
+    .criteria-expand[open] .criteria-toggle-label { content: "hide ↑"; }
+    .criteria-expand[open] .criteria-grid { padding: 0 1px 1px; }
+
+    /* ── Radar chart ── */
+    .radar-wrap {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .radar-svg-wrap {
+      flex-shrink: 0;
+    }
+    .radar-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding-top: 0.5rem;
+      flex: 1;
+      min-width: 160px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.62rem;
+      color: var(--text-sub);
+    }
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── Result card criterion bars ── */
+    .result-bars {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .result-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .result-bar-label {
+      font-size: 0.52rem;
+      color: var(--text-dim);
+      width: 90px;
+      flex-shrink: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .result-bar-track {
+      flex: 1;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .result-bar-inner {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.6s ease;
+    }
+    .result-bar-val {
+      font-size: 0.52rem;
+      color: var(--text-dim);
+      width: 20px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .rec-box {
+      margin-top: 2rem;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-mid);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.75rem;
+    }
+    .rec-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .rec-text {
+      font-size: 0.75rem;
+      line-height: 1.8;
+      color: var(--text-sub);
+    }
+    .rec-text strong { color: var(--text); font-weight: 400; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      flex-shrink: 0;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="artefact-name">Khaled Sanad: <strong>Decision Matrix</strong></div>
-    <span class="status-badge">In Development</span>
-  </header>
-  <main>
-    <div class="placeholder-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <rect x="3" y="3" width="7" height="7" rx="1"/>
-        <rect x="14" y="3" width="7" height="7" rx="1"/>
-        <rect x="3" y="14" width="7" height="7" rx="1"/>
-        <rect x="14" y="14" width="7" height="7" rx="1"/>
-      </svg>
+
+<header>
+  <div class="site-logo">Khaled Sanad: <em>Decision Matrix</em></div>
+  <span class="header-tag">Decision · Consulting</span>
+</header>
+
+<div class="page">
+
+  <div class="section-eyebrow">Strategic Evaluation</div>
+  <h1 class="section-title">Vendor Selection — Resource Management</h1>
+  <p class="section-sub">Three options evaluated across six weighted criteria. Independent assessment across technical, commercial, and delivery dimensions.</p>
+
+  <div style="
+    margin-bottom: 2.5rem;
+    padding: 1.1rem 1.5rem;
+    background: var(--accent-dim);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  ">
+    <span style="font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.15rem;color:var(--text);letter-spacing:0.01em;">Meridian Core</span>
+    <span style="font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);">is the recommended vendor</span>
+    <span style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--accent);margin-left:auto;letter-spacing:-0.01em;">74.7 <span style="font-size:0.75rem;color:var(--text-dim);font-family:'DM Mono',monospace;font-weight:300;">/ 100</span></span>
+    <a href="#rec-detail" style="font-family:'DM Mono',monospace;font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-dim);border:1px solid var(--border);padding:0.3rem 0.75rem;border-radius:2px;text-decoration:none;transition:color 0.16s,border-color 0.16s;" onmouseover="this.style.color='var(--accent)';this.style.borderColor='var(--accent)';" onmouseout="this.style.color='var(--text-dim)';this.style.borderColor='var(--border)';">Details ↓</a>
+  </div>
+
+  <!-- Context + Radar -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:2.5rem;">
+
+    <!-- Context box -->
+    <div style="background:var(--surface);padding:1.75rem 2rem;">
+      <div class="section-eyebrow" style="margin-bottom:0.75rem;">Programme</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:var(--text);margin-bottom:1.25rem;line-height:1.2;">Resource Management<br><span style="font-size:0.9rem;color:var(--text-sub);">FY2025</span></div>
+      <div style="display:flex;flex-direction:column;gap:0;">
+        <div style="display:flex;justify-content:space-between;font-size:0.65rem;padding:0.55rem 0;border-bottom:1px solid var(--border-soft);">
+          <span style="color:var(--text-dim);">Decision type</span>
+          <span style="color:var(--text-sub);">Selection</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.65rem;padding:0.55rem 0;border-bottom:1px solid var(--border-soft);">
+          <span style="color:var(--text-dim);">Options evaluated</span>
+          <span style="color:var(--text-sub);">3</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.65rem;padding:0.55rem 0;border-bottom:1px solid var(--border-soft);">
+          <span style="color:var(--text-dim);">Criteria dimensions</span>
+          <span style="color:var(--text-sub);">6 weighted</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.65rem;padding:0.55rem 0;border-bottom:1px solid var(--border-soft);">
+          <span style="color:var(--text-dim);">Max score</span>
+          <span style="color:var(--text-sub);">100 points</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.65rem;padding:0.55rem 0;">
+          <span style="color:var(--text-dim);">Recommended</span>
+          <span style="color:var(--accent);">Meridian Core</span>
+        </div>
+      </div>
     </div>
-    <h1>Decision Matrix</h1>
-    <p class="descriptor">Weighted-criteria evaluation tool for high-stakes business choices. Define options, assign criteria weights, and surface a transparent, explainable scoring and ranking framework for vendor selection, investment evaluation, initiative prioritisation, and strategic trade-off analysis.</p>
-    <div class="meta-row">
-      <div class="meta-item">
-        <div class="meta-label">Category</div>
-        <div class="meta-value">Decision · Consulting</div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">Status</div>
-        <div class="meta-value">In development</div>
-      </div>
-      <div class="meta-item">
-        <div class="meta-label">Data model</div>
-        <div class="meta-value">Embedded · No backend</div>
+
+    <!-- Radar box -->
+    <div style="background:var(--surface);padding:1.75rem 2rem;display:flex;flex-direction:column;">
+      <div class="section-eyebrow" style="margin-bottom:0.75rem;">Radar Comparison</div>
+      <div style="display:flex;gap:1.25rem;align-items:center;flex:1;">
+        <canvas id="radarCanvas" width="220" height="220" style="flex-shrink:0;"></canvas>
+        <div id="radar-legend" style="display:flex;flex-direction:column;gap:0.5rem;"></div>
       </div>
     </div>
-  </main>
-  <footer>
-    <span class="footer-text">Khaled Sanad — Portfolio</span>
-    <span class="footer-tag">Decision · Consulting</span>
-  </footer>
+
+  </div>
+
+  <div class="section-eyebrow">Ranked Results</div>
+  <p class="section-sub" style="margin-bottom:1rem;">Total weighted score out of 100. Higher is preferred.</p>
+  <div class="results-grid" id="results-grid"></div>
+
+  <!-- Scoring matrix -->
+  <div class="section-eyebrow" style="margin-top:2.5rem;">Scoring Matrix</div>
+  <p class="section-sub" style="margin-bottom:1rem;">Raw score 1–10 per criterion. Weighted score = raw × (weight / 10).</p>
+  <div class="matrix-wrap">
+    <table id="matrix-table">
+      <thead>
+        <tr>
+          <th>Criterion</th>
+          <th>Weight</th>
+          <th class="option-col">Meridian Core</th>
+          <th class="option-col">Nexum Platform</th>
+          <th class="option-col">Crestline Suite</th>
+        </tr>
+      </thead>
+      <tbody id="matrix-body"></tbody>
+    </table>
+  </div>
+
+  <!-- Criteria weights -->
+  <details class="criteria-expand" id="criteria-details" style="margin-top:2.5rem;">
+    <summary class="criteria-summary">
+      <span class="section-eyebrow" style="display:inline;margin:0;">Criteria Weights</span>
+      <span class="criteria-summary-pills" id="criteria-pills"></span>
+      <span class="criteria-toggle-label">show all ↓</span>
+    </summary>
+    <div class="criteria-grid" id="criteria-grid" style="margin-top:0.75rem;"></div>
+  </details>
+
+  <div class="rec-box" id="rec-detail" style="margin-top:2.5rem;">
+    <div class="rec-label">Recommendation & Rationale</div>
+    <p class="rec-text" id="rec-text"></p>
+    <div style="margin-top:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--accent-mid);border-radius:2px;overflow:hidden;">
+      <div style="background:var(--surface);padding:1rem 1.25rem;">
+        <div style="font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;">Strengths</div>
+        <div style="font-size:0.68rem;line-height:1.75;color:var(--text-sub);">
+          Highest score on Vendor Maturity (9/10) — strongest local support network and APRA engagement record of the three options. Technical Fit score of 8/10 confirms alignment with target-state architecture. Implementation risk rated manageable at 7/10, with an existing delivery team in-market.
+        </div>
+      </div>
+      <div style="background:var(--surface);padding:1rem 1.25rem;">
+        <div style="font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;">Conditions</div>
+        <div style="font-size:0.68rem;line-height:1.75;color:var(--text-sub);">
+          Approval is conditional on: (1) reference check with two comparable APRA-regulated institutions completed within 30 days; (2) fixed-price delivery commitment from vendor covering Phase 1 and Phase 2; (3) independent review of TCO assumptions by Group Finance prior to contract execution.
+        </div>
+      </div>
+      <div style="background:var(--surface);padding:1rem 1.25rem;">
+        <div style="font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;">Risks</div>
+        <div style="font-size:0.68rem;line-height:1.75;color:var(--text-sub);">
+          TCO is the weakest dimension at 6/10 — licensing and integration costs are above benchmark. If cost assumptions are not locked before contract, overrun risk is material. UX score of 7/10 warrants a targeted change management programme ahead of rollout to minimise adoption friction.
+        </div>
+      </div>
+      <div style="background:var(--surface);padding:1rem 1.25rem;">
+        <div style="font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;">Fallback</div>
+        <div style="font-size:0.68rem;line-height:1.75;color:var(--text-sub);">
+          If reference checks reveal material concerns or vendor cannot commit to fixed-price terms, Crestline Suite (score 68.4) is the recommended fallback. Its TCO advantage and strong regulatory compliance posture (9/10) make it viable under a cost-constrained scenario, subject to a separate technical fit assessment.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <span>Decision Matrix — Weighted-criteria evaluation framework.</span>
+  <span>Khaled Sanad · Portfolio</span>
+</footer>
+
+<script>
+const CRITERIA = [
+  { name: "Technical Fit",         weight: 25, desc: "Architecture alignment and integration capability" },
+  { name: "Implementation Risk",   weight: 20, desc: "Delivery complexity, timeline, and change risk" },
+  { name: "Total Cost of Ownership", weight: 20, desc: "Licensing, integration, and 5-year run cost" },
+  { name: "Vendor Maturity",       weight: 15, desc: "Market presence, financial stability, and support model" },
+  { name: "Regulatory Compliance", weight: 12, desc: "APRA, AML/CTF, and data sovereignty requirements" },
+  { name: "User Experience",       weight: 8,  desc: "Operator interface and end-user journey quality" },
+];
+
+const OPTIONS = [
+  {
+    name: "Meridian Core",
+    scores: [8, 7, 6, 9, 8, 7],
+    desc: "Established enterprise platform with strong APRA alignment and deep local support network. Higher TCO offset by low implementation risk."
+  },
+  {
+    name: "Nexum Platform",
+    scores: [9, 5, 8, 7, 7, 9],
+    desc: "Modern cloud-native architecture with excellent UX. Implementation risk elevated due to limited local delivery capability and newer regulatory certifications."
+  },
+  {
+    name: "Crestline Suite",
+    scores: [6, 8, 9, 6, 9, 6],
+    desc: "Lowest TCO and strong compliance posture. Technical fit is adequate but below benchmark. Best suited as a conservative fallback option."
+  }
+];
+
+/* ── Build criteria cards ── */
+const criteriaGrid = document.getElementById("criteria-grid");
+const criteriaPills = document.getElementById("criteria-pills");
+CRITERIA.forEach(c => {
+  const pill = document.createElement("span");
+  pill.className = "criteria-pill";
+  pill.innerHTML = `${c.name}<span>${c.weight}%</span>`;
+  criteriaPills.appendChild(pill);
+
+  // full card in expanded grid
+  const card = document.createElement("div");
+  card.className = "criteria-card";
+  card.innerHTML = `
+    <div class="criteria-name">${c.name}</div>
+    <div class="criteria-weight">${c.weight}</div>
+    <div class="criteria-weight-label">Weight · ${c.desc}</div>
+  `;
+  criteriaGrid.appendChild(card);
+});
+
+// toggle label
+const details = document.getElementById("criteria-details");
+const toggleLabel = details.querySelector(".criteria-toggle-label");
+details.addEventListener("toggle", () => {
+  toggleLabel.textContent = details.open ? "hide ↑" : "show all ↓";
+});
+
+/* ── Build matrix rows ── */
+const matrixBody = document.getElementById("matrix-body");
+CRITERIA.forEach((c, ci) => {
+  const tr = document.createElement("tr");
+  const weightedScores = OPTIONS.map(o => +(o.scores[ci] * c.weight / 10).toFixed(1));
+  tr.innerHTML = `
+    <td class="criteria-cell">${c.name}</td>
+    <td class="weight-cell">${c.weight}%</td>
+    ${OPTIONS.map((o, oi) => `
+      <td class="score-cell">
+        <div class="score-bar-wrap">
+          <div class="score-bar"><div class="score-bar-fill" style="width:${o.scores[ci]*10}%"></div></div>
+          ${o.scores[ci]}
+          <span style="font-size:0.55rem;color:var(--text-dim);margin-left:2px">(${weightedScores[oi]})</span>
+        </div>
+      </td>
+    `).join("")}
+  `;
+  matrixBody.appendChild(tr);
+});
+
+/* ── Totals row ── */
+const totals = OPTIONS.map(o =>
+  CRITERIA.reduce((sum, c, ci) => sum + o.scores[ci] * c.weight / 10, 0).toFixed(1)
+);
+
+/* ── Build totals row ── */
+const totalRow = document.createElement("tr");
+totalRow.style.borderTop = "1px solid var(--border)";
+totalRow.innerHTML = `
+  <td class="criteria-cell" style="color:var(--text-dim);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;">Total</td>
+  <td></td>
+  ${totals.map(t => `<td class="score-cell" style="color:var(--accent);font-size:1.1rem;">${t}</td>`).join("")}
+`;
+matrixBody.appendChild(totalRow);
+
+/* ── Results ── */
+const ranked = OPTIONS.map((o, i) => ({
+  ...o,
+  total: parseFloat(totals[i])
+})).sort((a, b) => b.total - a.total);
+
+const maxScore = Math.max(...ranked.map(r => r.total));
+const resultsGrid = document.getElementById("results-grid");
+
+ranked.forEach((o, i) => {
+  const card = document.createElement("div");
+  card.className = "result-card" + (i === 0 ? " winner" : "");
+
+  const barColor = i === 0 ? "var(--accent)" : i === 1 ? "rgba(139,122,176,0.5)" : "rgba(139,122,176,0.3)";
+
+  const barsHTML = CRITERIA.map((c, ci) => {
+    const raw = o.scores[ci];
+    return `
+      <div class="result-bar-row">
+        <div class="result-bar-label">${c.name}</div>
+        <div class="result-bar-track">
+          <div class="result-bar-inner" style="width:${raw*10}%;background:${barColor}"></div>
+        </div>
+        <div class="result-bar-val">${raw}</div>
+      </div>
+    `;
+  }).join("");
+
+  card.innerHTML = `
+    <div class="result-rank">${i === 0 ? "★ Recommended" : `Rank ${i + 1}`}</div>
+    <div class="result-name">${o.name}</div>
+    <div class="result-score-row">
+      <div class="result-score">${o.total}</div>
+      <div class="result-score-max">/ 100</div>
+    </div>
+    <div class="result-desc">${o.desc}</div>
+    <div class="result-bars">${barsHTML}</div>
+  `;
+  resultsGrid.appendChild(card);
+});
+
+/* ── Recommendation ── */
+const winner = ranked[0];
+const runnerup = ranked[1];
+const gap = (winner.total - runnerup.total).toFixed(1);
+document.getElementById("rec-text").innerHTML = `
+  <strong>${winner.name}</strong> is the recommended option with a weighted score of <strong>${winner.total} / 100</strong> — a margin of <strong>${gap} points</strong> over the next-ranked option. 
+  It leads on Technical Fit and Vendor Maturity, which carry the highest combined weighting (40%). 
+  Implementation risk is moderate and manageable within the programme timeline. 
+  A conditional approval is recommended subject to successful reference checks with two comparable APRA-regulated institutions and a fixed-price delivery commitment from the vendor.
+`;
+
+/* ── Radar chart ── */
+const OPTION_COLOURS = [
+  { stroke: "rgba(139,122,176,0.9)",  fill: "rgba(139,122,176,0.15)" },
+  { stroke: "rgba(107,143,168,0.75)", fill: "rgba(107,143,168,0.1)"  },
+  { stroke: "rgba(176,96,80,0.65)",   fill: "rgba(176,96,80,0.08)"   },
+];
+
+const canvas = document.getElementById("radarCanvas");
+const ctx = canvas.getContext("2d");
+const cx = 110, cy = 110, R = 82, n = CRITERIA.length;
+
+function radarPoint(i, val, max) {
+  const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+  const r = (val / max) * R;
+  return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+}
+
+function axisPoint(i, r) {
+  const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+  return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+}
+
+// Grid rings
+[2, 4, 6, 8, 10].forEach(v => {
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const p = axisPoint(i, (v / 10) * R);
+    i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+  }
+  ctx.closePath();
+  ctx.strokeStyle = "rgba(255,255,255,0.06)";
+  ctx.lineWidth = 1;
+  ctx.stroke();
+});
+
+// Axis lines
+for (let i = 0; i < n; i++) {
+  const p = axisPoint(i, R);
+  ctx.beginPath();
+  ctx.moveTo(cx, cy);
+  ctx.lineTo(p.x, p.y);
+  ctx.strokeStyle = "rgba(255,255,255,0.08)";
+  ctx.lineWidth = 1;
+  ctx.stroke();
+}
+
+// Axis labels
+ctx.font = "9px 'DM Mono', monospace";
+ctx.fillStyle = "rgba(245,242,237,0.35)";
+ctx.textAlign = "center";
+ctx.textBaseline = "middle";
+CRITERIA.forEach((c, i) => {
+  const p = axisPoint(i, R + 18);
+  const shortName = c.name.replace("Total Cost of Ownership", "TCO").replace("Implementation Risk", "Impl. Risk").replace("Regulatory Compliance", "Regulatory").replace("Vendor Maturity", "Maturity");
+  ctx.fillText(shortName, p.x, p.y);
+});
+
+// Option polygons
+OPTIONS.forEach((o, oi) => {
+  const col = OPTION_COLOURS[oi];
+  ctx.beginPath();
+  CRITERIA.forEach((c, ci) => {
+    const p = radarPoint(ci, o.scores[ci], 10);
+    ci === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = col.fill;
+  ctx.fill();
+  ctx.strokeStyle = col.stroke;
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Dots
+  CRITERIA.forEach((c, ci) => {
+    const p = radarPoint(ci, o.scores[ci], 10);
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.fillStyle = col.stroke;
+    ctx.fill();
+  });
+});
+
+// Legend
+const legendEl = document.getElementById("radar-legend");
+OPTIONS.forEach((o, i) => {
+  const item = document.createElement("div");
+  item.className = "legend-item";
+  item.innerHTML = `
+    <div class="legend-dot" style="background:${OPTION_COLOURS[i].stroke}"></div>
+    <span>${o.name}</span>
+  `;
+  legendEl.appendChild(item);
+});
+</script>
+
 </body>
 </html>
