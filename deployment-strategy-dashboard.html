@@ -4,52 +4,59 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blockchain Settlement Deployment — Khaled Sanad</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg:#141414;
-  --surface:#1c1c1c;
-  --surface-alt:#222222;
-  --surface-hi:#282828;
-  --border:rgba(255,255,255,0.07);
-  --border-soft:rgba(255,255,255,0.04);
-  --ink:#f5f2ed;
-  --ink-2:rgba(245,242,237,0.66);
-  --ink-3:rgba(245,242,237,0.36);
-  --accent:#c8852a;
-  --accent-dim:rgba(200,133,42,0.11);
-  --accent-mid:rgba(200,133,42,0.25);
-  --green:#5a9e6f;
-  --green-dim:rgba(90,158,111,0.12);
-  --amber:#c8852a;
-  --amber-dim:rgba(200,133,42,0.12);
-  --red:#b05040;
-  --red-dim:rgba(176,80,64,0.12);
-  --blue:#5a7fa8;
-  --blue-dim:rgba(90,127,168,0.12);
+  --bg:#0f1214;
+  --surface:#171b1e;
+  --surface-alt:#202428;
+  --surface-hi:#232a2f;
+  --border:rgba(232,236,240,.08);
+  --border-soft:rgba(232,236,240,.045);
+  --ink:#f4f3ef;
+  --ink-2:rgba(244,243,239,.72);
+  --ink-3:rgba(244,243,239,.43);
+  --accent:#93a9b2;
+  --accent-dim:rgba(145,166,174,.12);
+  --accent-mid:rgba(145,166,174,.28);
+  --green:#72a287;
+  --green-dim:rgba(114,162,135,.13);
+  --amber:#b89a63;
+  --amber-dim:rgba(184,154,99,.13);
+  --red:#b36d64;
+  --red-dim:rgba(179,109,100,.13);
+  --blue:#7d97b2;
+  --blue-dim:rgba(125,151,178,.13);
   --font-serif:'Cormorant Garamond', Georgia, serif;
-  --font-mono:'DM Mono','Courier New',monospace;
-  --radius:4px;
+  --font-sans:'Instrument Sans', 'Segoe UI', 'Aptos', system-ui, sans-serif;
+  --radius:6px;
   --tr:160ms ease;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:var(--font-mono);
-  background:var(--bg);
+  font-family:var(--font-sans);
+  font-weight:400;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(145,166,174,.07), transparent 32%),
+    radial-gradient(circle at 100% 20%, rgba(125,151,178,.05), transparent 28%),
+    var(--bg);
   color:var(--ink);
   min-height:100vh;
   display:flex;
   flex-direction:column;
   -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  font-variant-numeric:tabular-nums;
 }
 
 .site-header{
-  background:var(--surface);
+  background:rgba(23,26,29,.92);
+  backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border);
-  padding:13px 2rem;
+  padding:14px 2rem;
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -60,60 +67,172 @@ body{
 
 .site-logo{
   font-family:var(--font-serif);
+  font-size:1.18rem;
   font-weight:300;
-  font-size:1.05rem;
-  letter-spacing:.02em;
+  letter-spacing:.01em;
 }
 
-.site-logo em{font-style:normal;color:var(--accent)}
+.site-logo em{
+  font-style:normal;
+  color:var(--accent);
+}
 
 .header-right{
   display:flex;
+  gap:.75rem;
   align-items:center;
-  gap:1rem;
+  flex-wrap:wrap;
+}
+
+.as-of,
+.prog-badge,
+.gauge-note,
+.gauge-legend-row,
+.budget-num,
+.readiness-max,
+
+.gauge-marker-key{
+  width:100%;
+  display:grid;
+  gap:.42rem;
+  margin-top:.85rem;
+  padding-top:.75rem;
+  border-top:1px solid var(--border-soft);
+}
+
+.gauge-marker-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.8rem;
+  font-size:.78rem;
+  color:var(--ink-3);
+}
+
+.gauge-marker-label{
+  display:flex;
+  align-items:center;
+  gap:.45rem;
+  color:var(--ink-2);
+}
+
+.marker-swatch{
+  display:inline-block;
+  width:18px;
+  height:2px;
+  border-radius:2px;
+  background:var(--blue);
+}
+
+.marker-swatch.target{
+  width:20px;
+  height:3px;
+  background:var(--green);
+}
+
+.bullet-track{
+  position:relative;
+  height:4px;
+  background:var(--border);
+  border-radius:2px;
+  overflow:visible;
+}
+
+.bullet-fill{
+  height:100%;
+  border-radius:2px;
+  transition:width .5s ease;
+}
+
+.bullet-target{
+  position:absolute;
+  top:-4px;
+  width:2px;
+  height:12px;
+  border-radius:2px;
+  background:var(--ink);
+  opacity:.62;
+}
+
+.bullet-target::after{
+  content:attr(data-label);
+  position:absolute;
+  top:-16px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:.58rem;
+  font-weight:500;
+  color:var(--ink-3);
+  white-space:nowrap;
+  letter-spacing:.01em;
+}
+
+.bullet-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:.8rem;
+  margin-top:.4rem;
+  font-size:.72rem;
+  color:var(--ink-3);
+}
+
+.bullet-meta strong{
+  font-weight:500;
+  color:var(--ink-2);
+}
+
+footer{
+  font-family:var(--font-sans);
+  font-weight:500;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+}
+
+.folder-tab,
+.card-title,
+.kpi-label,
+.risk-filter-btn{
+  font-family:var(--font-sans);
+  font-weight:500;
+  letter-spacing:.01em;
+  text-transform:none;
 }
 
 .as-of{
   font-size:.58rem;
   color:var(--ink-3);
-  letter-spacing:.08em;
 }
 
 .prog-badge{
-  font-size:.55rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
+  font-size:.54rem;
   color:var(--accent);
   border:1px solid var(--accent-mid);
   background:var(--accent-dim);
-  padding:.28rem .7rem;
-  border-radius:2px;
+  padding:.32rem .72rem;
+  border-radius:999px;
 }
 
 .folder-nav{
   display:flex;
   align-items:flex-end;
-  gap:3px;
-  padding:1.35rem 2rem 0;
-  background:var(--bg);
+  gap:4px;
+  padding:1.25rem 2rem 0;
   position:sticky;
-  top:47px;
+  top:50px;
   z-index:190;
   overflow-x:auto;
+  background:var(--bg);
 }
 
 .folder-tab{
-  font-family:var(--font-mono);
-  font-size:.58rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
+  font-size:.74rem;
   color:var(--ink-3);
   background:var(--surface);
   border:1px solid var(--border);
   border-bottom:none;
-  padding:.62rem 1.25rem .72rem;
+  padding:.62rem 1.2rem .72rem;
   cursor:pointer;
-  border-radius:5px 5px 0 0;
+  border-radius:6px 6px 0 0;
   transition:color var(--tr),background var(--tr),transform var(--tr);
   white-space:nowrap;
   position:relative;
@@ -129,22 +248,21 @@ body{
   color:var(--accent);
   background:var(--surface-hi);
   border-bottom:1px solid var(--surface-hi);
-  z-index:2;
   transform:translateY(-2px);
 }
 
 .folder-content{
   background:var(--surface-hi);
   border:1px solid var(--border);
-  border-radius:0 4px 4px 4px;
+  border-radius:0 6px 6px 6px;
   margin:0 2rem 3rem;
-  padding:1.75rem;
+  padding:1.6rem;
   flex:1;
 }
 
 .tab-panel{
   display:none;
-  animation:fadeUp .2s ease both;
+  animation:fadeUp .18s ease both;
 }
 
 .tab-panel.active{display:block}
@@ -157,12 +275,13 @@ body{
 .chip{
   display:inline-flex;
   align-items:center;
-  gap:4px;
-  font-size:.52rem;
-  letter-spacing:.1em;
+  gap:5px;
+  font-size:.64rem;
+  font-weight:500;
+  letter-spacing:.02em;
   text-transform:uppercase;
-  padding:.22rem .6rem;
-  border-radius:100px;
+  padding:.24rem .62rem;
+  border-radius:999px;
   white-space:nowrap;
 }
 
@@ -184,15 +303,13 @@ body{
   background:var(--surface);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  padding:1.25rem 1.5rem;
+  padding:1.2rem 1.4rem;
 }
 
 .card-title{
-  font-size:.55rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
+  font-size:.74rem;
   color:var(--ink-3);
-  margin-bottom:1rem;
+  margin-bottom:.9rem;
 }
 
 .kpi-row{
@@ -203,33 +320,32 @@ body{
   border:1px solid var(--border);
   border-radius:var(--radius);
   overflow:hidden;
-  margin-bottom:1.5rem;
+  margin-bottom:1.4rem;
 }
 
 .kpi{
   background:var(--surface);
-  padding:1.1rem 1.25rem;
+  padding:1rem 1.15rem;
 }
 
 .kpi-label{
-  font-size:.52rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
+  font-size:.66rem;
   color:var(--ink-3);
-  margin-bottom:.42rem;
+  margin-bottom:.4rem;
 }
 
 .kpi-val{
   font-family:var(--font-serif);
-  font-size:1.8rem;
+  font-size:2rem;
   font-weight:300;
   line-height:1;
-  margin-bottom:.25rem;
+  margin-bottom:.28rem;
 }
 
 .kpi-sub{
-  font-size:.58rem;
+  font-size:.84rem;
   color:var(--ink-3);
+  font-weight:300;
 }
 
 .kpi-val.green{color:var(--green)}
@@ -258,25 +374,98 @@ body{
 
 .ov-grid{
   display:grid;
-  grid-template-columns:230px 1fr 280px;
+  grid-template-columns:minmax(440px,1.08fr) minmax(340px,.92fr) 290px;
   gap:1px;
   background:var(--border);
   border:1px solid var(--border);
   border-radius:var(--radius);
   overflow:hidden;
-  margin-bottom:1.5rem;
+  margin-bottom:1.4rem;
 }
 
 .ov-cell{
   background:var(--surface-hi);
-  padding:1.25rem 1.5rem;
+  padding:1.2rem 1.4rem;
 }
 
+
 .gauge-cell{
+  display:block;
+}
+
+.gauge-layout{
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:1.25rem;
+  align-items:center;
+}
+
+.gauge-visual{
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
+}
+
+.gauge-explainer{
+  border-left:1px solid var(--border-soft);
+  padding-left:1.1rem;
+}
+
+.gauge-explainer-title{
+  font-size:.74rem;
+  font-weight:500;
+  letter-spacing:.01em;
+  color:var(--ink-3);
+  margin-bottom:.65rem;
+}
+
+.gauge-explainer p{
+  font-size:.82rem;
+  color:var(--ink-2);
+  line-height:1.42;
+  margin-bottom:.75rem;
+}
+
+.gauge-mobile-explainer{
+  display:none;
+  width:100%;
+  margin-top:.85rem;
+  border-top:1px solid var(--border-soft);
+  padding-top:.75rem;
+}
+
+.gauge-mobile-explainer summary{
+  cursor:pointer;
+  color:var(--accent);
+  font-size:.78rem;
+  font-weight:500;
+  letter-spacing:.01em;
+  list-style:none;
+}
+
+.gauge-mobile-explainer summary::-webkit-details-marker{
+  display:none;
+}
+
+.gauge-mobile-explainer summary::after{
+  content:" +";
+  color:var(--ink-3);
+}
+
+.gauge-mobile-explainer[open] summary::after{
+  content:" –";
+}
+
+.gauge-mobile-body{
+  padding-top:.7rem;
+}
+
+
+.gauge-note{
+  font-size:.55rem;
+  color:var(--ink-3);
+  margin-top:.28rem;
 }
 
 .gauge-legend{
@@ -299,33 +488,46 @@ body{
   color:var(--ink-2);
 }
 
+.kpi-mini-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--border);
+  padding:0;
+}
+
+.kpi-mini{
+  background:var(--surface-hi);
+  padding:1rem 1.15rem;
+}
+
 .two-col{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:1.5rem;
-  margin-bottom:1.5rem;
+  gap:1.4rem;
+  margin-bottom:1.4rem;
 }
 
 .context-grid{
   display:grid;
-  grid-template-columns:1.25fr .75fr;
-  gap:1.5rem;
-  margin-bottom:1.5rem;
+  grid-template-columns:1.2fr .8fr;
+  gap:1.4rem;
+  margin-bottom:1.4rem;
 }
 
 .context-text{
-  font-size:.68rem;
+  font-size:.9rem;
   color:var(--ink-2);
-  line-height:1.75;
+  line-height:1.48;
+  max-width:780px;
 }
 
 .attention-list{
-  display:flex;
-  flex-direction:column;
+  display:grid;
   gap:.65rem;
-  font-size:.64rem;
+  font-size:.88rem;
   color:var(--ink-2);
-  line-height:1.55;
+  line-height:1.42;
 }
 
 .attention-list span{
@@ -333,8 +535,7 @@ body{
 }
 
 .overview-gantt-card{
-  margin-bottom:1.5rem;
-  background:var(--surface);
+  margin-bottom:1.4rem;
 }
 
 .mini-gantt{
@@ -344,13 +545,13 @@ body{
 
 .mini-gantt-row{
   display:grid;
-  grid-template-columns:215px 1fr 56px;
+  grid-template-columns:205px 1fr 52px;
   gap:.85rem;
   align-items:center;
 }
 
 .mini-gantt-label{
-  font-size:.62rem;
+  font-size:.86rem;
   color:var(--ink-2);
   white-space:nowrap;
   overflow:hidden;
@@ -370,7 +571,7 @@ body{
   top:4px;
   height:8px;
   border-radius:2px;
-  opacity:.8;
+  opacity:.84;
 }
 
 .mini-gantt-range.on-track{background:var(--green)}
@@ -391,25 +592,25 @@ body{
 
 .mini-gantt-pct{
   font-family:var(--font-serif);
-  font-size:1rem;
+  font-size:1.05rem;
   color:var(--ink-2);
   text-align:right;
 }
 
 .month-ruler{
   display:grid;
-  grid-template-columns:215px repeat(12,1fr) 56px;
+  grid-template-columns:205px repeat(12,1fr) 52px;
   gap:.85rem;
   margin-bottom:.65rem;
-  font-size:.48rem;
-  letter-spacing:.08em;
+  font-size:.52rem;
+  font-weight:400;
+  letter-spacing:.075em;
   color:var(--ink-3);
   text-transform:uppercase;
 }
 
 .gantt-wrap{
   overflow-x:auto;
-  margin-bottom:1.5rem;
 }
 
 .gantt-table{
@@ -419,20 +620,20 @@ body{
 }
 
 .gantt-table th{
-  font-size:.52rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--ink-3);
-  padding:.5rem .75rem;
+  font-size:.7rem;
+  letter-spacing:.01em;
+  text-transform:none;
+  color:var(--ink-2);
+  padding:.58rem .75rem;
   background:var(--surface);
   border-bottom:1px solid var(--border);
-  font-weight:400;
+  font-weight:500;
   white-space:nowrap;
   text-align:left;
 }
 
 .gantt-table td{
-  padding:.65rem .75rem;
+  padding:.68rem .75rem;
   border-bottom:1px solid var(--border-soft);
   vertical-align:middle;
 }
@@ -442,22 +643,24 @@ body{
 }
 
 .gantt-ws-label{
-  font-size:.7rem;
+  font-size:.84rem;
   color:var(--ink);
 }
 
 .gantt-ws-sub{
-  font-size:.58rem;
+  font-size:.78rem;
   color:var(--ink-3);
   margin-top:2px;
+  font-weight:300;
 }
 
 .gantt-rag{text-align:center}
 
 .gantt-pct{
-  font-size:.65rem;
+  font-size:.84rem;
   color:var(--ink-2);
   text-align:right;
+  font-weight:400;
 }
 
 .gantt-month-cell{
@@ -475,7 +678,7 @@ body{
 .gantt-segment-fill{
   height:100%;
   border-radius:1px;
-  opacity:.75;
+  opacity:.76;
 }
 
 .gantt-diamond{
@@ -496,14 +699,14 @@ body{
   border:1px solid var(--border);
   border-radius:var(--radius);
   overflow:hidden;
-  margin-bottom:4px;
+  margin-bottom:5px;
 }
 
 .ws-header{
   display:grid;
   grid-template-columns:2fr 1fr 80px 90px 40px;
   align-items:center;
-  padding:.9rem 1.25rem;
+  padding:.9rem 1.2rem;
   cursor:pointer;
   transition:background var(--tr);
   gap:1rem;
@@ -513,15 +716,29 @@ body{
   background:var(--surface-alt);
 }
 
+.ws-title{
+  font-size:.9rem;
+  color:var(--ink);
+}
+
+.ws-sub{
+  font-size:.76rem;
+  color:var(--ink-3);
+  margin-top:2px;
+  font-weight:400;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
 .ws-pct{
   font-family:var(--font-serif);
-  font-size:1.1rem;
+  font-size:1.2rem;
   font-weight:300;
   color:var(--accent);
 }
 
 .ws-toggle{
-  font-size:.6rem;
+  font-size:.72rem;
   color:var(--ink-3);
   text-align:right;
   transition:transform var(--tr);
@@ -534,18 +751,25 @@ body{
 .ws-body{
   display:none;
   border-top:1px solid var(--border-soft);
-  padding:0 1.25rem 1rem;
+  padding:0 1.2rem 1rem;
 }
 
 .ws-row.open .ws-body{
   display:block;
 }
 
+.ws-desc{
+  font-size:.86rem;
+  color:var(--ink-3);
+  line-height:1.42;
+  margin:.8rem 0;
+}
+
 .milestone-list{
   display:flex;
   flex-direction:column;
   gap:0;
-  margin-top:.75rem;
+  margin-top:.6rem;
 }
 
 .milestone{
@@ -555,7 +779,7 @@ body{
   gap:1rem;
   padding:.6rem 0;
   border-bottom:1px solid var(--border-soft);
-  font-size:.65rem;
+  font-size:.84rem;
 }
 
 .milestone:last-child{
@@ -568,7 +792,8 @@ body{
 
 .ms-date{
   color:var(--ink-3);
-  font-size:.6rem;
+  font-size:.78rem;
+  font-weight:400;
 }
 
 .risk-table{
@@ -577,8 +802,8 @@ body{
 }
 
 .risk-table th{
-  font-size:.52rem;
-  letter-spacing:.12em;
+  font-size:.7rem;
+  letter-spacing:.075em;
   text-transform:uppercase;
   color:var(--ink-3);
   padding:.6rem 1rem;
@@ -589,40 +814,38 @@ body{
 }
 
 .risk-table td{
-  padding:.8rem 1rem;
+  padding:.82rem 1rem;
   border-bottom:1px solid var(--border-soft);
-  font-size:.65rem;
+  font-size:.84rem;
   color:var(--ink-2);
   vertical-align:top;
 }
 
 .risk-id{
-  font-size:.58rem;
+  font-size:.78rem;
   color:var(--ink-3);
+  font-weight:400;
 }
 
 .risk-desc{
   color:var(--ink);
-  line-height:1.5;
+  line-height:1.34;
 }
 
 .risk-mitigation{
   color:var(--ink-3);
-  font-size:.62rem;
-  line-height:1.5;
+  font-size:.82rem;
+  line-height:1.36;
   margin-top:3px;
 }
 
 .risk-filter-btn{
-  font-family:var(--font-mono);
-  font-size:.56rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
+  font-size:.72rem;
   color:var(--ink-3);
   background:transparent;
   border:1px solid var(--border);
-  border-radius:2px;
-  padding:.42rem .9rem;
+  border-radius:4px;
+  padding:.45rem .9rem;
   cursor:pointer;
 }
 
@@ -634,10 +857,10 @@ body{
 
 .score-pill{
   display:inline-block;
-  padding:.2rem .5rem;
-  border-radius:2px;
+  padding:.2rem .55rem;
+  border-radius:3px;
   font-family:var(--font-serif);
-  font-size:.9rem;
+  font-size:.96rem;
 }
 
 .score-high{color:var(--red);background:var(--red-dim)}
@@ -654,22 +877,23 @@ body{
 }
 
 .budget-row.header{
-  font-size:.52rem;
-  letter-spacing:.12em;
+  font-size:.7rem;
+  letter-spacing:.075em;
   text-transform:uppercase;
   color:var(--ink-3);
   background:var(--surface);
   border-radius:var(--radius) var(--radius) 0 0;
-  padding:.6rem 1rem;
+  padding:.62rem 1rem;
+  font-weight:400;
 }
 
 .budget-ws{
-  font-size:.7rem;
+  font-size:.84rem;
   color:var(--ink);
 }
 
 .budget-num{
-  font-size:.68rem;
+  font-size:.84rem;
   color:var(--ink-2);
   text-align:right;
 }
@@ -686,27 +910,28 @@ body{
   border:1px solid var(--border);
   border-radius:var(--radius);
   overflow:hidden;
-  margin-bottom:1.5rem;
+  margin-bottom:1.4rem;
 }
 
 .readiness-cell{
   background:var(--surface);
-  padding:1.25rem 1.5rem;
+  padding:1.2rem 1.4rem;
 }
 
 .readiness-area{
-  font-size:.6rem;
-  letter-spacing:.12em;
+  font-size:.72rem;
+  letter-spacing:.075em;
   text-transform:uppercase;
   color:var(--ink-3);
-  margin-bottom:.6rem;
+  margin-bottom:.55rem;
+  font-weight:400;
 }
 
 .readiness-score{
   display:flex;
   align-items:baseline;
   gap:.35rem;
-  margin-bottom:.6rem;
+  margin-bottom:.55rem;
 }
 
 .readiness-num{
@@ -717,14 +942,105 @@ body{
 }
 
 .readiness-max{
-  font-size:.65rem;
+  font-size:.72rem;
   color:var(--ink-3);
 }
 
 .readiness-desc{
-  font-size:.62rem;
+  font-size:.84rem;
   color:var(--ink-3);
-  line-height:1.6;
+  line-height:1.38;
+}
+
+
+.gauge-marker-key{
+  width:100%;
+  display:grid;
+  gap:.42rem;
+  margin-top:.85rem;
+  padding-top:.75rem;
+  border-top:1px solid var(--border-soft);
+}
+
+.gauge-marker-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.8rem;
+  font-size:.78rem;
+  color:var(--ink-3);
+}
+
+.gauge-marker-label{
+  display:flex;
+  align-items:center;
+  gap:.45rem;
+  color:var(--ink-2);
+}
+
+.marker-swatch{
+  display:inline-block;
+  width:18px;
+  height:2px;
+  border-radius:2px;
+  background:var(--blue);
+}
+
+.marker-swatch.target{
+  width:20px;
+  height:3px;
+  background:var(--green);
+}
+
+.bullet-track{
+  position:relative;
+  height:4px;
+  background:var(--border);
+  border-radius:2px;
+  overflow:visible;
+}
+
+.bullet-fill{
+  height:100%;
+  border-radius:2px;
+  transition:width .5s ease;
+}
+
+.bullet-target{
+  position:absolute;
+  top:-4px;
+  width:2px;
+  height:12px;
+  border-radius:2px;
+  background:var(--ink);
+  opacity:.62;
+}
+
+.bullet-target::after{
+  content:attr(data-label);
+  position:absolute;
+  top:-16px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:.58rem;
+  font-weight:500;
+  color:var(--ink-3);
+  white-space:nowrap;
+  letter-spacing:.01em;
+}
+
+.bullet-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:.8rem;
+  margin-top:.4rem;
+  font-size:.72rem;
+  color:var(--ink-3);
+}
+
+.bullet-meta strong{
+  font-weight:500;
+  color:var(--ink-2);
 }
 
 footer{
@@ -733,13 +1049,16 @@ footer{
   display:flex;
   justify-content:space-between;
   gap:1rem;
-  font-size:.6rem;
+  font-size:.58rem;
   color:var(--ink-3);
-  letter-spacing:.08em;
 }
 
 @media(max-width:980px){
   .ov-grid{grid-template-columns:1fr}
+  .gauge-layout{grid-template-columns:1fr}
+  .gauge-explainer{display:none}
+  .gauge-mobile-explainer{display:block}
+  .kpi-mini-grid{grid-template-columns:1fr 1fr}
   .two-col{grid-template-columns:1fr}
   .context-grid{grid-template-columns:1fr}
   .kpi-row{grid-template-columns:repeat(2,1fr)}
@@ -757,18 +1076,12 @@ footer{
     gap:.65rem;
   }
 
-  .header-right{
-    flex-wrap:wrap;
-  }
-
-  .kpi-row{
+  .kpi-row,
+  .kpi-mini-grid{
     grid-template-columns:1fr;
   }
 
-  .ws-header{
-    grid-template-columns:1fr;
-  }
-
+  .ws-header,
   .budget-row{
     grid-template-columns:1fr;
     gap:.35rem;
@@ -778,7 +1091,103 @@ footer{
     text-align:left;
   }
 
-  footer{
+  .milestone{
+    grid-template-columns:1fr;
+    gap:.25rem;
+  }
+
+  
+.gauge-marker-key{
+  width:100%;
+  display:grid;
+  gap:.42rem;
+  margin-top:.85rem;
+  padding-top:.75rem;
+  border-top:1px solid var(--border-soft);
+}
+
+.gauge-marker-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:.8rem;
+  font-size:.78rem;
+  color:var(--ink-3);
+}
+
+.gauge-marker-label{
+  display:flex;
+  align-items:center;
+  gap:.45rem;
+  color:var(--ink-2);
+}
+
+.marker-swatch{
+  display:inline-block;
+  width:18px;
+  height:2px;
+  border-radius:2px;
+  background:var(--blue);
+}
+
+.marker-swatch.target{
+  width:20px;
+  height:3px;
+  background:var(--green);
+}
+
+.bullet-track{
+  position:relative;
+  height:4px;
+  background:var(--border);
+  border-radius:2px;
+  overflow:visible;
+}
+
+.bullet-fill{
+  height:100%;
+  border-radius:2px;
+  transition:width .5s ease;
+}
+
+.bullet-target{
+  position:absolute;
+  top:-4px;
+  width:2px;
+  height:12px;
+  border-radius:2px;
+  background:var(--ink);
+  opacity:.62;
+}
+
+.bullet-target::after{
+  content:attr(data-label);
+  position:absolute;
+  top:-16px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:.58rem;
+  font-weight:500;
+  color:var(--ink-3);
+  white-space:nowrap;
+  letter-spacing:.01em;
+}
+
+.bullet-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:.8rem;
+  margin-top:.4rem;
+  font-size:.72rem;
+  color:var(--ink-3);
+}
+
+.bullet-meta strong{
+  font-weight:500;
+  color:var(--ink-2);
+}
+
+footer{
     flex-direction:column;
   }
 }
@@ -790,7 +1199,7 @@ footer{
 <header class="site-header">
   <div class="site-logo">Khaled Sanad: <em>Blockchain Settlement Deployment</em></div>
   <div class="header-right">
-    <span class="as-of">As of Q2 2025</span>
+    <span class="as-of">Q2 2025</span>
     <span class="prog-badge">Global Fund Programme</span>
   </div>
 </header>
@@ -811,44 +1220,76 @@ footer{
   <div class="ov-grid">
     <div class="ov-cell gauge-cell">
       <div class="card-title" style="margin-bottom:.75rem;">Deployment Confidence</div>
-      <canvas id="gauge-canvas" width="190" height="112"></canvas>
-      <div style="font-family:var(--font-serif);font-size:2.15rem;font-weight:300;color:var(--amber);line-height:1;margin-top:.45rem;">6.4</div>
-      <div style="font-size:.55rem;color:var(--ink-3);margin-top:.22rem;">Actual confidence score</div>
-      <div class="gauge-legend">
-        <div class="gauge-legend-row"><span>Actual</span><strong>6.4</strong></div>
-        <div class="gauge-legend-row"><span>Forecast</span><strong>7.1</strong></div>
-        <div class="gauge-legend-row"><span>Target</span><strong>8.2</strong></div>
+
+      <div class="gauge-layout">
+        <div class="gauge-visual">
+          <canvas id="gauge-canvas" width="190" height="112"></canvas>
+          <div style="font-family:var(--font-serif);font-size:2.2rem;font-weight:300;color:var(--amber);line-height:1;margin-top:.45rem;">6.4</div>
+          <div class="gauge-note">Current score</div>
+        </div>
+
+        <div class="gauge-explainer">
+          <div class="gauge-explainer-title">How to read this</div>
+          <p>The amber arc shows current delivery confidence across custody, legal, liquidity, operations, and technology readiness.</p>
+          <div class="gauge-legend">
+            <div class="gauge-legend-row"><span>Actual</span><strong>6.4</strong></div>
+            <div class="gauge-legend-row"><span>Forecast</span><strong>7.1</strong></div>
+            <div class="gauge-legend-row"><span>Target</span><strong>8.2</strong></div>
+          </div>
+          <div class="gauge-marker-key">
+            <div class="gauge-marker-row">
+              <span class="gauge-marker-label"><span class="marker-swatch"></span>Blue marker</span>
+              <strong>Forecast landing</strong>
+            </div>
+            <div class="gauge-marker-row">
+              <span class="gauge-marker-label"><span class="marker-swatch target"></span>Green marker</span>
+              <strong>Go-live target</strong>
+            </div>
+          </div>
+        </div>
+
+        <details class="gauge-mobile-explainer">
+          <summary>Gauge explanation</summary>
+          <div class="gauge-mobile-body">
+            <p style="font-size:.82rem;color:var(--ink-2);line-height:1.42;margin-bottom:.75rem;">The amber arc shows current delivery confidence. The blue marker is the forecast landing point; the green marker is the go-live target.</p>
+            <div class="gauge-legend">
+              <div class="gauge-legend-row"><span>Actual</span><strong>6.4</strong></div>
+              <div class="gauge-legend-row"><span>Forecast</span><strong>7.1</strong></div>
+              <div class="gauge-legend-row"><span>Target</span><strong>8.2</strong></div>
+            </div>
+          </div>
+        </details>
       </div>
     </div>
 
-    <div class="ov-cell" style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);padding:0;">
-      <div style="background:var(--surface-hi);padding:1.1rem 1.25rem;">
-        <div class="kpi-label">Overall Progress</div>
+    <div class="ov-cell kpi-mini-grid">
+      <div class="kpi-mini">
+        <div class="kpi-label">Progress</div>
         <div class="kpi-val accent">64%</div>
         <div class="prog-bar-wrap"><div class="prog-bar-fill fill-amber" style="width:64%"></div></div>
-        <div class="kpi-sub" style="margin-top:.3rem;">Target by Q2: 70%</div>
+        <div class="kpi-sub" style="margin-top:.3rem;">Target: 70%</div>
       </div>
 
-      <div style="background:var(--surface-hi);padding:1.1rem 1.25rem;">
+      <div class="kpi-mini">
         <div class="kpi-label">Milestones</div>
-        <div style="font-family:var(--font-serif);font-size:1.8rem;font-weight:300;color:var(--green);line-height:1;">16<span style="font-size:1rem;color:var(--ink-3);">/25</span></div>
-        <div class="kpi-sub" style="margin-top:.4rem;color:var(--red);">4 overdue</div>
+        <div style="font-family:var(--font-serif);font-size:1.9rem;font-weight:300;color:var(--green);line-height:1;">16<span style="font-size:1rem;color:var(--ink-3);">/25</span></div>
+        <div class="kpi-sub" style="margin-top:.35rem;color:var(--red);">4 overdue</div>
       </div>
 
-      <div style="background:var(--surface-hi);padding:1.1rem 1.25rem;">
+      <div class="kpi-mini">
         <div class="kpi-label">Budget Burn</div>
         <div class="kpi-val amber">71%</div>
         <div class="prog-bar-wrap"><div class="prog-bar-fill fill-amber" style="width:71%"></div></div>
-        <div class="kpi-sub" style="margin-top:.3rem;">$6.4M of $9.0M</div>
+        <div class="kpi-sub" style="margin-top:.3rem;">$6.4M / $9.0M</div>
       </div>
 
-      <div style="background:var(--surface-hi);padding:1.1rem 1.25rem;">
+      <div class="kpi-mini">
         <div class="kpi-label">Open Risks</div>
         <div class="kpi-val red">8</div>
         <div style="display:flex;gap:4px;margin-top:.4rem;flex-wrap:wrap;">
-          <span style="font-size:.5rem;padding:2px 6px;background:var(--red-dim);color:var(--red);border-radius:2px;">3 HIGH</span>
-          <span style="font-size:.5rem;padding:2px 6px;background:var(--amber-dim);color:var(--amber);border-radius:2px;">3 MED</span>
-          <span style="font-size:.5rem;padding:2px 6px;background:var(--green-dim);color:var(--green);border-radius:2px;">2 LOW</span>
+          <span class="chip critical">3 High</span>
+          <span class="chip at-risk">3 Med</span>
+          <span class="chip on-track">2 Low</span>
         </div>
       </div>
     </div>
@@ -857,50 +1298,32 @@ footer{
       <div class="card-title">Executive Signal</div>
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
-        <span style="font-size:.65rem;color:var(--ink-2);">Programme status</span>
+        <span style="font-size:.86rem;color:var(--ink-2);">Programme</span>
         <span class="chip at-risk">At Risk</span>
       </div>
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
-        <span style="font-size:.65rem;color:var(--ink-2);">Custody model</span>
+        <span style="font-size:.86rem;color:var(--ink-2);">Custody</span>
         <span class="chip critical">Critical</span>
       </div>
 
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;">
-        <span style="font-size:.65rem;color:var(--ink-2);">Settlement rails</span>
+        <span style="font-size:.86rem;color:var(--ink-2);">Rail Build</span>
         <span class="chip on-track">On Track</span>
       </div>
 
       <div style="margin-top:1rem;padding-top:.85rem;border-top:1px solid var(--border-soft);">
-        <div class="card-title" style="margin-bottom:.5rem;">Next Hard Deadline</div>
-        <div style="font-family:var(--font-serif);font-size:1.15rem;font-weight:300;color:var(--red);">30 Sep 2025</div>
-        <div style="font-size:.6rem;color:var(--ink-3);margin-top:2px;">Pilot settlement attestation and board risk sign-off</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="context-grid">
-    <div class="card">
-      <div class="card-title">Programme Context</div>
-      <p class="context-text">
-        This fictional programme supports a multinational wealth management fund moving selected fund-subscription, redemption, treasury, and inter-entity settlement flows from batch-based legacy processes toward blockchain-enabled settlement. The objective is not to tokenise the entire operating model at once. The first stage proves whether high-friction cross-border settlement can be completed faster, reconciled automatically, governed through permissioned controls, and integrated with custody, transfer-agency, fund-accounting, and liquidity-management processes.
-      </p>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Executive Attention</div>
-      <div class="attention-list">
-        <div><span style="color:var(--red);">Custody and key control:</span> private-key governance, signer authority, and recovery procedures remain the main go-live constraints.</div>
-        <div><span style="color:var(--amber);">Operating-model risk:</span> legacy settlement and blockchain settlement must run in parallel until reconciliation confidence improves.</div>
-        <div><span style="color:var(--green);">Technology path:</span> permissioned settlement rail and tokenised cash workflow are progressing, subject to audit and legal finalisation.</div>
+        <div class="card-title" style="margin-bottom:.45rem;">Next Gate</div>
+        <div style="font-family:var(--font-serif);font-size:1.25rem;font-weight:300;color:var(--red);">30 Sep 2025</div>
+        <div style="font-size:.8rem;color:var(--ink-3);margin-top:2px;">Pilot settlement attestation</div>
       </div>
     </div>
   </div>
 
   <div class="card overview-gantt-card">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;gap:1rem;">
-      <div class="card-title" style="margin:0;">Settlement Modernisation Roadmap</div>
-      <button class="folder-tab" data-jump-tab="gantt" style="position:static;border:1px solid var(--border);border-radius:3px;padding:.45rem .8rem;background:var(--surface-hi);">Open Timeline</button>
+      <div class="card-title" style="margin:0;">Roadmap Snapshot</div>
+      <button class="folder-tab" data-jump-tab="gantt" style="position:static;border:1px solid var(--border);border-radius:4px;padding:.45rem .8rem;background:var(--surface-hi);">Open Timeline</button>
     </div>
 
     <div class="month-ruler">
@@ -912,14 +1335,32 @@ footer{
     <div class="mini-gantt" id="overview-gantt"></div>
   </div>
 
+  <div class="context-grid">
+    <div class="card">
+      <div class="card-title">Programme Context</div>
+      <p class="context-text">
+        A global wealth fund is moving selected subscription, redemption, treasury, and inter-entity settlement flows from batch-based legacy rails to permissioned blockchain settlement.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Settlement Focus</div>
+      <div class="attention-list">
+        <div><span style="color:var(--red);">Custody:</span> signer authority and recovery.</div>
+        <div><span style="color:var(--amber);">Parallel run:</span> legacy and on-chain reconciliation.</div>
+        <div><span style="color:var(--green);">Rail build:</span> progressing through audit.</div>
+      </div>
+    </div>
+  </div>
+
   <div class="two-col">
     <div class="card">
-      <div class="card-title">Workstream Progress</div>
+      <div class="card-title">Workstream Progress vs Target</div>
       <div id="ov-ws-list"></div>
     </div>
 
     <div class="card">
-      <div class="card-title">Upcoming Milestones</div>
+      <div class="card-title">Upcoming Gates</div>
       <div id="ov-milestones"></div>
     </div>
   </div>
@@ -927,8 +1368,8 @@ footer{
 </div>
 
 <div class="tab-panel" id="tab-gantt">
-  <p style="font-size:.65rem;color:var(--ink-3);margin-bottom:1.25rem;line-height:1.6;">
-    Programme timeline Jan 2025 — Dec 2025. Diamonds mark milestones. Red diamonds indicate hard governance, audit, custody, or board-sign-off gates.
+  <p style="font-size:.88rem;color:var(--ink-3);margin-bottom:1.2rem;line-height:1.42;">
+    Jan–Dec 2025 timeline. Red diamonds mark board, audit, custody, or go-live gates.
   </p>
 
   <div class="gantt-wrap">
@@ -965,7 +1406,7 @@ footer{
         <th style="width:60px;">ID</th>
         <th>Risk</th>
         <th style="width:130px;">Workstream</th>
-        <th style="width:80px;">Likelihood</th>
+        <th style="width:80px;">Likely</th>
         <th style="width:70px;">Impact</th>
         <th style="width:70px;">Score</th>
         <th style="width:90px;">Status</th>
@@ -978,50 +1419,50 @@ footer{
 <div class="tab-panel" id="tab-budget">
   <div class="kpi-row">
     <div class="kpi">
-      <div class="kpi-label">Total Budget</div>
+      <div class="kpi-label">Budget</div>
       <div class="kpi-val accent">$9.0M</div>
-      <div class="kpi-sub">Approved FY2025</div>
+      <div class="kpi-sub">Approved</div>
     </div>
 
     <div class="kpi">
-      <div class="kpi-label">Spent to Date</div>
+      <div class="kpi-label">Spent</div>
       <div class="kpi-val amber">$6.4M</div>
-      <div class="kpi-sub">71% consumed</div>
+      <div class="kpi-sub">71%</div>
     </div>
 
     <div class="kpi">
       <div class="kpi-label">Remaining</div>
       <div class="kpi-val green">$2.6M</div>
-      <div class="kpi-sub">6 months left</div>
+      <div class="kpi-sub">6 months</div>
     </div>
 
     <div class="kpi">
-      <div class="kpi-label">Forecast Variance</div>
+      <div class="kpi-label">Variance</div>
       <div class="kpi-val red">+$420k</div>
-      <div class="kpi-sub">Overrun risk</div>
+      <div class="kpi-sub">Forecast</div>
     </div>
 
     <div class="kpi">
-      <div class="kpi-label">Contingency Used</div>
+      <div class="kpi-label">Contingency</div>
       <div class="kpi-val amber">46%</div>
-      <div class="kpi-sub">$460k of $1.0M</div>
+      <div class="kpi-sub">$460k used</div>
     </div>
   </div>
 
-  <div class="card" style="margin-bottom:1.5rem;">
+  <div class="card" style="margin-bottom:1.4rem;">
     <div class="card-title">Budget by Workstream</div>
     <div class="budget-row header">
       <div>Workstream</div>
       <div style="text-align:right;">Allocated</div>
       <div style="text-align:right;">Spent</div>
       <div style="text-align:right;">Remaining</div>
-      <div style="text-align:right;">Burn %</div>
+      <div style="text-align:right;">Burn</div>
     </div>
     <div id="budget-rows"></div>
   </div>
 
   <div class="card">
-    <div class="card-title">Monthly Burn Rate</div>
+    <div class="card-title">Monthly Burn</div>
     <div id="burn-chart" style="display:flex;align-items:flex-end;gap:4px;height:80px;margin-top:.5rem;"></div>
     <div id="burn-labels" style="display:flex;gap:0;margin-top:.5rem;"></div>
   </div>
@@ -1031,7 +1472,7 @@ footer{
   <div class="readiness-grid" id="readiness-grid"></div>
 
   <div class="card">
-    <div class="card-title">Go-Live Gate Checklist</div>
+    <div class="card-title">Go-Live Gates</div>
     <div id="gate-checklist"></div>
   </div>
 </div>
@@ -1039,8 +1480,8 @@ footer{
 </div>
 
 <footer>
-  <span>Deployment Strategy — Blockchain Settlement Modernisation · Synthetic data</span>
-  <span>Khaled Sanad · Portfolio</span>
+  <span>Blockchain Settlement Deployment</span>
+  <span>Khaled Sanad</span>
 </footer>
 
 <script>
@@ -1051,14 +1492,16 @@ const WORKSTREAMS = [
     owner:"T. Walsh",
     status:"on-track",
     pct:78,
+    target:82,
+    forecast:86,
     budget:{alloc:2100,spent:1450},
-    desc:"Permissioned ledger environment, settlement smart contracts, node topology, transaction finality model, and integration with the fund’s settlement orchestration layer.",
+    desc:"Ledger, settlement contracts, nodes, and finality model.",
     milestones:[
-      {name:"Ledger architecture approved",date:"14 Feb 2025",done:true,critical:false},
+      {name:"Architecture approved",date:"14 Feb 2025",done:true,critical:false},
       {name:"Private test network deployed",date:"28 Mar 2025",done:true,critical:false},
-      {name:"Settlement contract audit passed",date:"30 Apr 2025",done:true,critical:false},
-      {name:"Pilot rail connected to settlement hub",date:"30 Jun 2025",done:false,critical:false},
-      {name:"Production rail approved for limited use",date:"30 Sep 2025",done:false,critical:true}
+      {name:"Contract audit passed",date:"30 Apr 2025",done:true,critical:false},
+      {name:"Pilot rail connected",date:"30 Jun 2025",done:false,critical:false},
+      {name:"Limited production approval",date:"30 Sep 2025",done:false,critical:true}
     ],
     ganttStart:0,
     ganttEnd:9
@@ -1069,14 +1512,16 @@ const WORKSTREAMS = [
     owner:"R. Nakamura",
     status:"at-risk",
     pct:58,
+    target:72,
+    forecast:68,
     budget:{alloc:1600,spent:1210},
-    desc:"Tokenised cash workflow, stable-value settlement asset selection, treasury funding rules, redemption procedures, liquidity buffers, and intraday settlement monitoring.",
+    desc:"Settlement asset, treasury funding, buffers, and redemption process.",
     milestones:[
-      {name:"Settlement asset shortlist complete",date:"28 Feb 2025",done:true,critical:false},
+      {name:"Asset shortlist complete",date:"28 Feb 2025",done:true,critical:false},
       {name:"Liquidity model approved",date:"15 Apr 2025",done:true,critical:false},
-      {name:"Redemption procedure validated",date:"30 Jun 2025",done:false,critical:false},
-      {name:"Intraday liquidity dashboard live",date:"31 Aug 2025",done:false,critical:false},
-      {name:"Treasury sign-off received",date:"30 Sep 2025",done:false,critical:true}
+      {name:"Redemption test complete",date:"30 Jun 2025",done:false,critical:false},
+      {name:"Liquidity dashboard live",date:"31 Aug 2025",done:false,critical:false},
+      {name:"Treasury sign-off",date:"30 Sep 2025",done:false,critical:true}
     ],
     ganttStart:1,
     ganttEnd:9
@@ -1087,14 +1532,16 @@ const WORKSTREAMS = [
     owner:"M. Chen",
     status:"critical",
     pct:46,
+    target:70,
+    forecast:61,
     budget:{alloc:1500,spent:1180},
-    desc:"Digital asset custody operating model, signer authority, multi-party approval flows, recovery procedures, hardware security controls, and segregation of duties.",
+    desc:"Signer authority, MPC workflow, recovery, and key-control policy.",
     milestones:[
-      {name:"Custody options assessment complete",date:"31 Jan 2025",done:true,critical:false},
+      {name:"Custody assessment complete",date:"31 Jan 2025",done:true,critical:false},
       {name:"Key-control policy drafted",date:"28 Mar 2025",done:true,critical:false},
-      {name:"MPC signing workflow tested",date:"31 Jul 2025",done:false,critical:true},
-      {name:"Recovery procedure independently reviewed",date:"30 Sep 2025",done:false,critical:true},
-      {name:"Custody board sign-off",date:"31 Oct 2025",done:false,critical:true}
+      {name:"MPC workflow tested",date:"31 Jul 2025",done:false,critical:true},
+      {name:"Recovery review complete",date:"30 Sep 2025",done:false,critical:true},
+      {name:"Board sign-off",date:"31 Oct 2025",done:false,critical:true}
     ],
     ganttStart:0,
     ganttEnd:10
@@ -1105,32 +1552,36 @@ const WORKSTREAMS = [
     owner:"S. Okonkwo",
     status:"at-risk",
     pct:52,
+    target:68,
+    forecast:64,
     budget:{alloc:1800,spent:1320},
-    desc:"Mapping of existing transfer-agent, custodian, administrator, and fund-accounting settlement processes into phased blockchain-enabled settlement workflows.",
+    desc:"Parallel run, fund selection, administrator extracts, and reconciliation.",
     milestones:[
-      {name:"Legacy settlement inventory complete",date:"28 Feb 2025",done:true,critical:false},
+      {name:"Legacy inventory complete",date:"28 Feb 2025",done:true,critical:false},
       {name:"Parallel-run design approved",date:"30 Apr 2025",done:true,critical:false},
       {name:"Pilot funds selected",date:"30 Jun 2025",done:false,critical:false},
-      {name:"First fund subscription settled on-chain",date:"30 Sep 2025",done:false,critical:true},
-      {name:"Parallel-run exit criteria approved",date:"30 Nov 2025",done:false,critical:false}
+      {name:"First on-chain subscription",date:"30 Sep 2025",done:false,critical:true},
+      {name:"Exit criteria approved",date:"30 Nov 2025",done:false,critical:false}
     ],
     ganttStart:1,
     ganttEnd:11
   },
   {
     id:"legal",
-    name:"Legal, Tax & Investor Disclosure",
+    name:"Legal, Tax & Disclosure",
     owner:"A. Patel",
     status:"critical",
     pct:49,
+    target:65,
+    forecast:60,
     budget:{alloc:1000,spent:720},
-    desc:"Fund documentation updates, investor disclosure, cross-border settlement permissions, tax treatment review, legal opinion packs, and jurisdiction-by-jurisdiction restrictions.",
+    desc:"Legal opinions, investor notice, tax review, and fund document updates.",
     milestones:[
-      {name:"Jurisdiction map completed",date:"28 Feb 2025",done:true,critical:false},
-      {name:"Investor disclosure draft issued",date:"30 Apr 2025",done:true,critical:false},
-      {name:"External legal opinion received",date:"31 Jul 2025",done:false,critical:true},
-      {name:"Fund documentation updates approved",date:"30 Sep 2025",done:false,critical:true},
-      {name:"Investor notice pack released",date:"31 Oct 2025",done:false,critical:false}
+      {name:"Jurisdiction map complete",date:"28 Feb 2025",done:true,critical:false},
+      {name:"Disclosure draft issued",date:"30 Apr 2025",done:true,critical:false},
+      {name:"Legal opinion received",date:"31 Jul 2025",done:false,critical:true},
+      {name:"Fund docs approved",date:"30 Sep 2025",done:false,critical:true},
+      {name:"Investor notice released",date:"31 Oct 2025",done:false,critical:false}
     ],
     ganttStart:0,
     ganttEnd:10
@@ -1141,14 +1592,16 @@ const WORKSTREAMS = [
     owner:"L. Romero",
     status:"on-track",
     pct:72,
+    target:78,
+    forecast:82,
     budget:{alloc:1000,spent:520},
-    desc:"Operational runbooks, exception handling, transaction reconciliation, settlement-failure procedures, dispute management, and audit evidence capture.",
+    desc:"Runbooks, breaks, exceptions, dispute process, and evidence packs.",
     milestones:[
       {name:"Runbook structure approved",date:"31 Jan 2025",done:true,critical:false},
-      {name:"Reconciliation engine configured",date:"30 Apr 2025",done:true,critical:false},
+      {name:"Reconciliation configured",date:"30 Apr 2025",done:true,critical:false},
       {name:"Exception workflow tested",date:"30 Jun 2025",done:false,critical:false},
-      {name:"Audit evidence pack approved",date:"31 Aug 2025",done:false,critical:false},
-      {name:"Operations go-live rehearsal complete",date:"31 Oct 2025",done:false,critical:true}
+      {name:"Audit pack approved",date:"31 Aug 2025",done:false,critical:false},
+      {name:"Go-live rehearsal",date:"31 Oct 2025",done:false,critical:true}
     ],
     ganttStart:0,
     ganttEnd:10
@@ -1156,112 +1609,75 @@ const WORKSTREAMS = [
 ];
 
 const RISKS = [
-  {id:"R01",desc:"Custody operating model not approved before pilot settlement gate",mitigation:"Escalate signer authority model to board risk committee; prepare fallback qualified-custodian structure.",ws:"Custody",likelihood:"High",impact:"High",score:"high",status:"open"},
-  {id:"R02",desc:"Tokenised cash instrument lacks sufficient liquidity during redemption windows",mitigation:"Maintain fiat fallback, increase pre-funded liquidity buffer, and set corridor limits for pilot funds.",ws:"Liquidity",likelihood:"Medium",impact:"High",score:"high",status:"open"},
-  {id:"R03",desc:"Legal treatment differs across investor jurisdictions",mitigation:"Apply jurisdiction-by-jurisdiction restrictions; require external opinions before investor-facing activation.",ws:"Legal",likelihood:"High",impact:"High",score:"high",status:"open"},
-  {id:"R04",desc:"On-chain and legacy records fail to reconcile during parallel run",mitigation:"Daily reconciliation bridge, exception queue ownership, and settlement freeze threshold for unresolved breaks.",ws:"Migration",likelihood:"Medium",impact:"Medium",score:"med",status:"open"},
-  {id:"R05",desc:"Smart contract defect discovered after audit",mitigation:"Secondary audit booked; emergency pause function and controlled upgrade path retained for pilot phase.",ws:"Settlement Rail",likelihood:"Low",impact:"High",score:"med",status:"mitigated"},
-  {id:"R06",desc:"Fund administrator cannot consume on-chain settlement data in required format",mitigation:"Create translation layer and maintain conventional reporting extracts until native integration is complete.",ws:"Operations",likelihood:"Medium",impact:"Medium",score:"med",status:"open"},
-  {id:"R07",desc:"Investor communications misrepresent blockchain settlement as investment product exposure",mitigation:"Separate operational settlement disclosure from asset-allocation disclosure; legal review all public language.",ws:"Disclosure",likelihood:"Low",impact:"Medium",score:"low",status:"open"},
-  {id:"R08",desc:"Specialist blockchain operations staff unavailable during cutover",mitigation:"Cross-train settlement operations team and maintain vendor support cover during pilot windows.",ws:"Operations",likelihood:"Low",impact:"Low",score:"low",status:"open"}
+  {id:"R01",desc:"Custody model not approved before pilot gate",mitigation:"Escalate signer model; retain qualified-custodian fallback.",ws:"Custody",likelihood:"High",impact:"High",score:"high",status:"open"},
+  {id:"R02",desc:"Tokenised cash liquidity weak during redemptions",mitigation:"Pre-fund buffer and keep fiat fallback.",ws:"Liquidity",likelihood:"Medium",impact:"High",score:"high",status:"open"},
+  {id:"R03",desc:"Legal treatment differs by jurisdiction",mitigation:"Restrict activation pending external opinions.",ws:"Legal",likelihood:"High",impact:"High",score:"high",status:"open"},
+  {id:"R04",desc:"On-chain and legacy records fail to reconcile",mitigation:"Daily bridge, exception owner, freeze threshold.",ws:"Migration",likelihood:"Medium",impact:"Medium",score:"med",status:"open"},
+  {id:"R05",desc:"Smart contract defect after audit",mitigation:"Second audit and emergency pause retained.",ws:"Rail",likelihood:"Low",impact:"High",score:"med",status:"mitigated"},
+  {id:"R06",desc:"Administrator cannot consume on-chain data",mitigation:"Translation layer and conventional extract retained.",ws:"Ops",likelihood:"Medium",impact:"Medium",score:"med",status:"open"},
+  {id:"R07",desc:"Investor messaging creates confusion",mitigation:"Separate settlement disclosure from product exposure.",ws:"Disclosure",likelihood:"Low",impact:"Medium",score:"low",status:"open"},
+  {id:"R08",desc:"Specialist staff unavailable during cutover",mitigation:"Cross-training and vendor support coverage.",ws:"Ops",likelihood:"Low",impact:"Low",score:"low",status:"open"}
 ];
 
 const READINESS = [
-  {area:"Settlement Rail",score:8,max:10,color:"green",desc:"Permissioned rail is technically advanced. Production approval depends on final contract audit and pilot settlement attestation."},
-  {area:"Custody & Keys",score:5,max:10,color:"red",desc:"Signer authority, key recovery, and segregation of duties remain the most material go-live constraints."},
-  {area:"Liquidity Model",score:6,max:10,color:"amber",desc:"Tokenised cash workflow is viable, but liquidity buffers and redemption procedures need further validation."},
-  {area:"Legal & Disclosure",score:5,max:10,color:"red",desc:"Fund documentation, investor disclosure, and jurisdictional opinions are not yet complete."},
-  {area:"Legacy Integration",score:6,max:10,color:"amber",desc:"Transfer-agent, custodian, administrator, and fund-accounting integrations remain partially dependent on translation layers."},
-  {area:"Operations Control",score:7,max:10,color:"amber",desc:"Runbooks, reconciliation, and exception handling are progressing. Audit evidence packs require final review."}
+  {area:"Settlement Rail",score:8,max:10,color:"green",desc:"Technically advanced; audit gate remains."},
+  {area:"Custody & Keys",score:5,max:10,color:"red",desc:"Main go-live constraint."},
+  {area:"Liquidity Model",score:6,max:10,color:"amber",desc:"Buffers need validation."},
+  {area:"Legal & Disclosure",score:5,max:10,color:"red",desc:"Opinions and notices pending."},
+  {area:"Legacy Integration",score:6,max:10,color:"amber",desc:"Translation layer still required."},
+  {area:"Operations Control",score:7,max:10,color:"amber",desc:"Runbooks strong; evidence pack pending."}
 ];
 
 const GATE_CHECKLIST = [
-  {item:"Board risk committee approves custody and key-control model",done:false,critical:true},
-  {item:"Final settlement smart contract audit passed",done:false,critical:true},
-  {item:"Pilot fund subscription settled on-chain and reconciled",done:false,critical:true},
-  {item:"Tokenised cash redemption procedure validated",done:false,critical:true},
-  {item:"Fund administrator receives compliant settlement extract",done:true,critical:false},
-  {item:"Investor disclosure and legal opinion pack approved",done:false,critical:true},
-  {item:"Parallel-run exception process tested",done:true,critical:false},
-  {item:"Treasury liquidity dashboard live",done:false,critical:false},
-  {item:"Executive steering committee approves limited production rollout",done:false,critical:true}
+  {item:"Custody model approved",done:false,critical:true},
+  {item:"Final contract audit passed",done:false,critical:true},
+  {item:"Pilot fund settled on-chain",done:false,critical:true},
+  {item:"Redemption process validated",done:false,critical:true},
+  {item:"Administrator extract ready",done:true,critical:false},
+  {item:"Disclosure pack approved",done:false,critical:true},
+  {item:"Parallel-run exceptions tested",done:true,critical:false},
+  {item:"Liquidity dashboard live",done:false,critical:false},
+  {item:"Limited rollout approved",done:false,critical:true}
 ];
 
 const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const BURN_BY_MONTH = [420,560,690,760,880,930,0,0,0,0,0,0];
 
 function statusChip(s){
-  const label = {
-    "on-track":"On Track",
-    "at-risk":"At Risk",
-    "critical":"Critical",
-    "complete":"Complete",
-    "not-started":"Pending"
-  };
+  const label = {"on-track":"On Track","at-risk":"At Risk","critical":"Critical","complete":"Done","not-started":"Pending"};
   return `<span class="chip ${s}">${label[s] || s}</span>`;
 }
 
-function fmtK(n){
-  return n >= 1000 ? `$${(n/1000).toFixed(1)}M` : `$${n}k`;
-}
+function fmtK(n){return n >= 1000 ? `$${(n/1000).toFixed(1)}M` : `$${n}k`;}
 
 function switchTab(tab){
-  document.querySelectorAll(".folder-tab[data-tab]").forEach(b => {
-    b.classList.toggle("active", b.dataset.tab === tab);
-  });
-
-  document.querySelectorAll(".tab-panel").forEach(p => {
-    p.classList.remove("active");
-  });
-
-  const panel = document.getElementById(`tab-${tab}`);
-  if(panel) panel.classList.add("active");
-
+  document.querySelectorAll(".folder-tab[data-tab]").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+  document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+  document.getElementById(`tab-${tab}`)?.classList.add("active");
   window.scrollTo({top:0,behavior:"instant"});
 }
 
-document.querySelectorAll(".folder-tab[data-tab]").forEach(btn => {
-  btn.addEventListener("click", () => switchTab(btn.dataset.tab));
-});
-
-document.querySelectorAll("[data-jump-tab]").forEach(btn => {
-  btn.addEventListener("click", () => switchTab(btn.dataset.jumpTab));
-});
+document.querySelectorAll(".folder-tab[data-tab]").forEach(btn => btn.addEventListener("click", () => switchTab(btn.dataset.tab)));
+document.querySelectorAll("[data-jump-tab]").forEach(btn => btn.addEventListener("click", () => switchTab(btn.dataset.jumpTab)));
 
 (function drawGauge(){
   const c = document.getElementById("gauge-canvas");
-  if(!c) return;
-
   const css = getComputedStyle(document.documentElement);
   const ctx = c.getContext("2d");
-  const cx = 95;
-  const cy = 94;
-  const r = 72;
-  const lw = 11;
-  const actual = 6.4;
-  const forecast = 7.1;
-  const target = 8.2;
-  const max = 10;
-  const start = Math.PI;
-  const end = Math.PI * 2;
-
+  const cx = 95, cy = 94, r = 72, lw = 11;
+  const actual = 6.4, forecast = 7.1, target = 8.2, max = 10, start = Math.PI;
   const colour = name => css.getPropertyValue(name).trim();
   const angle = v => start + (v / max) * Math.PI;
 
   ctx.clearRect(0,0,c.width,c.height);
-
   ctx.beginPath();
-  ctx.arc(cx,cy,r,start,end);
+  ctx.arc(cx,cy,r,start,Math.PI * 2);
   ctx.strokeStyle = "rgba(255,255,255,0.07)";
   ctx.lineWidth = lw;
   ctx.lineCap = "round";
   ctx.stroke();
 
-  [
-    {from:0,to:4,color:colour("--red")},
-    {from:4,to:7,color:colour("--amber")},
-    {from:7,to:10,color:colour("--green")}
-  ].forEach(seg => {
+  [{from:0,to:4,color:colour("--red")},{from:4,to:7,color:colour("--amber")},{from:7,to:10,color:colour("--green")}].forEach(seg => {
     ctx.beginPath();
     ctx.arc(cx,cy,r,angle(seg.from),angle(seg.to));
     ctx.strokeStyle = seg.color;
@@ -1281,12 +1697,9 @@ document.querySelectorAll("[data-jump-tab]").forEach(btn => {
 
   function marker(v, colourValue, length, width){
     const a = angle(v);
-    const inner = r - length;
-    const outer = r + 5;
-
     ctx.beginPath();
-    ctx.moveTo(cx + inner * Math.cos(a), cy + inner * Math.sin(a));
-    ctx.lineTo(cx + outer * Math.cos(a), cy + outer * Math.sin(a));
+    ctx.moveTo(cx + (r - length) * Math.cos(a), cy + (r - length) * Math.sin(a));
+    ctx.lineTo(cx + (r + 5) * Math.cos(a), cy + (r + 5) * Math.sin(a));
     ctx.strokeStyle = colourValue;
     ctx.lineWidth = width;
     ctx.lineCap = "round";
@@ -1316,11 +1729,8 @@ const overviewGantt = document.getElementById("overview-gantt");
 WORKSTREAMS.forEach(ws => {
   const row = document.createElement("div");
   row.className = "mini-gantt-row";
-
-  const total = 12;
-  const left = (ws.ganttStart / total) * 100;
-  const width = ((ws.ganttEnd - ws.ganttStart + 1) / total) * 100;
-
+  const left = (ws.ganttStart / 12) * 100;
+  const width = ((ws.ganttEnd - ws.ganttStart + 1) / 12) * 100;
   const markers = ws.milestones.map(m => {
     const month = new Date(m.date).getMonth();
     const pos = ((month + .5) / 12) * 100;
@@ -1330,12 +1740,10 @@ WORKSTREAMS.forEach(ws => {
   row.innerHTML = `
     <div class="mini-gantt-label">${ws.name}</div>
     <div class="mini-gantt-track">
-      <span class="mini-gantt-range ${ws.status}" style="left:${left}%;width:${width}%;"></span>
-      ${markers}
+      <span class="mini-gantt-range ${ws.status}" style="left:${left}%;width:${width}%;"></span>${markers}
     </div>
     <div class="mini-gantt-pct">${ws.pct}%</div>
   `;
-
   overviewGantt.appendChild(row);
 });
 
@@ -1343,38 +1751,39 @@ const ovWsList = document.getElementById("ov-ws-list");
 
 WORKSTREAMS.forEach(ws => {
   const row = document.createElement("div");
-  row.style.cssText = "padding:.55rem 0;border-bottom:1px solid var(--border-soft);";
-
   const fillClass = ws.status === "on-track" ? "fill-green" : ws.status === "critical" ? "fill-red" : "fill-amber";
+  const target = ws.target || 75;
 
+  row.style.cssText = "padding:.72rem 0;border-bottom:1px solid var(--border-soft);";
   row.innerHTML = `
-    <div style="display:flex;justify-content:space-between;font-size:.63rem;margin-bottom:4px;gap:.8rem;">
+    <div style="display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:.42rem;gap:.8rem;">
       <span style="color:var(--ink-2);">${ws.name}</span>
-      <span style="color:var(--ink-3);">${ws.pct}%</span>
+      <span style="font-weight:500;color:var(--ink-2);">${ws.pct}%</span>
     </div>
-    <div class="prog-bar-wrap" style="height:3px;"><div class="prog-bar-fill ${fillClass}" style="width:${ws.pct}%"></div></div>
+    <div class="bullet-track">
+      <div class="bullet-fill ${fillClass}" style="width:${ws.pct}%"></div>
+      <span class="bullet-target" data-label="Target ${target}%" style="left:${target}%"></span>
+    </div>
+    <div class="bullet-meta">
+      <span>Actual progress</span>
+      <span>Forecast ${ws.forecast || Math.min(100, ws.pct + 8)}%</span>
+    </div>
   `;
-
   ovWsList.appendChild(row);
 });
 
 const ovMs = document.getElementById("ov-milestones");
 
-WORKSTREAMS
-  .flatMap(ws => ws.milestones.filter(m => !m.done).map(m => ({...m, ws:ws.name})))
-  .slice(0,7)
-  .forEach(m => {
-    const el = document.createElement("div");
-    el.style.cssText = "display:flex;align-items:center;gap:.75rem;padding:.55rem 0;border-bottom:1px solid var(--border-soft);font-size:.63rem;";
-
-    el.innerHTML = `
-      <div style="flex:1;color:var(--ink-2);">${m.name}</div>
-      <div style="color:var(--ink-3);white-space:nowrap;">${m.date}</div>
-      ${m.critical ? `<span style="color:var(--red);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;">Gate item</span>` : ""}
-    `;
-
-    ovMs.appendChild(el);
-  });
+WORKSTREAMS.flatMap(ws => ws.milestones.filter(m => !m.done)).slice(0,7).forEach(m => {
+  const el = document.createElement("div");
+  el.style.cssText = "display:flex;align-items:center;gap:.75rem;padding:.55rem 0;border-bottom:1px solid var(--border-soft);font-size:.86rem;";
+  el.innerHTML = `
+    <div style="flex:1;color:var(--ink-2);">${m.name}</div>
+    <div style="font-weight:400;color:var(--ink-3);white-space:nowrap;font-size:.7rem;">${m.date}</div>
+    ${m.critical ? `<span style="font-weight:400;color:var(--red);font-size:.66rem;letter-spacing:.01em;text-transform:none;white-space:nowrap;">Gate</span>` : ""}
+  `;
+  ovMs.appendChild(el);
+});
 
 const ganttBody = document.getElementById("gantt-body");
 
@@ -1389,28 +1798,21 @@ WORKSTREAMS.forEach(ws => {
     const rangeLength = ws.ganttEnd - ws.ganttStart + 1;
     const expectedPctAtMonth = inRange ? (monthProgressIndex / rangeLength) * 100 : 0;
     const fill = inRange ? Math.min(100, Math.max(0, (ws.pct / expectedPctAtMonth) * 100)) : 0;
+    const diamonds = ws.milestones
+      .filter(x => new Date(x.date).getMonth() === m)
+      .map(x => `<span class="gantt-diamond ${x.done ? "past" : ""} ${x.critical ? "critical" : ""}"></span>`)
+      .join("");
 
-    const ms = ws.milestones.filter(x => new Date(x.date).getMonth() === m);
-    const diamonds = ms.map(x => `<span class="gantt-diamond ${x.done ? "past" : ""} ${x.critical ? "critical" : ""}"></span>`).join("");
-
-    cells += `
-      <td class="gantt-month-cell">
-        ${inRange ? `<div class="gantt-segment"><div class="gantt-segment-fill ${colourClass}" style="width:${fill}%"></div>${diamonds}</div>` : `<div style="position:relative;height:7px;">${diamonds}</div>`}
-      </td>
-    `;
+    cells += `<td class="gantt-month-cell">${inRange ? `<div class="gantt-segment"><div class="gantt-segment-fill ${colourClass}" style="width:${fill}%"></div>${diamonds}</div>` : `<div style="position:relative;height:7px;">${diamonds}</div>`}</td>`;
   }
 
   tr.innerHTML = `
-    <td>
-      <div class="gantt-ws-label">${ws.name}</div>
-      <div class="gantt-ws-sub">${ws.owner}</div>
-    </td>
-    <td style="font-size:.6rem;color:var(--ink-3);">${ws.owner}</td>
+    <td><div class="gantt-ws-label">${ws.name}</div><div class="gantt-ws-sub">${ws.owner}</div></td>
+    <td style="font-size:.78rem;color:var(--ink-3);font-weight:400;">${ws.owner}</td>
     <td class="gantt-rag">${statusChip(ws.status)}</td>
     ${cells}
     <td class="gantt-pct">${ws.pct}%</td>
   `;
-
   ganttBody.appendChild(tr);
 });
 
@@ -1419,7 +1821,6 @@ const wsAccordion = document.getElementById("ws-accordion");
 WORKSTREAMS.forEach(ws => {
   const row = document.createElement("div");
   row.className = "ws-row";
-
   const fillClass = ws.status === "on-track" ? "fill-green" : ws.status === "critical" ? "fill-red" : "fill-amber";
 
   const msRows = ws.milestones.map(m => `
@@ -1427,7 +1828,6 @@ WORKSTREAMS.forEach(ws => {
       <div class="ms-name" style="display:flex;align-items:center;gap:6px;">
         <span style="width:8px;height:8px;border-radius:50%;background:${m.done ? "var(--green)" : m.critical ? "var(--red)" : "var(--border)"};border:1px solid ${m.done ? "var(--green)" : m.critical ? "var(--red)" : "var(--ink-3)"};display:inline-block;flex-shrink:0;"></span>
         ${m.name}
-        ${m.critical ? `<span style="font-size:.5rem;color:var(--red);letter-spacing:.1em;text-transform:uppercase;">Gate</span>` : ""}
       </div>
       <div class="ms-date">${m.date}</div>
       <div>${m.done ? `<span class="chip complete">Done</span>` : `<span class="chip not-started">Pending</span>`}</div>
@@ -1436,23 +1836,17 @@ WORKSTREAMS.forEach(ws => {
 
   row.innerHTML = `
     <div class="ws-header">
-      <div>
-        <div style="font-size:.72rem;color:var(--ink);margin-bottom:3px;">${ws.name}</div>
-        <div style="font-size:.6rem;color:var(--ink-3);">${ws.milestones.filter(m => m.done).length}/${ws.milestones.length} milestones complete</div>
-      </div>
-      <div style="font-size:.62rem;color:var(--ink-3);">${ws.owner}</div>
+      <div><div class="ws-title">${ws.name}</div><div class="ws-sub">${ws.milestones.filter(m => m.done).length}/${ws.milestones.length} complete</div></div>
+      <div style="font-size:.78rem;color:var(--ink-3);font-weight:400;">${ws.owner}</div>
       <div class="ws-pct">${ws.pct}%</div>
       <div>${statusChip(ws.status)}</div>
       <div class="ws-toggle">▼</div>
     </div>
 
     <div class="ws-body">
-      <p style="font-size:.65rem;color:var(--ink-3);line-height:1.7;margin:.75rem 0 .5rem;">${ws.desc}</p>
+      <p class="ws-desc">${ws.desc}</p>
       <div style="margin-bottom:.75rem;">
-        <div style="display:flex;justify-content:space-between;font-size:.58rem;color:var(--ink-3);margin-bottom:4px;">
-          <span>Progress</span>
-          <span>${ws.pct}%</span>
-        </div>
+        <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--ink-3);font-weight:400;margin-bottom:4px;"><span>Progress</span><span>${ws.pct}%</span></div>
         <div class="prog-bar-wrap"><div class="prog-bar-fill ${fillClass}" style="width:${ws.pct}%"></div></div>
       </div>
       <div class="card-title" style="margin-top:1rem;">Milestones</div>
@@ -1467,25 +1861,19 @@ WORKSTREAMS.forEach(ws => {
 function renderRisks(filter){
   const body = document.getElementById("risk-body");
   body.innerHTML = "";
-
   const filtered = filter === "all" ? RISKS : RISKS.filter(r => r.score === filter);
 
   filtered.forEach(r => {
     const tr = document.createElement("tr");
-
     tr.innerHTML = `
       <td class="risk-id">${r.id}</td>
-      <td>
-        <div class="risk-desc">${r.desc}</div>
-        <div class="risk-mitigation">${r.mitigation}</div>
-      </td>
+      <td><div class="risk-desc">${r.desc}</div><div class="risk-mitigation">${r.mitigation}</div></td>
       <td>${r.ws}</td>
       <td>${r.likelihood}</td>
       <td>${r.impact}</td>
       <td><span class="score-pill score-${r.score}">${r.score === "high" ? "High" : r.score === "med" ? "Med" : "Low"}</span></td>
       <td>${r.status === "mitigated" ? `<span class="chip complete">Mitigated</span>` : `<span class="chip at-risk">Open</span>`}</td>
     `;
-
     body.appendChild(tr);
   });
 }
@@ -1506,10 +1894,8 @@ WORKSTREAMS.forEach(ws => {
   const remaining = ws.budget.alloc - ws.budget.spent;
   const burnPct = Math.round((ws.budget.spent / ws.budget.alloc) * 100);
   const over = burnPct > 80 && ws.pct < 70;
-
   const el = document.createElement("div");
   el.className = "budget-row";
-
   el.innerHTML = `
     <div class="budget-ws">${ws.name}</div>
     <div class="budget-num">${fmtK(ws.budget.alloc)}</div>
@@ -1517,7 +1903,6 @@ WORKSTREAMS.forEach(ws => {
     <div class="budget-num ${remaining < 100 ? "over" : ""}">${fmtK(remaining)}</div>
     <div class="budget-num ${burnPct > 85 ? "over" : ""}">${burnPct}%</div>
   `;
-
   budgetRows.appendChild(el);
 });
 
@@ -1528,16 +1913,13 @@ const maxBurn = Math.max(...BURN_BY_MONTH.filter(Boolean));
 BURN_BY_MONTH.forEach((b,i) => {
   const bar = document.createElement("div");
   const h = b > 0 ? Math.round((b / maxBurn) * 70) : 2;
-
   bar.style.cssText = `flex:1;height:${h}px;background:${b > 850 ? "var(--red)" : b > 0 ? "var(--amber)" : "var(--border)"};border-radius:2px 2px 0 0;align-self:flex-end;min-height:2px;`;
   bar.title = b > 0 ? `${MONTHS[i]}: $${b}k` : `${MONTHS[i]}: forecast`;
-
   burnChart.appendChild(bar);
 
   const label = document.createElement("div");
-  label.style.cssText = "flex:1;text-align:center;font-size:.48rem;color:var(--ink-3);letter-spacing:.06em;margin-top:4px;";
+  label.style.cssText = "flex:1;text-align:center;font-size:.55rem;color:var(--ink-3);font-weight:400;letter-spacing:.06em;margin-top:4px;";
   label.textContent = MONTHS[i].slice(0,1);
-
   burnLabels.appendChild(label);
 });
 
@@ -1546,19 +1928,13 @@ const readinessGrid = document.getElementById("readiness-grid");
 READINESS.forEach(r => {
   const cell = document.createElement("div");
   cell.className = "readiness-cell";
-
   const pct = (r.score / r.max) * 100;
-
   cell.innerHTML = `
     <div class="readiness-area">${r.area}</div>
-    <div class="readiness-score">
-      <div class="readiness-num" style="color:var(--${r.color})">${r.score}</div>
-      <div class="readiness-max">/ ${r.max}</div>
-    </div>
+    <div class="readiness-score"><div class="readiness-num" style="color:var(--${r.color})">${r.score}</div><div class="readiness-max">/ ${r.max}</div></div>
     <div class="prog-bar-wrap" style="margin-bottom:.6rem;"><div class="prog-bar-fill fill-${r.color}" style="width:${pct}%"></div></div>
     <div class="readiness-desc">${r.desc}</div>
   `;
-
   readinessGrid.appendChild(cell);
 });
 
@@ -1566,16 +1942,13 @@ const gateChecklist = document.getElementById("gate-checklist");
 
 GATE_CHECKLIST.forEach(item => {
   const el = document.createElement("div");
-
-  el.style.cssText = "display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--border-soft);font-size:.65rem;";
-
+  el.style.cssText = "display:flex;align-items:center;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--border-soft);font-size:.88rem;";
   el.innerHTML = `
     <div style="width:16px;height:16px;border-radius:50%;border:1.5px solid ${item.done ? "var(--green)" : item.critical ? "var(--red)" : "var(--border)"};background:${item.done ? "var(--green-dim)" : "transparent"};flex-shrink:0;"></div>
     <div style="flex:1;color:${item.done ? "var(--ink-3)" : "var(--ink-2)"};">${item.item}</div>
-    ${item.critical && !item.done ? `<span style="font-size:.5rem;color:var(--red);letter-spacing:.1em;text-transform:uppercase;">Gate item</span>` : ""}
+    ${item.critical && !item.done ? `<span style="font-size:.68rem;color:var(--red);font-weight:500;letter-spacing:.01em;text-transform:none;">Gate</span>` : ""}
     ${item.done ? `<span class="chip complete">Done</span>` : `<span class="chip not-started">Pending</span>`}
   `;
-
   gateChecklist.appendChild(el);
 });
 </script>
