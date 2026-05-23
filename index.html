@@ -50,7 +50,7 @@
     font-size: 0.65rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--text-sub);
+    color: var(--text-dim);
     text-decoration: none;
     border: 1px solid var(--border);
     padding: 0.55rem 1.1rem;
@@ -264,7 +264,7 @@
 
 <header>
   <h1>Khaled Sanad: <em>Portfolio</em></h1>
-  <a class="cv-btn" href="cv.html" title="Download CV" target="_blank" rel="noopener">View CV</a>
+  <a class="cv-btn" id="cvBtn" href="cv.html" title="View CV">View CV</a>
 </header>
 <div class="divider"></div>
 <main>
@@ -393,12 +393,13 @@
   let overlayOpen = false;
 
   function openOverlay(href, title) {
+    overlayFrame.src = "about:blank";
     overlayTitle.textContent = title;
     overlay.classList.add("active");
     document.body.style.overflow = "hidden";
     overlayOpen = true;
     history.pushState({ overlay: true }, "");
-    overlayFrame.contentWindow.location.replace(href);
+    setTimeout(() => { overlayFrame.src = href; }, 0);
   }
 
   function closeOverlay() {
@@ -406,7 +407,7 @@
     document.body.style.overflow = "";
     overlayOpen = false;
     overlayTitle.textContent = "";
-    overlayFrame.contentWindow.location.replace("about:blank");
+    overlayFrame.src = "about:blank";
   }
 
   document.querySelectorAll("a.tile").forEach(tile => {
@@ -414,6 +415,11 @@
       e.preventDefault();
       openOverlay(tile.getAttribute("href"), tile.getAttribute("data-title"));
     });
+  });
+
+  document.getElementById("cvBtn").addEventListener("click", e => {
+    e.preventDefault();
+    openOverlay("cv.html", "Curriculum Vitae");
   });
 
   overlayClose.addEventListener("click", () => history.back());
