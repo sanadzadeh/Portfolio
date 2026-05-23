@@ -398,13 +398,15 @@
     document.body.style.overflow = "hidden";
     overlayOpen = true;
     history.pushState({ overlay: true }, "");
-    overlayFrame.src = href;
+    overlayFrame.contentWindow.location.replace(href);
   }
 
   function closeOverlay() {
     overlay.classList.remove("active");
     document.body.style.overflow = "";
     overlayOpen = false;
+    overlayTitle.textContent = "";
+    overlayFrame.contentWindow.location.replace("about:blank");
   }
 
   document.querySelectorAll("a.tile").forEach(tile => {
