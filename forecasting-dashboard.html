@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Forecasting Dashboard — Khaled Sanad</title>
+<title>RegTech Forecasting Dashboard — Khaled Sanad</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
@@ -342,8 +342,7 @@ body{
 }
 
 .chip.baseline{color:var(--accent);background:var(--accent-dim)}
-.chip.optimistic{color:var(--green);background:var(--green-dim)}
-.chip.conservative{color:var(--amber);background:var(--amber-dim)}
+.chip.scaling{color:var(--green);background:var(--green-dim)}
 .chip.stress{color:var(--red);background:var(--red-dim)}
 
 .visual-grid{
@@ -828,8 +827,8 @@ body{
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="site-logo">Khaled Sanad: <em>Forecasting Dashboard</em></div>
-    <span class="header-tag">Planning · Scenarios · Executive Forecasting</span>
+    <div class="site-logo">Khaled Sanad: <em>RegTech Forecasting Dashboard</em></div>
+    <span class="header-tag">Legal Operations · Compliance Technology · Scenario Planning</span>
   </div>
 </header>
 
@@ -838,12 +837,11 @@ body{
     <div class="page-wrap">
       <div class="controls-inner">
         <div class="search-wrap">
-          <input class="search-input" id="search-input" type="search" placeholder="Search forecast scenarios, assumptions, or risks…" autocomplete="off">
+          <input class="search-input" id="search-input" type="search" placeholder="Search scenarios, assumptions, legal workflows, or risks…" autocomplete="off">
         </div>
         <button class="filter-pill active" data-filter="all">All</button>
         <button class="filter-pill" data-filter="baseline">Baseline</button>
-        <button class="filter-pill" data-filter="optimistic">Optimistic</button>
-        <button class="filter-pill" data-filter="conservative">Conservative</button>
+        <button class="filter-pill" data-filter="scaling">Scaling</button>
         <button class="filter-pill" data-filter="stress">Stress</button>
       </div>
     </div>
@@ -856,10 +854,10 @@ body{
         <div class="hero-panel">
           <div class="hero-top">
             <div>
-              <div class="hero-label" id="hero-label">Enterprise Forecasting Workspace</div>
-              <h1 class="hero-title" id="hero-title">Scenario-led planning for delivery, cost, demand, and capacity signals.</h1>
+              <div class="hero-label" id="hero-label">RegTech Forecasting Workspace</div>
+              <h1 class="hero-title" id="hero-title">Scenario-led planning for legal workflow volume, review capacity, automation readiness, and residual compliance backlog.</h1>
               <p class="hero-text" id="hero-text">
-                This artefact models how executives could compare forecast paths across baseline, optimistic, conservative, and stress scenarios. The main visual is a composite forecast chart: grouped bars show operational volume, while overlay lines show confidence and cost pressure moving across the same planning horizon.
+                This artefact models how a law-focused technology company could compare forecast paths across baseline, scaling, and stress scenarios. The main visual is a composite forecast chart: grouped bars show legal operations volume, while overlay lines show confidence and complexity pressure across the same planning horizon.
               </p>
             </div>
 
@@ -874,11 +872,11 @@ body{
               </div>
               <div class="signal-row">
                 <span class="signal-label">Primary constraint</span>
-                <span class="signal-value" id="primary-constraint">Capacity and demand uncertainty</span>
+                <span class="signal-value" id="primary-constraint">Legal review capacity and rule-change velocity</span>
               </div>
               <div class="signal-row">
                 <span class="signal-label">Decision posture</span>
-                <span class="signal-value" id="decision-posture">Monitor and stage commitments</span>
+                <span class="signal-value" id="decision-posture">Stage automation and governance controls</span>
               </div>
             </div>
           </div>
@@ -888,23 +886,23 @@ body{
       <div class="kpi-strip">
         <div class="kpi">
           <div class="kpi-label">Forecast Accuracy</div>
-          <div class="kpi-value accent" id="kpi-accuracy">86%</div>
-          <div class="kpi-sub" id="kpi-accuracy-sub">Last 3 planning cycles</div>
+          <div class="kpi-value accent" id="kpi-accuracy">87%</div>
+          <div class="kpi-sub" id="kpi-accuracy-sub">Last 3 release cycles</div>
         </div>
         <div class="kpi">
-          <div class="kpi-label">Cost Variance</div>
-          <div class="kpi-value amber" id="kpi-cost">+4.8%</div>
-          <div class="kpi-sub" id="kpi-cost-sub">Against approved baseline</div>
+          <div class="kpi-label">Review Variance</div>
+          <div class="kpi-value amber" id="kpi-cost">+6.1%</div>
+          <div class="kpi-sub" id="kpi-cost-sub">Against workflow baseline</div>
         </div>
         <div class="kpi">
-          <div class="kpi-label">Capacity Gap</div>
-          <div class="kpi-value red" id="kpi-capacity">18 FTE</div>
+          <div class="kpi-label">Reviewer Gap</div>
+          <div class="kpi-value red" id="kpi-capacity">14 FTE</div>
           <div class="kpi-sub" id="kpi-capacity-sub">Peak gap in Q3 FY26</div>
         </div>
         <div class="kpi">
           <div class="kpi-label">Confidence Band</div>
-          <div class="kpi-value green" id="kpi-band">±9%</div>
-          <div class="kpi-sub" id="kpi-band-sub">Narrowed from ±14%</div>
+          <div class="kpi-value green" id="kpi-band">±8%</div>
+          <div class="kpi-sub" id="kpi-band-sub">Narrowed from ±13%</div>
         </div>
       </div>
 
@@ -916,12 +914,12 @@ body{
           </div>
 
           <div class="chart-legend">
-            <span class="legend-item"><span class="legend-swatch" style="background:var(--accent);"></span>Demand</span>
-            <span class="legend-item"><span class="legend-swatch" style="background:var(--green);"></span>Funded capacity</span>
-            <span class="legend-item"><span class="legend-swatch" style="background:var(--purple);"></span>Delivered output</span>
-            <span class="legend-item"><span class="legend-swatch" style="background:var(--red);"></span>Residual gap</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:var(--accent);"></span>Legal intake</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:var(--green);"></span>Review capacity</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:var(--purple);"></span>Automated output</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:var(--red);"></span>Residual backlog</span>
             <span class="legend-item"><span class="legend-line" style="background:var(--ink);"></span>Confidence</span>
-            <span class="legend-item"><span class="legend-line" style="background:var(--amber);"></span>Cost pressure</span>
+            <span class="legend-item"><span class="legend-line" style="background:var(--amber);"></span>Complexity pressure</span>
           </div>
 
           <div class="driver-grid">
@@ -931,13 +929,13 @@ body{
             </div>
             <div class="driver-cell">
               <div class="driver-label">Decision signal</div>
-              <div class="driver-value" id="chart-signal-value">Stage funding</div>
+              <div class="driver-value" id="chart-signal-value">Stage controls</div>
             </div>
           </div>
         </div>
 
         <div class="visual-card">
-          <div class="section-title">Forecast Flow Sankey</div>
+          <div class="section-title">Legal Workflow Flow</div>
 
           <div class="sankey-wrap">
             <svg class="sankey-svg" viewBox="0 0 600 260" preserveAspectRatio="none">
@@ -948,38 +946,38 @@ body{
             </svg>
 
             <div class="sankey-node source">
-              <div class="node-label">Forecast Demand</div>
+              <div class="node-label">Legal Intake</div>
               <div class="node-value" id="sankey-demand">100</div>
-              <div class="node-sub">Indexed workload</div>
+              <div class="node-sub">Indexed matter volume</div>
             </div>
 
             <div class="sankey-node capacity">
-              <div class="node-label">Funded Capacity</div>
-              <div class="node-value" id="sankey-capacity">76</div>
-              <div class="node-sub">Available delivery supply</div>
+              <div class="node-label">Review Capacity</div>
+              <div class="node-value" id="sankey-capacity">78</div>
+              <div class="node-sub">Human and system review supply</div>
             </div>
 
             <div class="sankey-node risk">
-              <div class="node-label">Unabsorbed Pressure</div>
-              <div class="node-value" id="sankey-pressure">24</div>
-              <div class="node-sub">Demand not fully covered</div>
+              <div class="node-label">Unabsorbed Complexity</div>
+              <div class="node-value" id="sankey-pressure">22</div>
+              <div class="node-sub">Rule-change and exception load</div>
             </div>
 
             <div class="sankey-node delivery">
-              <div class="node-label">Deliverable Scope</div>
-              <div class="node-value" id="sankey-delivery">68</div>
-              <div class="node-sub">Likely achieved output</div>
+              <div class="node-label">Cleared Workflow</div>
+              <div class="node-value" id="sankey-delivery">70</div>
+              <div class="node-sub">Likely reviewed and resolved</div>
             </div>
 
             <div class="sankey-node gap">
-              <div class="node-label">Residual Gap</div>
-              <div class="node-value" id="sankey-gap">32</div>
-              <div class="node-sub">Delay, deferral, or re-scope</div>
+              <div class="node-label">Residual Backlog</div>
+              <div class="node-value" id="sankey-gap">30</div>
+              <div class="node-sub">Escalate, defer, or re-route</div>
             </div>
           </div>
 
           <p class="sankey-story" id="sankey-story">
-            The Sankey view translates forecast demand into funded capacity, deliverable scope, and residual gap. It tells the executive story behind the numbers: not all demand converts into delivery, and the unabsorbed portion becomes schedule, cost, or readiness pressure.
+            The flow view translates incoming legal workload into review capacity, cleared workflow, and residual backlog. It shows where regulatory change, policy interpretation, and exception handling reduce the amount of work that can be safely resolved through automation alone.
           </p>
         </div>
       </div>
@@ -1007,7 +1005,7 @@ body{
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <span>Forecasting Dashboard — Enterprise planning workspace · Synthetic data</span>
+    <span>RegTech Forecasting Dashboard — Legal operations planning workspace · Synthetic data</span>
     <span>Khaled Sanad · Portfolio</span>
   </div>
 </footer>
@@ -1016,264 +1014,178 @@ body{
 const DASHBOARD_STATE = {
   all:{
     label:"All scenarios",
-    heroLabel:"Enterprise Forecasting Workspace",
-    heroTitle:"Scenario-led planning for delivery, cost, demand, and capacity signals.",
-    heroText:"This artefact models how executives could compare forecast paths across baseline, optimistic, conservative, and stress scenarios. The main visual is a composite forecast chart: grouped bars show operational volume, while overlay lines show confidence and cost pressure moving across the same planning horizon.",
+    heroLabel:"RegTech Forecasting Workspace",
+    heroTitle:"Scenario-led planning for legal workflow volume, review capacity, automation readiness, and residual compliance backlog.",
+    heroText:"This artefact models how a law-focused technology company could compare forecast paths across baseline, scaling, and stress scenarios. The main visual is a composite forecast chart: grouped bars show legal operations volume, while overlay lines show confidence and complexity pressure across the same planning horizon.",
     horizon:"FY25–FY27",
-    constraint:"Capacity and demand uncertainty",
-    posture:"Monitor and stage commitments",
-    accuracy:"86%",
-    accuracySub:"Last 3 planning cycles",
-    cost:"+4.8%",
-    costSub:"Against approved baseline",
-    capacity:"18 FTE",
+    constraint:"Legal review capacity and rule-change velocity",
+    posture:"Stage automation and governance controls",
+    accuracy:"87%",
+    accuracySub:"Last 3 release cycles",
+    cost:"+6.1%",
+    costSub:"Against workflow baseline",
+    capacity:"14 FTE",
     capacitySub:"Peak gap in Q3 FY26",
-    band:"±9%",
-    bandSub:"Narrowed from ±14%",
+    band:"±8%",
+    bandSub:"Narrowed from ±13%",
     storyValue:"Compression",
-    signalValue:"Stage funding",
+    signalValue:"Stage controls",
     chart:{
-      demand:[72,80,88,95,103,111,118,126],
-      capacity:[68,74,79,84,88,92,96,100],
-      delivered:[62,68,73,78,82,86,91,96],
-      gap:[10,12,15,17,21,25,27,30],
-      confidence:[84,82,79,76,72,70,68,66],
-      costPressure:[28,32,37,43,49,55,60,66]
+      demand:[68,76,84,93,102,112,121,130],
+      capacity:[66,72,78,84,89,94,99,104],
+      delivered:[58,65,72,79,86,92,98,103],
+      gap:[10,11,12,14,16,20,23,27],
+      confidence:[86,84,82,79,76,73,71,69],
+      costPressure:[24,29,35,41,48,55,61,67]
     },
-    sankey:{demand:100,capacity:76,pressure:24,delivery:68,gap:32},
-    sankeyStory:"Across all scenarios, forecast demand exceeds funded capacity. The central planning issue is not whether delivery is possible, but how much demand can be absorbed before residual pressure becomes delay, cost growth, or scope deferral."
+    sankey:{demand:100,capacity:78,pressure:22,delivery:70,gap:30},
+    sankeyStory:"Across all scenarios, legal intake grows faster than safe review capacity. The central issue is not whether automation can help, but where legal judgement, auditability, and exception handling still require controlled human oversight."
   },
   baseline:{
     label:"Baseline",
     heroLabel:"Baseline Scenario",
-    heroTitle:"Expected workload growth under current operating conditions.",
-    heroText:"The baseline scenario assumes current funding, current delivery rhythm, moderate demand growth, and no major external shock. The composite chart shows a manageable but tightening gap as demand rises faster than capacity.",
+    heroTitle:"Expected legal workflow growth under current product and client operating conditions.",
+    heroText:"The baseline scenario assumes current client onboarding pace, current legal review routines, moderate rule-change volume, and no major regulatory shock. The chart shows a manageable but tightening gap as intake grows faster than review capacity.",
     horizon:"FY25–FY27",
-    constraint:"Mid-horizon delivery capacity",
-    posture:"Proceed with controlled staging",
-    accuracy:"88%",
+    constraint:"Mid-horizon review capacity",
+    posture:"Proceed with controlled automation",
+    accuracy:"89%",
     accuracySub:"Strongest historical fit",
-    cost:"+3.2%",
-    costSub:"Manageable variance",
-    capacity:"12 FTE",
+    cost:"+4.2%",
+    costSub:"Moderate review variance",
+    capacity:"9 FTE",
     capacitySub:"Peak gap in Q3 FY26",
-    band:"±7%",
+    band:"±6%",
     bandSub:"Stable control band",
     storyValue:"Tightening",
-    signalValue:"Stage capacity",
+    signalValue:"Stage review",
     chart:{
-      demand:[70,76,82,88,94,100,105,110],
-      capacity:[68,73,78,83,88,93,98,103],
-      delivered:[63,68,74,79,84,89,94,99],
-      gap:[7,8,8,9,10,11,11,11],
-      confidence:[88,87,85,82,78,77,75,74],
-      costPressure:[22,25,29,33,37,40,44,47]
+      demand:[66,72,78,85,92,99,105,112],
+      capacity:[64,70,76,82,88,94,100,106],
+      delivered:[57,64,71,78,84,90,96,102],
+      gap:[9,8,7,7,8,9,9,10],
+      confidence:[89,88,86,84,81,79,77,75],
+      costPressure:[18,22,26,30,34,38,42,46]
     },
-    sankey:{demand:100,capacity:82,pressure:18,delivery:74,gap:26},
-    sankeyStory:"The baseline Sankey shows a workable but tight plan. Most forecast demand converts into funded capacity, but a residual delivery gap remains unless capacity is staged before the peak quarter."
+    sankey:{demand:100,capacity:84,pressure:16,delivery:76,gap:24},
+    sankeyStory:"The baseline flow shows a workable plan. Most legal intake can be absorbed, but the residual backlog grows unless triage rules, reviewer allocation, and automation thresholds are staged before the peak review period."
   },
-  optimistic:{
-    label:"Optimistic",
-    heroLabel:"Optimistic Scenario",
-    heroTitle:"Higher benefit capture if adoption and execution outperform plan.",
-    heroText:"The optimistic scenario assumes stronger adoption, less rework, faster decision cycles, and higher conversion of capacity into delivered output. The chart shows the smallest gap, but confidence remains lower because the upside depends on behavioural change.",
+  scaling:{
+    label:"Scaling",
+    heroLabel:"Scaling Scenario",
+    heroTitle:"Higher throughput if legal automation, template logic, and client onboarding outperform plan.",
+    heroText:"The scaling scenario assumes stronger reuse of legal templates, faster playbook configuration, better exception routing, and higher conversion of review capacity into cleared workflow. It has the smallest backlog, but confidence is lower because the upside depends on adoption and governance discipline.",
     horizon:"FY25–FY27",
-    constraint:"Adoption must outpace complexity",
-    posture:"Use as upside case",
-    accuracy:"81%",
+    constraint:"Governed automation must outpace complexity",
+    posture:"Use as controlled upside case",
+    accuracy:"82%",
     accuracySub:"Moderate confidence",
-    cost:"+1.8%",
-    costSub:"Lower rework drag",
-    capacity:"6 FTE",
+    cost:"+2.4%",
+    costSub:"Lower manual review drag",
+    capacity:"5 FTE",
     capacitySub:"Peak residual gap",
-    band:"±11%",
-    bandSub:"Wider behavioural uncertainty",
-    storyValue:"Upside",
-    signalValue:"Protect adoption",
-    chart:{
-      demand:[72,80,89,98,106,115,123,130],
-      capacity:[70,79,88,97,106,114,121,127],
-      delivered:[66,76,86,95,104,112,120,126],
-      gap:[6,4,3,3,2,3,3,4],
-      confidence:[76,74,71,68,64,62,60,59],
-      costPressure:[18,19,21,23,25,27,29,31]
-    },
-    sankey:{demand:100,capacity:88,pressure:12,delivery:84,gap:16},
-    sankeyStory:"The optimistic Sankey shows higher conversion from demand to delivered scope. The plan works only if adoption and decision speed improve; otherwise the upside case can quickly collapse back toward baseline."
-  },
-  conservative:{
-    label:"Conservative",
-    heroLabel:"Conservative Scenario",
-    heroTitle:"Cost and readiness pressure where delivery friction persists.",
-    heroText:"The conservative scenario assumes slower approvals, higher remediation load, repeated testing, and longer parallel-run periods. The chart shows rising demand, flattening delivered output, and increasing cost pressure.",
-    horizon:"FY25–FY26",
-    constraint:"Cost pressure and readiness lag",
-    posture:"Protect critical path",
-    accuracy:"84%",
-    accuracySub:"Good fit, higher friction",
-    cost:"+9.6%",
-    costSub:"Rework and delay pressure",
-    capacity:"22 FTE",
-    capacitySub:"Specialist delivery gap",
     band:"±10%",
-    bandSub:"Moderate uncertainty",
-    storyValue:"Drag",
-    signalValue:"Gate decisions",
+    bandSub:"Wider adoption uncertainty",
+    storyValue:"Upside",
+    signalValue:"Protect rules",
     chart:{
-      demand:[70,78,86,94,102,111,119,126],
-      capacity:[66,70,74,78,81,84,86,88],
-      delivered:[59,63,66,69,71,73,75,76],
-      gap:[11,15,20,25,31,38,44,50],
-      confidence:[84,81,78,74,69,66,63,60],
-      costPressure:[34,40,47,54,62,69,75,82]
+      demand:[68,78,89,100,111,122,132,140],
+      capacity:[67,76,86,96,106,116,125,133],
+      delivered:[62,73,84,95,105,115,124,132],
+      gap:[6,5,5,5,6,7,8,8],
+      confidence:[82,80,77,74,70,67,65,63],
+      costPressure:[16,18,20,23,26,29,32,35]
     },
-    sankey:{demand:100,capacity:70,pressure:30,delivery:58,gap:42},
-    sankeyStory:"The conservative Sankey shows demand leaking into unabsorbed pressure. The story is cumulative drag: cost variance, readiness delay, and capacity shortage combine to reduce deliverable scope."
+    sankey:{demand:100,capacity:90,pressure:10,delivery:86,gap:14},
+    sankeyStory:"The scaling flow shows higher conversion from intake to cleared workflow. The plan works only if legal templates, rule libraries, escalation paths, and audit controls mature together; otherwise automation creates speed without enough defensibility."
   },
   stress:{
     label:"Stress",
     heroLabel:"Stress Scenario",
-    heroTitle:"Capacity shock where demand rises while specialist supply tightens.",
-    heroText:"The stress scenario tests how quickly the plan deteriorates when demand increases, specialist capacity tightens, and unresolved work is pushed into later quarters. The composite chart shows the clearest breakpoint: demand rises, delivery stalls, confidence falls, and cost pressure accelerates.",
+    heroTitle:"Rule-change shock where legal intake rises while specialist review capacity tightens.",
+    heroText:"The stress scenario tests how quickly the operating model deteriorates when legislative updates, client-specific exceptions, and complex legal interpretations increase at the same time. The chart shows the breakpoint: intake rises, cleared workflow stalls, confidence falls, and complexity pressure accelerates.",
     horizon:"FY26",
-    constraint:"Specialist capacity shortage",
+    constraint:"Specialist legal review shortage",
     posture:"Trigger mitigation",
-    accuracy:"72%",
+    accuracy:"73%",
     accuracySub:"Higher volatility",
-    cost:"+14.2%",
-    costSub:"Contingency pressure",
-    capacity:"31 FTE",
-    capacitySub:"Peak shortage",
-    band:"±16%",
+    cost:"+15.1%",
+    costSub:"Escalation pressure",
+    capacity:"26 FTE",
+    capacitySub:"Peak reviewer shortage",
+    band:"±15%",
     bandSub:"Wide stress range",
     storyValue:"Breakpoint",
-    signalValue:"Re-sequence",
+    signalValue:"Re-route",
     chart:{
-      demand:[74,84,95,106,118,130,141,150],
-      capacity:[64,66,67,68,68,69,69,70],
-      delivered:[56,57,58,58,59,59,60,60],
-      gap:[18,27,37,48,59,71,81,90],
-      confidence:[72,68,64,60,58,54,50,47],
-      costPressure:[42,50,59,68,77,85,92,98]
+      demand:[72,84,97,110,124,138,151,162],
+      capacity:[62,64,65,66,67,68,68,69],
+      delivered:[52,54,55,56,56,57,57,58],
+      gap:[20,30,42,54,68,81,94,104],
+      confidence:[73,69,65,61,57,53,49,46],
+      costPressure:[38,47,57,67,77,86,93,99]
     },
-    sankey:{demand:100,capacity:58,pressure:42,delivery:44,gap:56},
-    sankeyStory:"The stress Sankey makes the failure mode visible. Capacity absorbs barely over half of demand, leaving a large residual gap that must become deferral, re-scope, additional funding, or executive trade-off."
+    sankey:{demand:100,capacity:56,pressure:44,delivery:42,gap:58},
+    sankeyStory:"The stress flow makes the failure mode visible. Review capacity absorbs barely over half of intake, leaving a large residual backlog that must become escalation, deferral, narrower automation thresholds, or executive prioritisation."
   }
 };
 
 const SCENARIOS = [
   {
-    id:"baseline-demand",
+    id:"baseline-intake",
     category:"baseline",
     label:"Baseline",
-    title:"Demand Forecast",
-    desc:"Expected workload growth under current product, customer, and operational settings.",
+    title:"Legal Intake Forecast",
+    desc:"Expected growth in legal matter volume under current client onboarding, product coverage, and review settings.",
     horizon:"FY25–FY27",
-    metricA:"12.4%",
+    metricA:"11.8%",
     metricALabel:"Annual growth",
-    metricB:"78%",
+    metricB:"79%",
     metricBLabel:"Confidence",
-    meta:"Baseline · Demand",
+    meta:"Baseline · Intake",
     content:`
-      <p><strong>Purpose:</strong> This forecast estimates expected demand growth if current operating conditions continue without major shocks or acceleration events.</p>
-      <p>The baseline path assumes gradual growth in service demand, moderate channel shift, and no major structural change to the delivery model. Growth is not assumed to be linear; the model expects heavier demand in the middle quarters as deferred initiatives and customer-facing changes compound.</p>
+      <p><strong>Purpose:</strong> This forecast estimates expected legal operations volume if current product coverage and client onboarding continue without major acceleration or disruption.</p>
+      <p>The baseline path assumes moderate growth in legal review requests, recurring policy updates, and steady use of existing template libraries. Growth is not treated as purely linear; the model expects heavier volume in the middle quarters as new client workflows, updated clauses, and exception queues compound.</p>
       <h2>Planning implication</h2>
-      <p>The baseline scenario is manageable, but only if capacity planning begins before the Q3 FY26 pressure point. Treating the baseline as a passive business-as-usual case would understate the delivery load.</p>
+      <p>The baseline scenario is manageable, but only if review capacity and automation thresholds are adjusted before the Q3 FY26 pressure point. Treating this as ordinary business-as-usual would understate the backlog risk.</p>
     `
   },
   {
-    id:"optimistic-benefit",
-    category:"optimistic",
-    label:"Optimistic",
-    title:"Benefit Realisation Uplift",
-    desc:"Higher benefit capture if adoption, process automation, and stakeholder readiness outperform plan.",
+    id:"scaling-automation",
+    category:"scaling",
+    label:"Scaling",
+    title:"Automation Throughput Uplift",
+    desc:"Higher cleared-workflow output if template logic, legal playbooks, and exception routing outperform plan.",
     horizon:"FY25–FY27",
-    metricA:"18.7%",
-    metricALabel:"Benefit uplift",
-    metricB:"64%",
+    metricA:"21.3%",
+    metricALabel:"Throughput uplift",
+    metricB:"66%",
     metricBLabel:"Confidence",
-    meta:"Optimistic · Benefits",
+    meta:"Scaling · Automation",
     content:`
-      <p><strong>Purpose:</strong> This scenario tests upside potential where adoption improves faster than expected and automation benefits translate into measurable operating leverage.</p>
-      <p>The optimistic path depends on early business adoption, lower remediation drag, and faster process change. It is plausible but should not be treated as the financial control case because several assumptions depend on behavioural change rather than system delivery alone.</p>
+      <p><strong>Purpose:</strong> This scenario tests upside potential where legal automation matures faster than expected and reusable rule libraries reduce manual review demand.</p>
+      <p>The scaling path depends on cleaner intake categorisation, stronger template governance, better matter routing, and fewer ambiguous exceptions. It is plausible, but it should not be treated as the default case because several assumptions depend on behavioural adoption, not just platform capability.</p>
       <h2>Planning implication</h2>
-      <p>This scenario is useful for strategic ambition, but executive reporting should separate committed benefits from stretch benefits. The main value is identifying which adoption levers could move the forecast upward.</p>
+      <p>This scenario is useful for product ambition and operational planning, but executive reporting should separate governed automation from untested automation. The main value is identifying which controls make higher throughput legally defensible.</p>
     `
   },
   {
-    id:"conservative-cost",
-    category:"conservative",
-    label:"Conservative",
-    title:"Cost Pressure Case",
-    desc:"Higher delivery and remediation cost where dependency delays increase vendor and internal labour spend.",
-    horizon:"FY25–FY26",
-    metricA:"+9.6%",
-    metricALabel:"Cost pressure",
-    metricB:"69%",
-    metricBLabel:"Confidence",
-    meta:"Conservative · Cost",
-    content:`
-      <p><strong>Purpose:</strong> This scenario estimates cost pressure where delays, rework, and dependency congestion increase delivery expenditure.</p>
-      <p>The conservative path assumes that several workstreams remain technically feasible but operationally slower. Cost pressure comes less from a single failure point and more from accumulated friction: delayed sign-offs, repeated testing, and longer parallel-run periods.</p>
-      <h2>Planning implication</h2>
-      <p>The key management response is not simply cutting scope. The stronger response is to protect the critical path, reduce avoidable handoffs, and define decision gates before spend accumulates invisibly.</p>
-    `
-  },
-  {
-    id:"stress-capacity",
+    id:"stress-rule-change",
     category:"stress",
     label:"Stress",
-    title:"Capacity Constraint Shock",
-    desc:"Stress case showing delivery slippage if demand rises while specialist resource availability tightens.",
+    title:"Regulatory Change Shock",
+    desc:"Stress case showing backlog growth if rule updates, client exceptions, and specialist review demand rise together.",
     horizon:"FY26",
-    metricA:"31 FTE",
+    metricA:"26 FTE",
     metricALabel:"Peak gap",
-    metricB:"58%",
+    metricB:"57%",
     metricBLabel:"Confidence",
-    meta:"Stress · Capacity",
+    meta:"Stress · Rule Change",
     content:`
-      <p><strong>Purpose:</strong> This stress scenario tests the impact of specialist capacity constraints during the heaviest forecast delivery period.</p>
-      <p>The model assumes higher demand, reduced resource availability, and lower flexibility in the specialist roles needed for governance, testing, data remediation, and implementation support. The result is not immediate failure, but progressive schedule compression.</p>
+      <p><strong>Purpose:</strong> This stress scenario tests the impact of rapid rule-change volume during the heaviest forecast review period.</p>
+      <p>The model assumes more frequent legislative updates, higher client-specific interpretation requests, and lower availability of senior legal reviewers. The result is not immediate system failure, but progressive backlog compression and lower confidence in automated clearance.</p>
       <h2>Planning implication</h2>
-      <p>The useful signal is the timing of the gap. By the time the shortage becomes visible in delivery metrics, mitigation options are already narrower. Early workforce planning is the main control lever.</p>
-    `
-  },
-  {
-    id:"baseline-financial",
-    category:"baseline",
-    label:"Baseline",
-    title:"Financial Run-Rate",
-    desc:"Expected expenditure path across approved budget, committed spend, and projected run-rate.",
-    horizon:"FY25–FY27",
-    metricA:"$8.4M",
-    metricALabel:"Forecast spend",
-    metricB:"+3.2%",
-    metricBLabel:"Variance",
-    meta:"Baseline · Financials",
-    content:`
-      <p><strong>Purpose:</strong> This view compares approved budget, committed spend, and forecast run-rate across the planning horizon.</p>
-      <p>The run-rate remains broadly controlled, but the model identifies a moderate overspend risk where capacity pressure overlaps with higher vendor dependency. The forecast is still inside a manageable band, but contingency use should be actively monitored.</p>
-      <h2>Planning implication</h2>
-      <p>Financial governance should focus on forward commitments rather than only actual spend. The risk is that cost pressure becomes locked in before it appears in month-end reporting.</p>
-    `
-  },
-  {
-    id:"conservative-readiness",
-    category:"conservative",
-    label:"Conservative",
-    title:"Readiness Delay Case",
-    desc:"Forecast impact if operational readiness, data quality, and business adoption lag the technical build.",
-    horizon:"FY26–FY27",
-    metricA:"11 weeks",
-    metricALabel:"Delay risk",
-    metricB:"69%",
-    metricBLabel:"Confidence",
-    meta:"Conservative · Readiness",
-    content:`
-      <p><strong>Purpose:</strong> This scenario isolates the risk that delivery outputs are technically complete but not operationally ready for adoption.</p>
-      <p>The readiness delay case assumes process documentation, user training, reconciliation controls, and business sign-off lag behind the build. This creates a gap between built and usable, which is common in enterprise delivery.</p>
-      <h2>Planning implication</h2>
-      <p>The forecast supports earlier readiness tracking. A project can appear green on build metrics while still carrying material go-live risk if operational readiness is treated as a late-stage activity.</p>
+      <p>The useful signal is timing. By the time backlog appears in operational metrics, mitigation options are narrower. Early triage rules, reviewer allocation, escalation thresholds, and audit controls are the main control levers.</p>
     `
   }
 ];
@@ -1423,7 +1335,7 @@ function drawCompositeChart(data){
 
   ctx.textAlign = "left";
   ctx.fillStyle = "rgba(245,242,237,0.28)";
-  ctx.fillText("Indexed operational volume", pad.left, 12);
+  ctx.fillText("Indexed legal workflow volume", pad.left, 12);
 
   ctx.textAlign = "right";
   ctx.fillText("Line scale: 0–100", w - pad.right, 12);
