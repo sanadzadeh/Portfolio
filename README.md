@@ -1,63 +1,43 @@
 # Portfolio
 
-A personal portfolio platform of standalone browser-based artefacts focused on **business decision support** rather than technical demos.
+## Executive decision-support suite
 
-## Positioning
+This repository contains a browser-native executive decision-support suite built as standalone HTML/CSS/vanilla JavaScript artefacts. The suite is static-first and deployable via GitHub Pages with no backend runtime.
 
-The portfolio is designed to showcase practical capabilities in:
-- data and analytics,
-- strategic thinking,
-- decision support design,
-- AI-assisted product development.
+## Asterion Grid programme context
 
-Each artefact is intended to feel like a professional tool that could be used by consultants, analysts, programme teams, executives, and business stakeholders.
+Asterion Grid is a fictional multinational commodity provenance and compliance infrastructure operator. The scenario used across the suite is the **Critical Minerals Traceability Expansion FY26–FY28**.
 
-## Product philosophy
+## Applications
 
-- Prioritise usefulness, clarity, and decision quality.
-- Present polished, purpose-built interfaces for non-technical audiences.
-- Keep technical complexity behind the scenes.
-- Demonstrate product thinking over algorithm novelty.
+- Forecasting Dashboard
+- Data Risk Assessment
+- Decision Matrix
+- Deployment Strategy Dashboard
+- Business Case Builder
+- Initiative Tracker
+- Stakeholder Mapping
+- Ledger (technology primer)
 
-## Architecture
+Together, these artefacts demonstrate forecasting, risk assessment, weighted option analysis, deployment planning, initiative tracking, stakeholder mapping, business-case modelling, and technology education.
 
-- Self-contained HTML artefacts.
-- Embedded CSS and vanilla JavaScript.
-- Minimal external dependencies.
-- Browser-only execution.
-- GitHub Pages deployable.
+## Technical model
 
-## All artefacts
+- Standalone static pages (no build tooling)
+- Embedded CSS and vanilla JavaScript per app
+- No shared runtime engine, no API dependencies
+- GitHub Pages compatible
 
-### 1) Forecasting Dashboard
-Enterprise planning and scenario analysis environment using synthetic datasets.
+## Repository structure
 
-### 2) Ledger
-A structured knowledge platform for blockchain, digital assets, regulation, tokenisation, custody, DeFi, and financial infrastructure.
+- `index.html`
+- `cv.html`
+- `apps/*.html`
+- `assets/css/`
+- `assets/js/`
+- `assets/data/`
+- `templates/`
 
-### 3) Deployment Strategy Dashboard
-Executive transformation governance dashboard built on synthetic programme data.
+## Deployment
 
-### 4) Decision Matrix
-Weighted-criteria decision support tool for structured option evaluation.
-
-### 5) Data Risk Assessment
-Framework for identifying, scoring, and prioritising data-related risks across programmes and organisations.
-
-### 6) Initiative Tracker
-Portfolio view of active initiatives by status, owner, priority, and strategic theme.
-
-### 7) Stakeholder Mapping Tool
-Influence-interest mapping tool for stakeholder segmentation and engagement strategy planning.
-
-### 8) Business Case Builder
-Structured builder for problem framing, options, costs, benefits, risks, and recommendation.
-
-## Portfolio narrative
-
-Together, the artefacts demonstrate the ability to:
-- frame complex problems,
-- structure information for action,
-- design intuitive experiences,
-- convert analysis into clear decisions,
-- deliver complete browser-native products with lightweight architecture.
+Host as static files (e.g., GitHub Pages). No external service, backend, or real client data is required.
