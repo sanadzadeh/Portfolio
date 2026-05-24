@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RegTech Forecasting Dashboard — Khaled Sanad</title>
+<title>Forecasting Dashboard — Asterion Grid</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-
 <style>
-:root {
+:root{
   --bg:#141414;
   --surface:#1c1c1c;
   --surface-alt:#222222;
   --surface-hi:#282828;
+  --surface-input:#2e2e2e;
   --border:rgba(255,255,255,0.07);
   --border-soft:rgba(255,255,255,0.04);
   --ink:#f5f2ed;
@@ -28,7 +28,7 @@
   --red-dim:rgba(180,104,93,0.12);
   --purple:#8f7cae;
   --purple-dim:rgba(143,124,174,0.12);
-  --font-serif:'Cormorant Garamond', Georgia, serif;
+  --font-serif:'Cormorant Garamond',Georgia,serif;
   --font-mono:'DM Mono','Courier New',monospace;
   --radius:4px;
   --radius-sm:3px;
@@ -36,12 +36,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-
-html{
-  font-size:16px;
-  scroll-behavior:smooth;
-}
-
+html{font-size:16px;scroll-behavior:smooth}
 body{
   font-family:var(--font-mono);
   background:var(--bg);
@@ -53,6 +48,7 @@ body{
   flex-direction:column;
 }
 
+/* ── Header ── */
 .site-header{
   background:var(--surface);
   border-bottom:1px solid var(--border);
@@ -61,7 +57,6 @@ body{
   top:0;
   z-index:100;
 }
-
 .header-inner{
   max-width:1180px;
   margin:0 auto;
@@ -71,216 +66,188 @@ body{
   justify-content:space-between;
   gap:1rem;
 }
-
 .site-logo{
   font-family:var(--font-serif);
   font-weight:300;
-  font-size:1.1rem;
-  color:var(--ink);
+  font-size:.85rem;
+  color:var(--ink-2);
   letter-spacing:.02em;
   white-space:nowrap;
 }
-
-.site-logo em{
-  font-style:normal;
-  color:var(--accent);
-}
-
-.header-tag{
-  font-size:.6rem;
+.site-logo strong{font-weight:400;color:var(--ink)}
+.status-badge{
+  font-size:.58rem;
   letter-spacing:.18em;
   text-transform:uppercase;
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:.3rem .7rem;
+  background:var(--accent-dim);
+  border-radius:2px;
+  white-space:nowrap;
+}
+
+.jump-btn{
+  font-family:var(--font-mono);
+  font-size:.58rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
   color:var(--ink-3);
-  border-left:1px solid var(--border);
-  padding-left:1rem;
+  background:none;
+  border:1px solid var(--border);
+  padding:.35rem .85rem;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:color var(--tr),border-color var(--tr),background var(--tr);
 }
-
-#main-view{
-  flex:1;
-  display:flex;
-  flex-direction:column;
+.jump-btn:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-dim)}
+.status-badge{
+  font-size:.58rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--accent);
+  border:1px solid var(--accent-mid);
+  padding:.3rem .7rem;
+  background:var(--accent-dim);
+  border-radius:2px;
+  white-space:nowrap;
+  font-weight:600;
 }
-
-#main-view.hidden{
-  display:none;
-}
-
-#detail-view{
-  flex:1;
-  display:none;
-  flex-direction:column;
-}
-
-#detail-view.active{
-  display:flex;
-  animation:fadeUp .2s ease both;
-}
+#main-view{flex:1;display:flex;flex-direction:column}
+#main-view.hidden{display:none}
+#detail-view{flex:1;display:none;flex-direction:column}
+#detail-view.active{display:flex;animation:fadeUp .2s ease both}
 
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(10px)}
   to{opacity:1;transform:translateY(0)}
 }
 
-.page-wrap{
-  max-width:1180px;
-  margin:0 auto;
-  padding:0 2rem;
-  width:100%;
-}
+.page-wrap{max-width:1180px;margin:0 auto;padding:0 2rem;width:100%}
+.content-section{padding:2rem 0 5rem;flex:1}
 
-.controls-bar{
-  border-bottom:1px solid var(--border-soft);
-  padding:16px 0;
+/* ── Scenario tabs ── */
+.scenario-tabs-bar{
   background:var(--bg);
+  border-bottom:1px solid var(--border);
   position:sticky;
   top:53px;
   z-index:90;
+  padding-top:1.5rem;
 }
-
-.controls-inner{
+.scenario-tabs{
   display:flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
+  gap:0;
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 2rem;
 }
-
-.search-wrap{
-  position:relative;
-  flex:1;
-  max-width:400px;
-  min-width:190px;
-}
-
-.search-input{
-  width:100%;
-  padding:8px 12px;
-  border:1px solid var(--border);
-  border-radius:var(--radius-sm);
-  font-family:var(--font-mono);
-  font-size:.75rem;
-  background:var(--surface);
-  color:var(--ink);
-  outline:none;
-  transition:border-color var(--tr),box-shadow var(--tr);
-}
-
-.search-input:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px var(--accent-dim);
-}
-
-.search-input::placeholder{
-  color:var(--ink-3);
-}
-
-.filter-pill{
+.scenario-tab{
   font-family:var(--font-mono);
   font-size:.6rem;
-  letter-spacing:.12em;
+  letter-spacing:.14em;
   text-transform:uppercase;
-  padding:5px 12px;
-  border-radius:100px;
+  padding:.65rem 1.4rem;
   border:1px solid var(--border);
-  background:var(--surface);
-  color:var(--ink-2);
+  border-bottom:none;
+  background:var(--bg);
+  color:var(--ink-3);
   cursor:pointer;
   transition:all var(--tr);
-  white-space:nowrap;
+  border-radius:var(--radius) var(--radius) 0 0;
+  margin-right:2px;
+  position:relative;
 }
-
-.filter-pill:hover{
-  border-color:var(--accent);
+.scenario-tab:hover{color:var(--ink-2);background:var(--surface)}
+.scenario-tab.active{
+  background:var(--surface-hi);
   color:var(--accent);
-  background:var(--accent-dim);
+  border-color:var(--border);
+  border-bottom:1px solid var(--surface-hi);
+  z-index:1;
+}
+.scenario-tab.active::after{
+  content:'';
+  position:absolute;
+  bottom:-1px;
+  left:0;right:0;
+  height:1px;
+  background:var(--surface-hi);
+}
+.tab-content-border{
+  border-top:1px solid var(--border);
+  margin-top:-1px;
 }
 
-.filter-pill.active{
-  background:var(--accent);
-  border-color:var(--accent);
-  color:var(--bg);
-}
-
-.content-section{
-  padding:2rem 0 5rem;
-  flex:1;
-}
-
+/* ── Hero ── */
 .hero-grid{
   display:grid;
-  grid-template-columns:1fr;
+  grid-template-columns:1.2fr .8fr;
   gap:1px;
   background:var(--border);
   border:1px solid var(--border);
   margin-bottom:1.5rem;
 }
-
-.hero-panel{
-  background:var(--surface);
-  padding:1.6rem 1.8rem;
-}
-
-.hero-top{
-  display:grid;
-  grid-template-columns:1fr 260px;
-  gap:1.5rem;
-  align-items:start;
-}
-
-.hero-label{
-  font-size:.55rem;
-  letter-spacing:.18em;
+.hero-panel{background:var(--surface);padding:1.6rem 1.8rem}
+.eyebrow{
+  font-size:.68rem;
+  letter-spacing:.22em;
   text-transform:uppercase;
   color:var(--accent);
-  margin-bottom:.75rem;
+  margin-bottom:.5rem;
 }
-
 .hero-title{
   font-family:var(--font-serif);
-  font-weight:300;
-  font-size:2.05rem;
-  line-height:1.15;
+  font-weight:400;
+  font-size:clamp(1.2rem,2.2vw,1.8rem);
+  line-height:1.12;
   color:var(--ink);
-  margin-bottom:1rem;
+  margin-bottom:.9rem;
 }
-
 .hero-text{
-  font-size:.72rem;
-  color:var(--ink-2);
-  line-height:1.75;
+  margin-top:1rem;
+  font-size:.78rem;
+  line-height:1.85;
+  color:var(--ink-3);
   max-width:760px;
 }
-
-.signal-list{
-  display:flex;
-  flex-direction:column;
-  gap:.65rem;
-}
-
+.signal-list{display:flex;flex-direction:column;gap:.65rem}
 .signal-row{
   display:flex;
   justify-content:space-between;
   gap:.8rem;
-  align-items:center;
+  align-items:baseline;
   padding-bottom:.55rem;
   border-bottom:1px solid var(--border-soft);
+  font-size:0.875rem;
+}
+.signal-row:last-child{border-bottom:none;padding-bottom:0}
+.signal-row span:first-child{color:var(--ink-3)}
+.signal-row span:last-child{color:var(--ink-2);text-align:right}
+
+/* ── Context + KPI side by side ── */
+.context-kpi-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  margin-bottom:1.5rem;
+}
+.context-kpi-grid .hero-panel{border:none;background:var(--surface)}
+.kpi-strip-inner{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:var(--border);
+}
+@media(max-width:780px){
+  .context-kpi-grid{grid-template-columns:1fr}
 }
 
-.signal-row:last-child{
-  border-bottom:none;
-  padding-bottom:0;
-}
-
-.signal-label{
-  font-size:.62rem;
-  color:var(--ink-3);
-}
-
-.signal-value{
-  font-size:.66rem;
-  color:var(--ink-2);
-  text-align:right;
-}
-
+/* ── KPI strip ── */
 .kpi-strip{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -289,12 +256,7 @@ body{
   border:1px solid var(--border);
   margin-bottom:1.5rem;
 }
-
-.kpi{
-  background:var(--surface);
-  padding:1.15rem 1.25rem;
-}
-
+.kpi{background:var(--surface);padding:1.15rem 1.25rem}
 .kpi-label{
   font-size:.52rem;
   letter-spacing:.15em;
@@ -302,49 +264,125 @@ body{
   color:var(--ink-3);
   margin-bottom:.42rem;
 }
-
 .kpi-value{
   font-family:var(--font-serif);
-  font-size:1.8rem;
+  font-size:1.9rem;
   font-weight:300;
   line-height:1;
   margin-bottom:.32rem;
+  transition:color var(--tr);
 }
-
 .kpi-value.accent{color:var(--accent)}
 .kpi-value.green{color:var(--green)}
 .kpi-value.amber{color:var(--amber)}
 .kpi-value.red{color:var(--red)}
+.kpi-sub{font-size:.58rem;color:var(--ink-3)}
 
-.kpi-sub{
-  font-size:.58rem;
-  color:var(--ink-3);
+/* ── Assumptions panel ── */
+.assumptions-panel{
+  background:var(--surface);
+  border:1px solid var(--border);
+  padding:1.4rem 1.8rem;
+  margin-bottom:1.5rem;
 }
-
-.chip{
-  display:inline-flex;
+.assumptions-header{
+  display:flex;
+  justify-content:space-between;
   align-items:center;
-  gap:4px;
-  font-size:.52rem;
-  letter-spacing:.1em;
+  margin-bottom:1.1rem;
+}
+.assumptions-eyebrow{
+  font-size:.68rem;
+  letter-spacing:.18em;
   text-transform:uppercase;
-  padding:.22rem .6rem;
-  border-radius:100px;
-  white-space:nowrap;
+  color:var(--ink-2);
+  font-weight:400;
+  display:flex;
+  align-items:center;
+  gap:.5rem;
 }
-
-.chip::before{
-  content:'';
-  width:5px;
-  height:5px;
+.blink-dot{
+  width:6px;
+  height:6px;
   border-radius:50%;
-  background:currentColor;
+  background:var(--accent);
+  flex-shrink:0;
+  animation:blink 1.4s ease-in-out infinite;
+}
+@keyframes blink{
+  0%,100%{opacity:1}
+  50%{opacity:.15}
+}
+.reset-link{
+  font-size:.625rem;
+  letter-spacing:.1em;
+  color:var(--ink-3);
+  background:none;
+  border:none;
+  cursor:pointer;
+  text-decoration:underline;
+  text-decoration-color:rgba(245,242,237,0.18);
+  text-underline-offset:3px;
+  padding:0;
+  transition:color var(--tr);
+}
+.reset-link:hover{color:var(--accent)}
+.assumptions-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.2rem 2rem;
+}
+.assumption-row{display:flex;flex-direction:column;gap:.45rem}
+.assumption-label{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+}
+.assumption-name{
+  font-size:.625rem;
+  letter-spacing:.08em;
+  color:var(--ink-2);
+}
+.assumption-val{
+  font-family:var(--font-serif);
+  font-size:1.1rem;
+  font-weight:300;
+  color:var(--ink);
+  min-width:3.5rem;
+  text-align:right;
+}
+.assumption-val.modified{color:var(--accent)}
+/* Custom slider */
+input[type=range]{
+  -webkit-appearance:none;
+  appearance:none;
+  width:100%;
+  height:3px;
+  background:var(--border);
+  border-radius:2px;
+  outline:none;
+  cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:13px;
+  height:13px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-dim);
+  cursor:pointer;
+  transition:box-shadow var(--tr);
+}
+input[type=range]::-webkit-slider-thumb:hover{
+  box-shadow:0 0 0 5px var(--accent-dim);
+}
+input[type=range].modified::-webkit-slider-thumb{background:var(--accent)}
+input[type=range]::-moz-range-thumb{
+  width:13px;height:13px;border-radius:50%;
+  background:var(--accent);border:none;cursor:pointer;
 }
 
-.chip.baseline{color:var(--accent);background:var(--accent-dim)}
-.chip.scaling{color:var(--green);background:var(--green-dim)}
-.chip.stress{color:var(--red);background:var(--red-dim)}
-
+/* ── Visual grid ── */
 .visual-grid{
   display:grid;
   grid-template-columns:1.15fr .85fr;
@@ -353,31 +391,16 @@ body{
   border:1px solid var(--border);
   margin-bottom:1.5rem;
 }
-
-.visual-card{
-  background:var(--surface);
-  padding:1.25rem 1.5rem;
-}
-
+.visual-card{background:var(--surface);padding:1.25rem 1.5rem}
 .section-title{
-  font-size:.55rem;
+  font-size:.68rem;
   letter-spacing:.18em;
   text-transform:uppercase;
   color:var(--ink-3);
   margin-bottom:1rem;
 }
-
-.composite-chart-wrap{
-  position:relative;
-  height:360px;
-}
-
-#composite-chart{
-  width:100%;
-  height:100%;
-  display:block;
-}
-
+.composite-chart-wrap{position:relative;height:340px}
+#composite-chart{width:100%;height:100%;display:block}
 .chart-legend{
   display:flex;
   flex-wrap:wrap;
@@ -388,25 +411,9 @@ body{
   text-transform:uppercase;
   color:var(--ink-3);
 }
-
-.legend-item{
-  display:flex;
-  align-items:center;
-  gap:.35rem;
-}
-
-.legend-swatch{
-  width:10px;
-  height:10px;
-  border-radius:2px;
-  display:inline-block;
-}
-
-.legend-line{
-  width:18px;
-  height:2px;
-  display:inline-block;
-}
+.legend-item{display:flex;align-items:center;gap:.35rem}
+.legend-swatch{width:10px;height:10px;border-radius:2px;display:inline-block}
+.legend-line{width:18px;height:2px;display:inline-block}
 
 .driver-grid{
   display:grid;
@@ -416,12 +423,7 @@ body{
   border:1px solid var(--border);
   margin-top:1.25rem;
 }
-
-.driver-cell{
-  background:var(--surface-hi);
-  padding:.85rem .9rem;
-}
-
+.driver-cell{background:var(--surface-hi);padding:.85rem .9rem}
 .driver-label{
   font-size:.5rem;
   letter-spacing:.14em;
@@ -429,7 +431,6 @@ body{
   color:var(--ink-3);
   margin-bottom:.3rem;
 }
-
 .driver-value{
   font-family:var(--font-serif);
   font-size:1.35rem;
@@ -437,66 +438,115 @@ body{
   color:var(--ink);
 }
 
-.sankey-wrap{
-  position:relative;
-  height:260px;
-  overflow:hidden;
+/* ── Flow / Sankey ── */
+.flow-outer{
+  display:grid;
+  grid-template-columns:140px 1fr;
+  gap:1rem;
+  align-items:stretch;
 }
-
-.sankey-svg{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+.flow-nodes{
+  display:flex;
+  flex-direction:column;
+  gap:.55rem;
 }
-
-.sankey-node{
-  position:absolute;
-  width:132px;
-  min-height:54px;
+.flow-node{
   border:1px solid var(--border);
   background:var(--surface-hi);
   border-radius:var(--radius);
-  padding:.65rem .7rem;
-  z-index:2;
+  padding:.6rem .7rem;
+  flex:1;
 }
-
-.sankey-node.source{left:0;top:92px}
-.sankey-node.capacity{left:38%;top:28px}
-.sankey-node.risk{left:38%;top:166px}
-.sankey-node.delivery{right:0;top:28px}
-.sankey-node.gap{right:0;top:166px}
-
 .node-label{
-  font-size:.48rem;
+  font-size:.44rem;
   letter-spacing:.12em;
   text-transform:uppercase;
   color:var(--ink-3);
-  margin-bottom:.2rem;
+  margin-bottom:.18rem;
 }
-
 .node-value{
   font-family:var(--font-serif);
-  font-size:1.25rem;
+  font-size:1.15rem;
   font-weight:300;
   line-height:1;
   color:var(--ink);
 }
-
-.node-sub{
-  font-size:.55rem;
-  color:var(--ink-3);
-  margin-top:.25rem;
-  line-height:1.35;
+.node-sub{font-size:.52rem;color:var(--ink-3);margin-top:.2rem;line-height:1.3}
+.sankey-svg-wrap{
+  position:relative;
+  width:100%;
+  min-height:260px;
 }
-
-.sankey-story{
+.sankey-svg-wrap svg{
+  width:100%;
+  height:100%;
+  display:block;
+  overflow:visible;
+}
+.flow-story{
   margin-top:.9rem;
-  font-size:.62rem;
+  font-size:0.875rem;
   color:var(--ink-3);
   line-height:1.65;
 }
 
+/* ── Executive interpretation ── */
+.interpretation-box{
+  border-left:3px solid var(--accent);
+  background:var(--surface);
+  padding:1.5rem 1.75rem;
+  margin-bottom:1.5rem;
+  transition:border-color var(--tr);
+  scroll-margin-top:6rem;
+}
+.interpretation-eyebrow{
+  font-size:.65rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:.9rem;
+}
+.interpretation-text{
+  font-family:var(--font-serif);
+  font-size:1.05rem;
+  font-weight:300;
+  line-height:1.78;
+  color:var(--ink-2);
+}
+.interpretation-text strong{color:var(--ink);font-weight:400}
+
+/* ── Scenario cards ── */
+.cards-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:.9rem;
+}
+.cards-eyebrow{
+  font-size:.68rem;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-bottom:0;
+}
+.expand-btn{
+  display:flex;
+  align-items:center;
+  gap:.45rem;
+  font-family:var(--font-mono);
+  font-size:.58rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  background:none;
+  border:1px solid var(--border);
+  padding:.35rem .85rem;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  transition:color var(--tr),border-color var(--tr),background var(--tr);
+}
+.expand-btn:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-dim)}
+.expand-btn[aria-expanded="true"]{color:var(--accent);border-color:var(--accent-mid)}
 .card-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -504,7 +554,6 @@ body{
   background:var(--border);
   border:1px solid var(--border);
 }
-
 .card{
   background:var(--bg);
   padding:1.65rem;
@@ -515,489 +564,368 @@ body{
   transition:background var(--tr);
   position:relative;
   overflow:hidden;
-  animation:fadeUp .3s ease both;
-  min-height:245px;
+  min-height:230px;
 }
-
 .card::after{
   content:'';
   position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
+  bottom:0;left:0;right:0;
   height:1px;
   background:var(--accent);
   transform:scaleX(0);
   transform-origin:left;
   transition:transform .35s ease;
 }
-
-.card:hover{
-  background:var(--surface-alt);
-}
-
-.card:hover::after{
-  transform:scaleX(1);
-}
-
-.card:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:-2px;
-}
-
-.card-label{
-  font-size:.58rem;
-  letter-spacing:.18em;
+.card:hover{background:var(--surface-alt)}
+.card:hover::after{transform:scaleX(1)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.card-tag{
+  font-size:.54rem;
+  letter-spacing:.16em;
   text-transform:uppercase;
   color:var(--accent);
+  display:flex;
+  align-items:center;
+  gap:.35rem;
 }
-
+.card-tag::before{
+  content:'';width:5px;height:5px;
+  border-radius:50%;background:currentColor;
+}
+.card-tag.acc{color:var(--green)}
+.card-tag.acc::before{background:var(--green)}
+.card-tag.del{color:var(--amber)}
+.card-tag.del::before{background:var(--amber)}
+.card-tag.res{color:var(--red)}
+.card-tag.res::before{background:var(--red)}
 .card-title{
   font-family:var(--font-serif);
   font-weight:400;
-  font-size:1.25rem;
+  font-size:1.2rem;
   line-height:1.2;
   color:var(--ink);
 }
-
-.card-desc{
-  font-size:.7rem;
-  line-height:1.7;
-  color:var(--ink-2);
-  flex:1;
-}
-
+.card-desc{font-size:.7rem;line-height:1.7;color:var(--ink-2);flex:1}
 .card-metric{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:.55rem;
   margin:.35rem 0;
 }
-
 .metric-box{
   border:1px solid var(--border-soft);
   background:rgba(255,255,255,.018);
   padding:.55rem .65rem;
 }
-
 .metric-label{
-  font-size:.48rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--ink-3);
+  font-size:.48rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);
 }
-
 .metric-value{
   font-family:var(--font-serif);
-  font-size:1.1rem;
-  font-weight:300;
-  color:var(--ink);
+  font-size:1.1rem;font-weight:300;color:var(--ink);
 }
-
 .card-footer{
-  margin-top:.8rem;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding-top:.8rem;
-  border-top:1px solid var(--border-soft);
+  margin-top:.8rem;display:flex;
+  justify-content:space-between;align-items:center;
+  padding-top:.8rem;border-top:1px solid var(--border-soft);
 }
-
-.card-meta{
-  font-size:.6rem;
-  letter-spacing:.1em;
-  color:var(--ink-3);
-}
-
+.card-meta{font-size:.6rem;letter-spacing:.1em;color:var(--ink-3)}
 .card-action{
-  font-size:.58rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--ink-3);
+  font-size:.58rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-3);
   transition:color var(--tr);
 }
+.card:hover .card-action{color:var(--accent)}
 
-.card:hover .card-action{
-  color:var(--accent);
-}
-
-.placeholder{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:6rem 2rem;
-  text-align:center;
-  gap:1rem;
-  grid-column:1 / -1;
-}
-
-.placeholder-title{
-  font-family:var(--font-serif);
-  font-weight:300;
-  font-size:1.5rem;
-  color:var(--ink-3);
-}
-
-.placeholder-sub{
-  font-size:.7rem;
-  color:var(--ink-3);
-  letter-spacing:.08em;
-}
-
+/* ── Detail view ── */
 .detail-header-bar{
   background:var(--surface);
   border-bottom:1px solid var(--border);
   padding:12px 0;
 }
-
 .detail-header-inner{
-  max-width:1180px;
-  margin:0 auto;
-  padding:0 2rem;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:1rem;
+  max-width:1180px;margin:0 auto;padding:0 2rem;
+  display:flex;align-items:center;
+  justify-content:space-between;gap:1rem;
 }
-
 .back-btn{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  font-family:var(--font-mono);
-  font-size:.65rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  color:var(--ink-3);
-  background:none;
-  border:1px solid var(--border);
-  padding:6px 12px;
-  border-radius:var(--radius-sm);
-  cursor:pointer;
+  display:flex;align-items:center;gap:7px;
+  font-family:var(--font-mono);font-size:.65rem;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink-3);background:none;
+  border:1px solid var(--border);padding:6px 12px;
+  border-radius:var(--radius-sm);cursor:pointer;
   transition:color var(--tr),border-color var(--tr),background var(--tr);
 }
-
-.back-btn:hover{
-  color:var(--accent);
-  border-color:var(--accent);
-  background:var(--accent-dim);
-}
-
-.detail-meta{
-  font-size:.65rem;
-  color:var(--ink-3);
-  letter-spacing:.08em;
-}
-
-.detail-body{
-  max-width:860px;
-  margin:0 auto;
-  padding:3rem 2rem 6rem;
-}
-
-.detail-label{
-  font-size:.6rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--accent);
+.back-btn:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-dim)}
+.detail-meta{font-size:.65rem;color:var(--ink-3);letter-spacing:.08em}
+.detail-body{max-width:860px;margin:0 auto;padding:3rem 2rem 6rem}
+.detail-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.22rem .6rem;border-radius:100px;
   margin-bottom:.75rem;
 }
-
+.detail-chip::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
+.detail-chip.base{color:var(--accent);background:var(--accent-dim)}
+.detail-chip.acc{color:var(--green);background:var(--green-dim)}
+.detail-chip.del{color:var(--amber);background:var(--amber-dim)}
+.detail-chip.res{color:var(--red);background:var(--red-dim)}
 .detail-title{
-  font-family:var(--font-serif);
-  font-weight:300;
-  font-size:clamp(1.8rem,4vw,2.8rem);
-  line-height:1.15;
-  color:var(--ink);
-  margin-bottom:1.5rem;
+  font-family:var(--font-serif);font-weight:300;
+  font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.15;
+  color:var(--ink);margin-bottom:1.5rem;
 }
-
-.detail-content{
-  font-size:.875rem;
-  line-height:1.85;
-  color:var(--ink-2);
-}
-
+.detail-content{font-size:.875rem;line-height:1.85;color:var(--ink-2)}
 .detail-content h2{
-  font-family:var(--font-serif);
-  font-weight:400;
-  font-size:1.3rem;
-  color:var(--ink);
-  margin:2.5rem 0 .75rem;
-  padding-bottom:.5rem;
-  border-bottom:1px solid var(--border-soft);
+  font-family:var(--font-serif);font-weight:400;font-size:1.3rem;
+  color:var(--ink);margin:2.5rem 0 .75rem;
+  padding-bottom:.5rem;border-bottom:1px solid var(--border-soft);
 }
+.detail-content p{margin-bottom:1rem}
+.detail-content strong{color:var(--ink)}
 
-.detail-content p{
-  margin-bottom:1rem;
-}
-
-.detail-content strong{
-  color:var(--ink);
-}
-
-.site-footer{
-  border-top:1px solid var(--border);
-  padding:1.2rem 0;
-}
-
+/* ── Footer ── */
+.site-footer{border-top:1px solid var(--border);padding:1.2rem 0}
 .footer-inner{
-  max-width:1180px;
-  margin:0 auto;
-  padding:0 2rem;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:1rem;
-  flex-wrap:wrap;
-  font-size:.65rem;
-  color:var(--ink-3);
-  letter-spacing:.06em;
+  max-width:1180px;margin:0 auto;padding:0 2rem;
+  display:flex;justify-content:space-between;
+  align-items:center;gap:1rem;flex-wrap:wrap;
+  font-size:.6rem;color:var(--ink-3);letter-spacing:.08em;
+  text-transform:uppercase;
 }
 
+/* ── Responsive ── */
 @media(max-width:980px){
-  .hero-top,
-  .visual-grid{
-    grid-template-columns:1fr;
-  }
-
-  .kpi-strip,
-  .card-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .sankey-wrap{
-    height:520px;
-  }
-
-  .sankey-node{
-    left:50%!important;
-    right:auto!important;
-    transform:translateX(-50%);
-  }
-
-  .sankey-node.source{top:0}
-  .sankey-node.capacity{top:115px}
-  .sankey-node.risk{top:230px}
-  .sankey-node.delivery{top:345px}
-  .sankey-node.gap{top:445px}
-
-  .sankey-svg{
-    display:none;
-  }
+  .hero-grid,.visual-grid{grid-template-columns:1fr}
+  .kpi-strip,.card-grid{grid-template-columns:repeat(2,1fr)}
+  .assumptions-grid{grid-template-columns:repeat(2,1fr)}
+  .flow-outer{grid-template-columns:1fr;grid-template-rows:auto auto}
+  .flow-nodes{flex-direction:row;flex-wrap:wrap;gap:.45rem}
+  .flow-node{flex:1;min-width:110px}
+  .sankey-svg-wrap{min-height:180px}
 }
-
 @media(max-width:620px){
-  .header-inner{
-    align-items:flex-start;
-    flex-direction:column;
-  }
-
-  .header-tag{
-    border-left:none;
-    padding-left:0;
-  }
-
-  .kpi-strip,
-  .card-grid,
-  .driver-grid{
-    grid-template-columns:1fr;
-  }
-
-  .page-wrap,
-  .header-inner,
-  .detail-header-inner{
-    padding-left:1rem;
-    padding-right:1rem;
-  }
-
-  .hero-title{
-    font-size:1.7rem;
-  }
-
-  .composite-chart-wrap{
-    height:420px;
-  }
+  .header-inner{align-items:flex-start;flex-direction:column}
+  .kpi-strip,.card-grid,.driver-grid,.assumptions-grid{grid-template-columns:1fr}
+  .page-wrap,.header-inner,.detail-header-inner{padding-left:1rem;padding-right:1rem}
+  .scenario-tabs{padding:0 1rem}
+  .scenario-tab{padding:.55rem .9rem}
+  .flow-nodes{flex-direction:column}
+  .flow-node{min-width:unset}
 }
 </style>
 </head>
-
 <body>
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="site-logo">Khaled Sanad: <em>RegTech Forecasting Dashboard</em></div>
-    <span class="header-tag">Legal Operations · Compliance Technology · Scenario Planning</span>
+    <div class="site-logo">Khaled Sanad: <strong>Forecasting Interactive Dashboard</strong></div>
+    <span class="status-badge">Critical Minerals Expansion · FY26–FY28</span>
   </div>
 </header>
 
+<!-- ══ MAIN VIEW ══ -->
 <div id="main-view">
-  <div class="controls-bar">
-    <div class="page-wrap">
-      <div class="controls-inner">
-        <div class="search-wrap">
-          <input class="search-input" id="search-input" type="search" placeholder="Search scenarios, assumptions, legal workflows, or risks…" autocomplete="off">
-        </div>
-        <button class="filter-pill active" data-filter="all">All</button>
-        <button class="filter-pill" data-filter="baseline">Baseline</button>
-        <button class="filter-pill" data-filter="scaling">Scaling</button>
-        <button class="filter-pill" data-filter="stress">Stress</button>
-      </div>
+
+  <div class="scenario-tabs-bar">
+    <div class="scenario-tabs">
+      <button class="scenario-tab active" data-scenario="base">Base Case</button>
+      <button class="scenario-tab" data-scenario="acc">Accelerated Compliance</button>
+      <button class="scenario-tab" data-scenario="del">Regulatory Delay</button>
+      <button class="scenario-tab" data-scenario="res">Supplier Resistance</button>
     </div>
+    <div class="tab-content-border"></div>
   </div>
 
   <section class="content-section">
     <div class="page-wrap">
 
-      <div class="hero-grid">
+      <!-- Hero -->
+      <div class="hero-grid" style="margin-top:1.5rem">
         <div class="hero-panel">
-          <div class="hero-top">
-            <div>
-              <div class="hero-label" id="hero-label">RegTech Forecasting Workspace</div>
-              <h1 class="hero-title" id="hero-title">Scenario-led planning for legal workflow volume, review capacity, automation readiness, and residual compliance backlog.</h1>
-              <p class="hero-text" id="hero-text">
-                This artefact models how a law-focused technology company could compare forecast paths across baseline, scaling, and stress scenarios. The main visual is a composite forecast chart: grouped bars show legal operations volume, while overlay lines show confidence and complexity pressure across the same planning horizon.
-              </p>
+          <h1 class="hero-title" id="hero-title">Critical Minerals Traceability Forecast</h1>
+          <p class="hero-text" id="hero-text">
+            Planning environment for supplier adoption, coverage, and risk trajectory across five regions. <strong style="color:var(--ink);font-weight:400">Adjust assumptions to model alternatives;</strong> the interpretation panel updates in real time.
+          </p>
+          <a class="jump-btn hero-jump" href="#interpretation" style="margin-top:1.1rem;display:inline-block">Executive Interpretation ↓</a>
+        </div>
+        <div class="kpi-strip-inner" style="background:var(--border);gap:1px">
+            <div class="kpi">
+              <div class="kpi-label">Projected Supplier Coverage</div>
+              <div class="kpi-value accent" id="kpi-coverage">74%</div>
+              <div class="kpi-sub" id="kpi-coverage-sub">By Q3 FY27 — priority regions</div>
             </div>
+            <div class="kpi">
+              <div class="kpi-label">Compliance Confidence</div>
+              <div class="kpi-value green" id="kpi-confidence">81</div>
+              <div class="kpi-sub" id="kpi-confidence-sub">Score out of 100</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Est. Annual Savings</div>
+              <div class="kpi-value amber" id="kpi-savings">$4.2M</div>
+              <div class="kpi-sub" id="kpi-savings-sub">Audit labour and dispute resolution</div>
+            </div>
+            <div class="kpi">
+              <div class="kpi-label">Implementation Risk</div>
+              <div class="kpi-value accent" id="kpi-risk">Medium</div>
+              <div class="kpi-sub" id="kpi-risk-sub">Controlled with mitigation plan</div>
+            </div>
+        </div>
+      </div>
 
-            <div class="signal-list">
-              <div class="signal-row">
-                <span class="signal-label">Active scenario</span>
-                <span class="signal-value" id="active-scenario">All scenarios</span>
-              </div>
-              <div class="signal-row">
-                <span class="signal-label">Planning horizon</span>
-                <span class="signal-value" id="planning-horizon">FY25–FY27</span>
-              </div>
-              <div class="signal-row">
-                <span class="signal-label">Primary constraint</span>
-                <span class="signal-value" id="primary-constraint">Legal review capacity and rule-change velocity</span>
-              </div>
-              <div class="signal-row">
-                <span class="signal-label">Decision posture</span>
-                <span class="signal-value" id="decision-posture">Stage automation and governance controls</span>
-              </div>
+      <!-- Assumptions -->
+      <div class="assumptions-panel">
+        <div class="assumptions-header">
+          <span class="assumptions-eyebrow"><span class="blink-dot"></span>Interactive · Drag sliders to model outcomes</span>
+          <button class="reset-link" id="reset-btn">Reset to defaults</button>
+        </div>
+        <div class="assumptions-grid">
+          <div class="assumption-row">
+            <div class="assumption-label">
+              <span class="assumption-name">Supplier onboarding rate</span>
+              <span class="assumption-val" id="val-onboard">18 /mo</span>
             </div>
+            <input type="range" id="sl-onboard" min="6" max="36" value="18" step="2">
+          </div>
+          <div class="assumption-row">
+            <div class="assumption-label">
+              <span class="assumption-name">Regulatory friction index</span>
+              <span class="assumption-val" id="val-friction">5 / 10</span>
+            </div>
+            <input type="range" id="sl-friction" min="1" max="10" value="5" step="1">
+          </div>
+          <div class="assumption-row">
+            <div class="assumption-label">
+              <span class="assumption-name">Evidence failure rate</span>
+              <span class="assumption-val" id="val-failure">12%</span>
+            </div>
+            <input type="range" id="sl-failure" min="2" max="40" value="12" step="2">
+          </div>
+          <div class="assumption-row">
+            <div class="assumption-label">
+              <span class="assumption-name">Platform adoption curve</span>
+              <span class="assumption-val" id="val-adoption">9 mo</span>
+            </div>
+            <input type="range" id="sl-adoption" min="3" max="24" value="9" step="3">
+          </div>
+          <div class="assumption-row">
+            <div class="assumption-label">
+              <span class="assumption-name">Implementation cost variance</span>
+              <span class="assumption-val" id="val-cost">+8%</span>
+            </div>
+            <input type="range" id="sl-cost" min="-20" max="40" value="8" step="4">
+          </div>
+          <div class="assumption-row">
+            <div class="assumption-label">
+              <span class="assumption-name">Audit exception rate</span>
+              <span class="assumption-val" id="val-audit">9%</span>
+            </div>
+            <input type="range" id="sl-audit" min="2" max="30" value="9" step="1">
           </div>
         </div>
       </div>
 
-      <div class="kpi-strip">
-        <div class="kpi">
-          <div class="kpi-label">Forecast Accuracy</div>
-          <div class="kpi-value accent" id="kpi-accuracy">87%</div>
-          <div class="kpi-sub" id="kpi-accuracy-sub">Last 3 release cycles</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Review Variance</div>
-          <div class="kpi-value amber" id="kpi-cost">+6.1%</div>
-          <div class="kpi-sub" id="kpi-cost-sub">Against workflow baseline</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Reviewer Gap</div>
-          <div class="kpi-value red" id="kpi-capacity">14 FTE</div>
-          <div class="kpi-sub" id="kpi-capacity-sub">Peak gap in Q3 FY26</div>
-        </div>
-        <div class="kpi">
-          <div class="kpi-label">Confidence Band</div>
-          <div class="kpi-value green" id="kpi-band">±8%</div>
-          <div class="kpi-sub" id="kpi-band-sub">Narrowed from ±13%</div>
-        </div>
-      </div>
-
+      <!-- Charts -->
       <div class="visual-grid">
         <div class="visual-card">
-          <div class="section-title">Composite Forecast View</div>
+          <div class="section-title">Supplier Coverage &amp; Compliance Trajectory</div>
           <div class="composite-chart-wrap">
             <canvas id="composite-chart"></canvas>
           </div>
-
           <div class="chart-legend">
-            <span class="legend-item"><span class="legend-swatch" style="background:var(--accent);"></span>Legal intake</span>
-            <span class="legend-item"><span class="legend-swatch" style="background:var(--green);"></span>Review capacity</span>
-            <span class="legend-item"><span class="legend-swatch" style="background:var(--purple);"></span>Automated output</span>
-            <span class="legend-item"><span class="legend-swatch" style="background:var(--red);"></span>Residual backlog</span>
-            <span class="legend-item"><span class="legend-line" style="background:var(--ink);"></span>Confidence</span>
-            <span class="legend-item"><span class="legend-line" style="background:var(--amber);"></span>Complexity pressure</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span>Suppliers onboarded</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:var(--green)"></span>Evidence validated</span>
+            <span class="legend-item"><span class="legend-swatch" style="background:var(--red)"></span>Exception backlog</span>
+            <span class="legend-item"><span class="legend-line" style="background:var(--ink)"></span>Coverage %</span>
+            <span class="legend-item"><span class="legend-line" style="background:var(--amber)"></span>Compliance pressure</span>
           </div>
-
           <div class="driver-grid">
             <div class="driver-cell">
-              <div class="driver-label">Chart story</div>
-              <div class="driver-value" id="chart-story-value">Compression</div>
+              <div class="driver-label">Chart signal</div>
+              <div class="driver-value" id="chart-signal">Steady ramp</div>
             </div>
             <div class="driver-cell">
-              <div class="driver-label">Decision signal</div>
-              <div class="driver-value" id="chart-signal-value">Stage controls</div>
+              <div class="driver-label">Key constraint</div>
+              <div class="driver-value" id="chart-constraint">EU regulatory lag</div>
             </div>
           </div>
         </div>
 
         <div class="visual-card">
-          <div class="section-title">Legal Workflow Flow</div>
-
-          <div class="sankey-wrap">
-            <svg class="sankey-svg" viewBox="0 0 600 260" preserveAspectRatio="none">
-              <path id="flow-demand-capacity" d="" fill="none" stroke="rgba(107,143,168,.42)" stroke-width="34" stroke-linecap="round"/>
-              <path id="flow-demand-risk" d="" fill="none" stroke="rgba(196,154,85,.34)" stroke-width="18" stroke-linecap="round"/>
-              <path id="flow-capacity-delivery" d="" fill="none" stroke="rgba(95,154,120,.38)" stroke-width="30" stroke-linecap="round"/>
-              <path id="flow-risk-gap" d="" fill="none" stroke="rgba(180,104,93,.34)" stroke-width="20" stroke-linecap="round"/>
-            </svg>
-
-            <div class="sankey-node source">
-              <div class="node-label">Legal Intake</div>
-              <div class="node-value" id="sankey-demand">100</div>
-              <div class="node-sub">Indexed matter volume</div>
+          <div class="section-title">Platform Flow — Supplier to Verified Record</div>
+          <div class="flow-outer">
+            <div class="flow-nodes">
+              <div class="flow-node">
+                <div class="node-label">Supplier Pool</div>
+                <div class="node-value">100</div>
+                <div class="node-sub">Indexed base</div>
+              </div>
+              <div class="flow-node">
+                <div class="node-label">Onboarded</div>
+                <div class="node-value" id="fn-onboarded">74</div>
+                <div class="node-sub">Platform registered</div>
+              </div>
+              <div class="flow-node">
+                <div class="node-label">Evidence Gap</div>
+                <div class="node-value" id="fn-evgap">26</div>
+                <div class="node-sub">Pending attestation</div>
+              </div>
+              <div class="flow-node">
+                <div class="node-label">Verified Records</div>
+                <div class="node-value" id="fn-verified">65</div>
+                <div class="node-sub">Audit-ready chain</div>
+              </div>
+              <div class="flow-node">
+                <div class="node-label">Exception Queue</div>
+                <div class="node-value" id="fn-exceptions">35</div>
+                <div class="node-sub">Remediation needed</div>
+              </div>
             </div>
-
-            <div class="sankey-node capacity">
-              <div class="node-label">Review Capacity</div>
-              <div class="node-value" id="sankey-capacity">78</div>
-              <div class="node-sub">Human and system review supply</div>
-            </div>
-
-            <div class="sankey-node risk">
-              <div class="node-label">Unabsorbed Complexity</div>
-              <div class="node-value" id="sankey-pressure">22</div>
-              <div class="node-sub">Rule-change and exception load</div>
-            </div>
-
-            <div class="sankey-node delivery">
-              <div class="node-label">Cleared Workflow</div>
-              <div class="node-value" id="sankey-delivery">70</div>
-              <div class="node-sub">Likely reviewed and resolved</div>
-            </div>
-
-            <div class="sankey-node gap">
-              <div class="node-label">Residual Backlog</div>
-              <div class="node-value" id="sankey-gap">30</div>
-              <div class="node-sub">Escalate, defer, or re-route</div>
+            <div class="sankey-svg-wrap">
+              <svg id="sankey-svg" viewBox="0 0 320 260" preserveAspectRatio="xMidYMid meet">
+                <!-- flows drawn by JS -->
+              </svg>
             </div>
           </div>
-
-          <p class="sankey-story" id="sankey-story">
-            The flow view translates incoming legal workload into review capacity, cleared workflow, and residual backlog. It shows where regulatory change, policy interpretation, and exception handling reduce the amount of work that can be safely resolved through automation alone.
+          <p class="flow-story" id="flow-story">
+            The flow shows how the supplier pool converts to audit-ready provenance records. Onboarding friction and evidence failure rate determine the exception queue — the primary operational risk at current adoption pace.
           </p>
         </div>
       </div>
 
-      <div class="card-grid" id="card-grid"></div>
+      <!-- Executive interpretation -->
+      <div class="interpretation-box" id="interpretation">
+        <div class="interpretation-eyebrow">Executive Interpretation</div>
+        <p class="interpretation-text" id="interp-text">
+          Projected supplier coverage reaches <strong id="i-coverage">74%</strong> by Q3 FY27 under Base Case assumptions. The primary constraint is EU regulatory acceptance, which adds an estimated 4–6 months to full activation. At current onboarding rates, compliance confidence remains above threshold through FY26 but faces downward pressure in H1 FY27. The board should prioritise EU regulator engagement and evidence remediation resourcing in the next planning cycle.
+        </p>
+      </div>
+
+      <!-- Scenario detail cards -->
+      <div class="cards-header">
+        <div class="cards-eyebrow">Detailed Forecast Views</div>
+        <button class="expand-btn" id="expand-btn" aria-expanded="false">
+          <span class="blink-dot"></span>Expand
+        </button>
+      </div>
+      <div class="card-grid" id="card-grid" style="display:none"></div>
 
     </div>
   </section>
 </div>
 
+<!-- ══ DETAIL VIEW ══ -->
 <div id="detail-view">
   <div class="detail-header-bar">
     <div class="detail-header-inner">
-      <button class="back-btn" id="back-btn">Back</button>
+      <button class="back-btn" id="back-btn">← Back</button>
       <span class="detail-meta" id="detail-meta"></span>
     </div>
   </div>
-
   <div class="detail-body">
-    <div class="detail-label" id="detail-label"></div>
+    <div id="detail-chip"></div>
     <h1 class="detail-title" id="detail-title"></h1>
     <div class="detail-content" id="detail-content"></div>
   </div>
@@ -1005,420 +933,486 @@ body{
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <span>RegTech Forecasting Dashboard — Legal operations planning workspace · Synthetic data</span>
     <span>Khaled Sanad · Portfolio</span>
+    <span>Asterion Grid · Critical Minerals Traceability Expansion · FY26–FY28</span>
   </div>
 </footer>
 
 <script>
-const DASHBOARD_STATE = {
-  all:{
-    label:"All scenarios",
-    heroLabel:"RegTech Forecasting Workspace",
-    heroTitle:"Scenario-led planning for legal workflow volume, review capacity, automation readiness, and residual compliance backlog.",
-    heroText:"This artefact models how a law-focused technology company could compare forecast paths across baseline, scaling, and stress scenarios. The main visual is a composite forecast chart: grouped bars show legal operations volume, while overlay lines show confidence and complexity pressure across the same planning horizon.",
-    horizon:"FY25–FY27",
-    constraint:"Legal review capacity and rule-change velocity",
-    posture:"Stage automation and governance controls",
-    accuracy:"87%",
-    accuracySub:"Last 3 release cycles",
-    cost:"+6.1%",
-    costSub:"Against workflow baseline",
-    capacity:"14 FTE",
-    capacitySub:"Peak gap in Q3 FY26",
-    band:"±8%",
-    bandSub:"Narrowed from ±13%",
-    storyValue:"Compression",
-    signalValue:"Stage controls",
+// ── Scenario base data ──
+const SCENARIOS = {
+  base:{
+    label:"Base Case",
+    chipClass:"base",
+    title:"Critical Minerals Traceability Forecast",
+    text:"Planning environment for supplier adoption, coverage, and risk trajectory across five regions. <strong style=\"color:var(--ink);font-weight:400\">Adjust assumptions to model alternatives;</strong> the interpretation panel updates in real time.",
+    constraint:"EU regulatory acceptance timeline",
+    posture:"Proceed with staged regional rollout",
+    coverage:74, confidence:81, savings:"$4.2M", savingsSub:"Audit labour and dispute resolution",
+    risk:"Medium", riskSub:"Controlled with mitigation plan",
+    chartSignal:"Steady ramp", chartConstraint:"EU regulatory lag",
     chart:{
-      demand:[68,76,84,93,102,112,121,130],
-      capacity:[66,72,78,84,89,94,99,104],
-      delivered:[58,65,72,79,86,92,98,103],
-      gap:[10,11,12,14,16,20,23,27],
-      confidence:[86,84,82,79,76,73,71,69],
-      costPressure:[24,29,35,41,48,55,61,67]
+      onboard:[18,36,56,78,102,128,148,162],
+      validated:[14,29,46,64,84,106,124,138],
+      exceptions:[4,7,10,14,18,22,24,24],
+      coverage:[12,22,34,46,58,70,78,84],
+      pressure:[18,24,31,38,45,51,55,57]
     },
-    sankey:{demand:100,capacity:78,pressure:22,delivery:70,gap:30},
-    sankeyStory:"Across all scenarios, legal intake grows faster than safe review capacity. The central issue is not whether automation can help, but where legal judgement, auditability, and exception handling still require controlled human oversight."
+    flow:{onboarded:74,evgap:26,verified:65,exceptions:35},
+    flowStory:"The flow shows how supplier pool converts to audit-ready provenance records. Onboarding friction and evidence failure rate determine the size of the exception queue — the primary operational risk at current adoption pace.",
+    interp:(c,conf)=>`Projected supplier coverage reaches <strong>${c}%</strong> by Q3 FY27 under current assumptions. The primary constraint is EU regulatory acceptance, which adds an estimated 4–6 months to full platform activation. At current onboarding rates, compliance confidence of <strong>${conf}</strong> remains above threshold through FY26 but faces downward pressure in H1 FY27. The board should prioritise EU regulator engagement and evidence remediation resourcing in the next planning cycle.`
   },
-  baseline:{
-    label:"Baseline",
-    heroLabel:"Baseline Scenario",
-    heroTitle:"Expected legal workflow growth under current product and client operating conditions.",
-    heroText:"The baseline scenario assumes current client onboarding pace, current legal review routines, moderate rule-change volume, and no major regulatory shock. The chart shows a manageable but tightening gap as intake grows faster than review capacity.",
-    horizon:"FY25–FY27",
-    constraint:"Mid-horizon review capacity",
-    posture:"Proceed with controlled automation",
-    accuracy:"89%",
-    accuracySub:"Strongest historical fit",
-    cost:"+4.2%",
-    costSub:"Moderate review variance",
-    capacity:"9 FTE",
-    capacitySub:"Peak gap in Q3 FY26",
-    band:"±6%",
-    bandSub:"Stable control band",
-    storyValue:"Tightening",
-    signalValue:"Stage review",
+  acc:{
+    label:"Accelerated Compliance",
+    chipClass:"acc",
+    title:"Regulatory frameworks align early — supplier onboarding outperforms.",
+    text:"Faster regulatory acceptance and stronger supplier adoption. Confidence is moderate — upside depends on external factors, not platform capability alone.",
+    constraint:"Sustaining evidence quality at scale",
+    posture:"Use as target case for milestone commitments",
+    coverage:89, confidence:91, savings:"$6.1M", savingsSub:"Higher coverage reduces audit exposure",
+    risk:"Low–Medium", riskSub:"Upside depends on EU and supplier alignment",
+    chartSignal:"Strong ramp", chartConstraint:"Evidence quality at scale",
     chart:{
-      demand:[66,72,78,85,92,99,105,112],
-      capacity:[64,70,76,82,88,94,100,106],
-      delivered:[57,64,71,78,84,90,96,102],
-      gap:[9,8,7,7,8,9,9,10],
-      confidence:[89,88,86,84,81,79,77,75],
-      costPressure:[18,22,26,30,34,38,42,46]
+      onboard:[24,50,80,112,144,172,192,206],
+      validated:[20,44,72,102,132,158,178,194],
+      exceptions:[4,6,8,10,12,14,14,12],
+      coverage:[16,30,48,66,84,94,98,100],
+      pressure:[14,18,23,28,32,35,36,36]
     },
-    sankey:{demand:100,capacity:84,pressure:16,delivery:76,gap:24},
-    sankeyStory:"The baseline flow shows a workable plan. Most legal intake can be absorbed, but the residual backlog grows unless triage rules, reviewer allocation, and automation thresholds are staged before the peak review period."
+    flow:{onboarded:89,evgap:11,verified:82,exceptions:18},
+    flowStory:"Accelerated onboarding and lower evidence failure rate dramatically reduce the exception queue. The risk shifts from volume coverage to quality assurance — schema validation and oracle input controls become the primary governance focus.",
+    interp:(c,conf)=>`Under Accelerated Compliance, projected supplier coverage reaches <strong>${c}%</strong> — the platform's target state — by mid-FY27. EU regulatory alignment is the decisive enabler, reducing the activation lag from 4–6 months to under 8 weeks. Compliance confidence of <strong>${conf}</strong> supports bringing forward the Phase 2 supplier cohort ahead of schedule. Asterion Grid should secure regulator engagement commitments from AU and SG counterparts in parallel to lock in the upside.`
   },
-  scaling:{
-    label:"Scaling",
-    heroLabel:"Scaling Scenario",
-    heroTitle:"Higher throughput if legal automation, template logic, and client onboarding outperform plan.",
-    heroText:"The scaling scenario assumes stronger reuse of legal templates, faster playbook configuration, better exception routing, and higher conversion of review capacity into cleared workflow. It has the smallest backlog, but confidence is lower because the upside depends on adoption and governance discipline.",
-    horizon:"FY25–FY27",
-    constraint:"Governed automation must outpace complexity",
-    posture:"Use as controlled upside case",
-    accuracy:"82%",
-    accuracySub:"Moderate confidence",
-    cost:"+2.4%",
-    costSub:"Lower manual review drag",
-    capacity:"5 FTE",
-    capacitySub:"Peak residual gap",
-    band:"±10%",
-    bandSub:"Wider adoption uncertainty",
-    storyValue:"Upside",
-    signalValue:"Protect rules",
+  del:{
+    label:"Regulatory Delay",
+    chipClass:"del",
+    title:"EU acceptance slips 6–9 months — FY27 delivery confidence compressed.",
+    text:"EU schema acceptance delays force resequencing. AU and SG absorb some volume but cannot compensate for EU cohort shortfall.",
+    constraint:"EU evidence schema approval and jurisdictional sequencing",
+    posture:"Activate AU and SG ahead of EU — preserve programme momentum",
+    coverage:58, confidence:64, savings:"$2.8M", savingsSub:"Reduced by EU coverage shortfall",
+    risk:"Medium–High", riskSub:"EU delay creates FY27 coverage gap",
+    chartSignal:"Compressed ramp", chartConstraint:"EU schema delay",
     chart:{
-      demand:[68,78,89,100,111,122,132,140],
-      capacity:[67,76,86,96,106,116,125,133],
-      delivered:[62,73,84,95,105,115,124,132],
-      gap:[6,5,5,5,6,7,8,8],
-      confidence:[82,80,77,74,70,67,65,63],
-      costPressure:[16,18,20,23,26,29,32,35]
+      onboard:[14,26,38,52,66,80,92,104],
+      validated:[10,19,28,38,48,59,68,78],
+      exceptions:[4,7,10,14,18,21,24,26],
+      coverage:[9,16,23,31,39,47,54,60],
+      pressure:[24,32,40,47,53,58,62,64]
     },
-    sankey:{demand:100,capacity:90,pressure:10,delivery:86,gap:14},
-    sankeyStory:"The scaling flow shows higher conversion from intake to cleared workflow. The plan works only if legal templates, rule libraries, escalation paths, and audit controls mature together; otherwise automation creates speed without enough defensibility."
+    flow:{onboarded:58,evgap:42,verified:48,exceptions:52},
+    flowStory:"EU regulatory delay forces resequencing. AU and SG suppliers onboard ahead of plan but cannot compensate for EU volume. The exception queue grows as suppliers submit evidence against schemas not yet formally accepted by EU regulators.",
+    interp:(c,conf)=>`EU schema acceptance slips 6–9 months under this scenario, reducing projected supplier coverage to <strong>${c}%</strong> by Q3 FY27 — a ${89-c} percentage point shortfall against target. Compliance confidence falls to <strong>${conf}</strong>, driven by onboarding resequencing and evidence remediation backlog in the EU cohort. AU and SG onboarding should be accelerated to maintain programme momentum while EU suppliers are held in a parallel preparation cohort. The board should seek formal EU regulatory timeline assurance and authorise contingency budget for evidence remediation within the next 60 days.`
   },
-  stress:{
-    label:"Stress",
-    heroLabel:"Stress Scenario",
-    heroTitle:"Rule-change shock where legal intake rises while specialist review capacity tightens.",
-    heroText:"The stress scenario tests how quickly the operating model deteriorates when legislative updates, client-specific exceptions, and complex legal interpretations increase at the same time. The chart shows the breakpoint: intake rises, cleared workflow stalls, confidence falls, and complexity pressure accelerates.",
-    horizon:"FY26",
-    constraint:"Specialist legal review shortage",
-    posture:"Trigger mitigation",
-    accuracy:"73%",
-    accuracySub:"Higher volatility",
-    cost:"+15.1%",
-    costSub:"Escalation pressure",
-    capacity:"26 FTE",
-    capacitySub:"Peak reviewer shortage",
-    band:"±15%",
-    bandSub:"Wide stress range",
-    storyValue:"Breakpoint",
-    signalValue:"Re-route",
+  res:{
+    label:"Supplier Resistance",
+    chipClass:"res",
+    title:"Adoption stalls — integration cost and data-sharing reluctance dominate.",
+    text:"Significant supplier cohort delays or refuses onboarding — integration cost, data sovereignty concerns, or competitive sensitivity about supply-chain disclosure.",
+    constraint:"Supplier integration cost and data-sharing incentives",
+    posture:"Trigger commercial mitigation — tiered onboarding and cost-sharing",
+    coverage:42, confidence:51, savings:"$1.4M", savingsSub:"Severely limited by low coverage",
+    risk:"High", riskSub:"Commercial model at risk below 50% coverage",
+    chartSignal:"Stalled adoption", chartConstraint:"Supplier incentive gap",
     chart:{
-      demand:[72,84,97,110,124,138,151,162],
-      capacity:[62,64,65,66,67,68,68,69],
-      delivered:[52,54,55,56,56,57,57,58],
-      gap:[20,30,42,54,68,81,94,104],
-      confidence:[73,69,65,61,57,53,49,46],
-      costPressure:[38,47,57,67,77,86,93,99]
+      onboard:[10,16,22,28,34,40,46,52],
+      validated:[7,11,15,19,23,27,31,34],
+      exceptions:[3,5,7,9,11,13,15,18],
+      coverage:[7,11,15,19,23,27,31,35],
+      pressure:[32,42,50,56,61,65,68,70]
     },
-    sankey:{demand:100,capacity:56,pressure:44,delivery:42,gap:58},
-    sankeyStory:"The stress flow makes the failure mode visible. Review capacity absorbs barely over half of intake, leaving a large residual backlog that must become escalation, deferral, narrower automation thresholds, or executive prioritisation."
+    flow:{onboarded:42,evgap:58,verified:32,exceptions:68},
+    flowStory:"Low adoption leaves the majority of the supplier base outside the platform. Verified records cover only a third of target volume — insufficient for regulatory submissions and enterprise customer audits. The exception queue dominates, consuming remediation capacity and reducing the programme's commercial credibility.",
+    interp:(c,conf)=>`The Supplier Resistance scenario is the programme's critical commercial risk. At <strong>${c}%</strong> projected coverage, Asterion Grid falls below the minimum threshold for regulatory submission quality and enterprise customer audit assurance. Compliance confidence drops to <strong>${conf}</strong>. The board must determine whether tiered onboarding incentives, cost-sharing arrangements, or mandatory supplier obligations — through customer contract terms — can recover adoption trajectory within the next two quarters. If not, Phase 2 scope and FY27 revenue projections require formal revision.`
   }
 };
 
-const SCENARIOS = [
-  {
-    id:"baseline-intake",
-    category:"baseline",
-    label:"Baseline",
-    title:"Legal Intake Forecast",
-    desc:"Expected growth in legal matter volume under current client onboarding, product coverage, and review settings.",
-    horizon:"FY25–FY27",
-    metricA:"11.8%",
-    metricALabel:"Annual growth",
-    metricB:"79%",
-    metricBLabel:"Confidence",
-    meta:"Baseline · Intake",
-    content:`
-      <p><strong>Purpose:</strong> This forecast estimates expected legal operations volume if current product coverage and client onboarding continue without major acceleration or disruption.</p>
-      <p>The baseline path assumes moderate growth in legal review requests, recurring policy updates, and steady use of existing template libraries. Growth is not treated as purely linear; the model expects heavier volume in the middle quarters as new client workflows, updated clauses, and exception queues compound.</p>
-      <h2>Planning implication</h2>
-      <p>The baseline scenario is manageable, but only if review capacity and automation thresholds are adjusted before the Q3 FY26 pressure point. Treating this as ordinary business-as-usual would understate the backlog risk.</p>
-    `
-  },
-  {
-    id:"scaling-automation",
-    category:"scaling",
-    label:"Scaling",
-    title:"Automation Throughput Uplift",
-    desc:"Higher cleared-workflow output if template logic, legal playbooks, and exception routing outperform plan.",
-    horizon:"FY25–FY27",
-    metricA:"21.3%",
-    metricALabel:"Throughput uplift",
-    metricB:"66%",
-    metricBLabel:"Confidence",
-    meta:"Scaling · Automation",
-    content:`
-      <p><strong>Purpose:</strong> This scenario tests upside potential where legal automation matures faster than expected and reusable rule libraries reduce manual review demand.</p>
-      <p>The scaling path depends on cleaner intake categorisation, stronger template governance, better matter routing, and fewer ambiguous exceptions. It is plausible, but it should not be treated as the default case because several assumptions depend on behavioural adoption, not just platform capability.</p>
-      <h2>Planning implication</h2>
-      <p>This scenario is useful for product ambition and operational planning, but executive reporting should separate governed automation from untested automation. The main value is identifying which controls make higher throughput legally defensible.</p>
-    `
-  },
-  {
-    id:"stress-rule-change",
-    category:"stress",
-    label:"Stress",
-    title:"Regulatory Change Shock",
-    desc:"Stress case showing backlog growth if rule updates, client exceptions, and specialist review demand rise together.",
-    horizon:"FY26",
-    metricA:"26 FTE",
-    metricALabel:"Peak gap",
-    metricB:"57%",
-    metricBLabel:"Confidence",
-    meta:"Stress · Rule Change",
-    content:`
-      <p><strong>Purpose:</strong> This stress scenario tests the impact of rapid rule-change volume during the heaviest forecast review period.</p>
-      <p>The model assumes more frequent legislative updates, higher client-specific interpretation requests, and lower availability of senior legal reviewers. The result is not immediate system failure, but progressive backlog compression and lower confidence in automated clearance.</p>
-      <h2>Planning implication</h2>
-      <p>The useful signal is timing. By the time backlog appears in operational metrics, mitigation options are narrower. Early triage rules, reviewer allocation, escalation thresholds, and audit controls are the main control levers.</p>
-    `
-  }
+// ── Detail cards ──
+const CARDS = [
+  {id:"regional",scenario:"base",chipClass:"base",tag:"Base",title:"Regional Rollout Sequencing",desc:"Phased entry across Australia, Singapore, EU, US, and Middle East based on regulatory maturity, supplier density, and platform readiness.",metricA:"5",metricALabel:"Regions in scope",metricB:"Q2 FY26",metricBLabel:"AU/SG go-live",meta:"Base · Regional",
+  content:`<p><strong>Purpose:</strong> This view models the sequencing of Asterion Grid's regional rollout, prioritising markets with the strongest regulatory alignment and supplier network density.</p><p>Australia and Singapore activate in Q2 FY26, benefiting from existing regulatory frameworks that recognise tamper-evident records and an established logistics and mining supplier base. The EU activates subject to supply-chain due diligence framework confirmation, estimated Q4 FY26 under Base Case. The US and Middle East enter as Phase 2 markets in FY27, with supplier onboarding sequenced around customs documentation and energy sector supply chains.</p><h2>Planning implication</h2><p>The sequencing is designed to maximise early coverage in high-value, high-readiness markets. If EU activation slips, AU and SG volume provides a revenue and credibility base while the regulatory position is resolved. Executive attention should focus on maintaining the AU/SG launch timeline and securing EU regulatory engagement commitments within the next 90 days.</p>`},
+  {id:"evidence",scenario:"base",chipClass:"base",tag:"Base",title:"Evidence Quality Forecast",desc:"Models the rate at which supplier-submitted attestations pass validation against the Asterion Grid evidence schema, and the expected exception backlog.",metricA:"88%",metricALabel:"Target pass rate",metricB:"12%",metricBLabel:"Baseline failure rate",meta:"Base · Evidence",
+  content:`<p><strong>Purpose:</strong> Evidence quality is the platform's core value proposition. This forecast models how the attestation pass rate evolves as suppliers mature their data submission processes and the schema validation engine matures.</p><p>At launch, the expected failure rate is 12–15% as suppliers adapt their internal data structures to the evidence schema. By Q4 FY26, schema tooling improvements and supplier onboarding support are expected to reduce failure rate to below 8%. The exception backlog is the operational risk: failed attestations require manual review, oracle verification, and supplier remediation — each adding 3–7 days to chain-of-custody confirmation.</p><h2>Planning implication</h2><p>Evidence quality controls — schema validation, oracle input monitoring, supplier feedback loops — should be treated as a platform capability investment, not an operational overhead. The payoff is a reduction in remediation cost and an increase in audit readiness that directly supports enterprise customer contracts and regulatory submissions.</p>`},
+  {id:"savings",scenario:"acc",chipClass:"acc",tag:"Accelerated",title:"Audit Labour Savings Projection",desc:"Quantifies the reduction in manual audit effort as platform coverage increases and verified records replace manual evidence collection.",metricA:"$6.1M",metricALabel:"Annual savings at 89% coverage",metricB:"18 mo",metricBLabel:"Payback horizon",meta:"Accelerated · Value",
+  content:`<p><strong>Purpose:</strong> The financial case for the Asterion Grid platform rests on displacing manual audit effort across suppliers, logistics providers, and compliance teams. This projection models how savings scale with coverage.</p><p>At 89% supplier coverage under the Accelerated scenario, annual audit labour savings across the supplier network reach $6.1M — a combination of reduced manual evidence collection ($2.8M), faster dispute resolution ($1.6M), and lower regulatory penalty exposure ($1.7M). Savings are non-linear: the first 50% of coverage delivers disproportionate returns because it captures the highest-volume supplier relationships.</p><h2>Planning implication</h2><p>The savings projection supports an 18-month payback on implementation cost. Executive reporting should separate realised savings (from live, audit-ready supplier records) from projected savings (from suppliers in onboarding). Only realised savings should inform FY27 budget assumptions.</p>`},
+  {id:"eudelay",scenario:"del",chipClass:"del",tag:"Regulatory Delay",title:"EU Delay Contingency Plan",desc:"Mitigation approach if EU supply-chain due diligence framework delays evidence schema acceptance beyond Q4 FY26.",metricA:"6–9 mo",metricALabel:"Estimated slip",metricB:"−16pt",metricBLabel:"Coverage impact",meta:"Regulatory Delay · Contingency",
+  content:`<p><strong>Purpose:</strong> The EU market represents the largest addressable supplier cohort in Phase 1. A 6–9 month delay in schema acceptance materially affects FY27 coverage and compliance confidence.</p><p>The contingency plan has three components. First, accelerate AU and SG onboarding to maximise coverage momentum independently of EU. Second, prepare EU suppliers in a parallel holding cohort — collecting evidence data against the draft schema so they can activate rapidly once regulatory confirmation is received. Third, engage EU regulatory contacts directly to understand the review timeline and provide technical schema documentation proactively.</p><h2>Planning implication</h2><p>The contingency plan preserves programme credibility and maintains enterprise customer confidence. It requires a modest additional investment in supplier pre-onboarding support and regulatory engagement resources — both of which should be treated as insurance against a scenario that would otherwise require formal programme rescoping.</p>`},
+  {id:"resistance",scenario:"res",chipClass:"res",tag:"Supplier Resistance",title:"Supplier Adoption Incentive Design",desc:"Commercial and structural responses to low supplier onboarding where integration cost and data-sharing concerns are the primary barriers.",metricA:"<50%",metricALabel:"Coverage at stall point",metricB:"Cost-share",metricBLabel:"Primary lever",meta:"Supplier Resistance · Commercial",
+  content:`<p><strong>Purpose:</strong> Supplier resistance is the platform's most consequential commercial risk. This view models the levers available to recover adoption trajectory if onboarding stalls below the minimum viable coverage threshold.</p><p>Three levers are available. Tiered onboarding reduces the technical integration burden for small and mid-size suppliers by providing a managed submission service rather than a full API integration. Cost-sharing arrangements — funded by enterprise customer contracts — subsidise supplier onboarding costs in exchange for verified evidence commitments. Mandatory clauses in enterprise customer supply contracts create a pull-through obligation that bypasses supplier discretion entirely.</p><h2>Planning implication</h2><p>The mandatory clause approach is the most structurally robust but requires customer contract renegotiation. The board should authorise a commercial policy position on mandatory supplier obligations before Phase 2 launch. Without it, the programme's coverage ceiling is determined by supplier willingness rather than platform capability.</p>`},
+  {id:"oracle",scenario:"base",chipClass:"base",tag:"Base",title:"Oracle and Off-Chain Input Risk",desc:"Models the risk that blockchain records are compromised by inaccurate or manipulated data submitted through external data feeds and supplier APIs.",metricA:"High",metricALabel:"Risk classification",metricB:"Controls",metricBLabel:"Mitigation status",meta:"Base · Data Integrity",
+  content:`<p><strong>Purpose:</strong> The integrity of Asterion Grid's provenance records depends entirely on the accuracy of the data submitted to the platform. Blockchain immutability guarantees that records cannot be altered after submission — but it also means that incorrect data, once recorded, becomes a permanent liability.</p><p>Oracle risk arises when external data feeds — supplier systems, customs APIs, certification bodies, IoT sensors — submit inaccurate, delayed, or manipulated information. The platform's evidence schema and validation engine provide the first line of defence. Secondary controls include cross-reference checks against authoritative sources, anomaly detection on submission patterns, and supplier-level audit trails that allow source data reconstruction.</p><h2>Planning implication</h2><p>Oracle risk management should be classified as a platform capability investment, not an operational overhead. The controls required — source validation, anomaly detection, cross-reference architecture — are not unique to Asterion Grid, but the consequences of failure are higher because the records are immutable and form the basis of regulatory submissions and enterprise audit reports.</p>`}
 ];
 
+// ── State ──
+let activeScenario = "base";
+
+// Scenario-specific slider defaults — reset restores these, not Base Case values
+const SCENARIO_DEFAULTS = {
+  base: {onboard:18, friction:5,  failure:12, adoption:9,  cost:8,  audit:9},
+  acc:  {onboard:26, friction:3,  failure:7,  adoption:6,  cost:5,  audit:6},
+  del:  {onboard:14, friction:8,  failure:16, adoption:12, cost:12, audit:11},
+  res:  {onboard:10, friction:6,  failure:18, adoption:18, cost:15, audit:14}
+};
+
+let assumptions = {...SCENARIO_DEFAULTS.base};
+
+// ── DOM refs ──
 const mainView = document.getElementById("main-view");
 const detailView = document.getElementById("detail-view");
 const backBtn = document.getElementById("back-btn");
-const detailLabel = document.getElementById("detail-label");
-const detailTitle = document.getElementById("detail-title");
-const detailMeta = document.getElementById("detail-meta");
-const detailContent = document.getElementById("detail-content");
 const cardGrid = document.getElementById("card-grid");
-const searchInput = document.getElementById("search-input");
 
-let activeFilter = "all";
+// ── Slider wiring ──
+const sliders = [
+  {id:"sl-onboard", valId:"val-onboard", key:"onboard", fmt:v=>`${v} /mo`},
+  {id:"sl-friction", valId:"val-friction", key:"friction", fmt:v=>`${v} / 10`},
+  {id:"sl-failure",  valId:"val-failure",  key:"failure",  fmt:v=>`${v}%`},
+  {id:"sl-adoption", valId:"val-adoption", key:"adoption", fmt:v=>`${v} mo`},
+  {id:"sl-cost",     valId:"val-cost",     key:"cost",     fmt:v=>v>=0?`+${v}%`:`${v}%`},
+  {id:"sl-audit",    valId:"val-audit",    key:"audit",    fmt:v=>`${v}%`}
+];
 
-function chip(label, category){
-  return `<span class="chip ${category}">${label}</span>`;
+function getDefaults(){ return SCENARIO_DEFAULTS[activeScenario]; }
+
+function applyDefaults(){
+  const d = getDefaults();
+  assumptions = {...d};
+  sliders.forEach(s=>{
+    document.getElementById(s.id).value = d[s.key];
+    document.getElementById(s.valId).textContent = s.fmt(d[s.key]);
+    document.getElementById(s.valId).className = "assumption-val";
+    document.getElementById(s.id).className = "";
+  });
 }
 
-function setText(id, value){
-  document.getElementById(id).textContent = value;
+sliders.forEach(s=>{
+  const el = document.getElementById(s.id);
+  const valEl = document.getElementById(s.valId);
+  el.addEventListener("input",()=>{
+    assumptions[s.key] = +el.value;
+    const modified = assumptions[s.key] !== getDefaults()[s.key];
+    valEl.className = "assumption-val" + (modified?" modified":"");
+    el.className = modified?"modified":"";
+    updateDashboard();
+  });
+});
+
+document.getElementById("reset-btn").addEventListener("click",()=>{
+  applyDefaults();
+  updateDashboard();
+});
+
+// ── Computed values ──
+function computeOutputs(){
+  const sc = SCENARIOS[activeScenario];
+  const d = getDefaults();
+  let coverageAdj = sc.coverage;
+  coverageAdj += (assumptions.onboard - d.onboard) * 0.6;
+  coverageAdj -= (assumptions.friction - d.friction) * 1.8;
+  coverageAdj -= (assumptions.failure  - d.failure)  * 0.5;
+  coverageAdj -= (assumptions.adoption - d.adoption) * 0.8;
+  coverageAdj -= (assumptions.cost     - d.cost)     * 0.1;
+  coverageAdj -= (assumptions.audit    - d.audit)    * 0.4;
+  coverageAdj = Math.max(8, Math.min(100, Math.round(coverageAdj)));
+
+  let confAdj = sc.confidence;
+  confAdj += (assumptions.onboard - d.onboard) * 0.3;
+  confAdj -= (assumptions.friction - d.friction) * 1.5;
+  confAdj -= (assumptions.failure  - d.failure)  * 0.4;
+  confAdj -= (assumptions.adoption - d.adoption) * 0.5;
+  confAdj -= (assumptions.audit    - d.audit)    * 0.5;
+  confAdj = Math.max(10, Math.min(99, Math.round(confAdj)));
+
+  return {coverage:coverageAdj, confidence:confAdj};
 }
 
-function cssVar(name){
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+// ── Update dashboard ──
+function updateDashboard(){
+  const sc = SCENARIOS[activeScenario];
+  const {coverage, confidence} = computeOutputs();
+
+  // Slider display values
+  sliders.forEach(s=>{
+    document.getElementById(s.valId).textContent = s.fmt(assumptions[s.key]);
+  });
+
+  // Hero
+  document.getElementById("hero-title").textContent = sc.title;
+  document.getElementById("hero-text").innerHTML = sc.text;
+
+  // KPIs
+  const coverageEl = document.getElementById("kpi-coverage");
+  coverageEl.textContent = coverage + "%";
+  coverageEl.className = "kpi-value " + (coverage >= 75 ? "green" : coverage >= 55 ? "amber" : "red");
+
+  const confEl = document.getElementById("kpi-confidence");
+  confEl.textContent = confidence;
+  confEl.className = "kpi-value " + (confidence >= 75 ? "green" : confidence >= 55 ? "amber" : "red");
+
+  // Savings — reactive
+  const savingsEl = document.getElementById("kpi-savings");
+  savingsEl.textContent = computeSavings(sc, coverage);
+  document.getElementById("kpi-savings-sub").textContent = sc.savingsSub;
+
+  // Risk — reactive to confidence
+  const riskEl = document.getElementById("kpi-risk");
+  const riskLabel = confidence >= 78 ? "Low–Medium" : confidence >= 60 ? "Medium" : confidence >= 42 ? "Medium–High" : "High";
+  riskEl.textContent = riskLabel;
+  riskEl.className = "kpi-value " + (riskLabel==="Low–Medium"?"green":riskLabel==="Medium"?"amber":"red");
+  document.getElementById("kpi-risk-sub").textContent = sc.riskSub;
+
+  // Chart labels
+  document.getElementById("chart-signal").textContent = sc.chartSignal;
+  document.getElementById("chart-constraint").textContent = sc.chartConstraint;
+
+  // Flow values
+  const f = sc.flow;
+  const d = getDefaults();
+  const onbF  = assumptions.onboard / d.onboard;
+  const frict = (assumptions.friction - d.friction) / 10;
+  const onboardAdj = Math.round(Math.min(100, Math.max(0, f.onboarded * onbF * (1 - frict * 0.7))));
+  const evGapAdj   = Math.max(0, 100 - onboardAdj);
+  const verAdj     = Math.round(onboardAdj * (1 - assumptions.failure / 100));
+  const excAdj     = Math.max(0, 100 - verAdj);
+
+  document.getElementById("fn-onboarded").textContent  = onboardAdj;
+  document.getElementById("fn-evgap").textContent      = evGapAdj;
+  document.getElementById("fn-verified").textContent   = verAdj;
+  document.getElementById("fn-exceptions").textContent = excAdj;
+  document.getElementById("flow-story").textContent    = sc.flowStory;
+
+  // Interpretation
+  document.getElementById("interp-text").innerHTML = sc.interp(coverage, confidence);
+
+  // Draw chart with reactive data
+  drawChart(computeChartData(sc));
+  drawSankey(onboardAdj, evGapAdj, verAdj, excAdj);
 }
 
-function drawCompositeChart(data){
+// ── Canvas chart ──
+function drawChart(data){
   const canvas = document.getElementById("composite-chart");
   const parent = canvas.parentElement;
   const dpr = window.devicePixelRatio || 1;
   const rect = parent.getBoundingClientRect();
+  if(!rect.width) return;
 
   canvas.width = rect.width * dpr;
   canvas.height = rect.height * dpr;
-  canvas.style.width = `${rect.width}px`;
-  canvas.style.height = `${rect.height}px`;
+  canvas.style.width = rect.width + "px";
+  canvas.style.height = rect.height + "px";
 
   const ctx = canvas.getContext("2d");
-  ctx.scale(dpr,dpr);
-
-  const w = rect.width;
-  const h = rect.height;
-  const pad = {top:22,right:38,bottom:42,left:42};
-  const plotW = w - pad.left - pad.right;
-  const plotH = h - pad.top - pad.bottom;
+  ctx.scale(dpr, dpr);
+  const w = rect.width, h = rect.height;
+  const pad = {top:24,right:44,bottom:40,left:42};
+  const pw = w - pad.left - pad.right;
+  const ph = h - pad.top - pad.bottom;
 
   ctx.clearRect(0,0,w,h);
-  ctx.font = "10px 'DM Mono'";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
 
-  const allBarValues = [...data.demand,...data.capacity,...data.delivered,...data.gap];
-  const maxBar = Math.max(...allBarValues) * 1.12;
-  const maxLine = 100;
-  const labels = ["Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8"];
+  const labels = ["Q1 FY26","Q2","Q3","Q4","Q1 FY27","Q2","Q3","Q4"];
+  const maxBar = Math.max(...data.onboard,...data.validated,...data.exceptions) * 1.15;
 
-  function xFor(i){
-    return pad.left + (plotW / labels.length) * i + (plotW / labels.length) / 2;
-  }
+  function xFor(i){ return pad.left + (pw/labels.length)*i + (pw/labels.length)/2 }
+  function yBar(v){ return pad.top + ph - (v/maxBar)*ph }
+  function yLine(v){ return pad.top + ph - (v/100)*ph }
 
-  function yBar(v){
-    return pad.top + plotH - (v / maxBar) * plotH;
-  }
-
-  function yLine(v){
-    return pad.top + plotH - (v / maxLine) * plotH;
-  }
-
-  ctx.strokeStyle = "rgba(255,255,255,0.055)";
+  // Grid
+  ctx.strokeStyle = "rgba(255,255,255,0.05)";
   ctx.lineWidth = 1;
-
   for(let i=0;i<=4;i++){
-    const y = pad.top + (plotH/4)*i;
-    ctx.beginPath();
-    ctx.moveTo(pad.left,y);
-    ctx.lineTo(w-pad.right,y);
-    ctx.stroke();
-
-    const value = Math.round(maxBar - (maxBar/4)*i);
+    const y = pad.top + (ph/4)*i;
+    ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(w-pad.right,y); ctx.stroke();
+    const val = Math.round(maxBar-(maxBar/4)*i);
     ctx.fillStyle = "rgba(245,242,237,0.28)";
+    ctx.font = "10px 'DM Mono'";
     ctx.textAlign = "right";
-    ctx.fillText(value, pad.left - 8, y);
+    ctx.fillText(val, pad.left-6, y+3);
   }
 
-  const groupW = plotW / labels.length;
-  const barW = Math.min(12, groupW / 7);
-  const series = [
-    {key:"demand",color:cssVar("--accent")},
-    {key:"capacity",color:cssVar("--green")},
-    {key:"delivered",color:cssVar("--purple")},
-    {key:"gap",color:cssVar("--red")}
+  // Bars
+  const groupW = pw/labels.length;
+  const bw = Math.min(11, groupW/5);
+  const barSeries = [
+    {key:"onboard",color:"rgba(107,143,168,0.78)"},
+    {key:"validated",color:"rgba(95,154,120,0.78)"},
+    {key:"exceptions",color:"rgba(180,104,93,0.70)"}
   ];
 
-  labels.forEach((label,i) => {
-    const centre = xFor(i);
-    const startX = centre - (barW * 2.2);
-
-    series.forEach((s,idx) => {
+  labels.forEach((lbl,i)=>{
+    const cx = xFor(i);
+    const startX = cx - (bw*1.6);
+    barSeries.forEach((s,idx)=>{
       const v = data[s.key][i];
-      const x = startX + idx * (barW + 3);
+      const x = startX + idx*(bw+3);
       const y = yBar(v);
-      const bh = pad.top + plotH - y;
-
+      const bh = pad.top+ph-y;
       ctx.fillStyle = s.color;
-      ctx.globalAlpha = s.key === "gap" ? .62 : .76;
-      ctx.fillRect(x,y,barW,bh);
-      ctx.globalAlpha = 1;
+      ctx.fillRect(x,y,bw,bh);
     });
-
-    ctx.fillStyle = "rgba(245,242,237,0.35)";
+    ctx.fillStyle = "rgba(245,242,237,0.32)";
     ctx.textAlign = "center";
-    ctx.fillText(label, centre, h - 18);
+    ctx.font = "9px 'DM Mono'";
+    ctx.fillText(lbl, cx, h-10);
   });
 
+  // Lines
   function drawLine(values, colour, dash=false){
     ctx.beginPath();
-    values.forEach((v,i) => {
-      const x = xFor(i);
-      const y = yLine(v);
-      if(i===0) ctx.moveTo(x,y);
-      else ctx.lineTo(x,y);
+    values.forEach((v,i)=>{
+      const x=xFor(i), y=yLine(v);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
     });
-
     ctx.strokeStyle = colour;
     ctx.lineWidth = 2;
-    ctx.setLineDash(dash ? [5,4] : []);
+    ctx.setLineDash(dash?[5,4]:[]);
     ctx.stroke();
     ctx.setLineDash([]);
-
-    values.forEach((v,i) => {
-      const x = xFor(i);
-      const y = yLine(v);
+    values.forEach((v,i)=>{
       ctx.beginPath();
-      ctx.arc(x,y,3,0,Math.PI*2);
+      ctx.arc(xFor(i),yLine(v),3,0,Math.PI*2);
       ctx.fillStyle = colour;
       ctx.fill();
-      ctx.strokeStyle = cssVar("--surface");
-      ctx.lineWidth = 1;
-      ctx.stroke();
     });
   }
 
-  drawLine(data.confidence, cssVar("--ink"), false);
-  drawLine(data.costPressure, cssVar("--amber"), true);
+  drawLine(data.coverage, "rgba(245,242,237,0.85)");
+  drawLine(data.pressure, "rgba(196,154,85,0.85)", true);
 
-  ctx.textAlign = "left";
+  // Right axis label
   ctx.fillStyle = "rgba(245,242,237,0.28)";
-  ctx.fillText("Indexed legal workflow volume", pad.left, 12);
-
   ctx.textAlign = "right";
-  ctx.fillText("Line scale: 0–100", w - pad.right, 12);
+  ctx.font = "9px 'DM Mono'";
+  ctx.fillText("Line scale: 0–100%", w-pad.right, 14);
 }
 
-function drawSankey(s){
-  setText("sankey-demand", s.demand);
-  setText("sankey-capacity", s.capacity);
-  setText("sankey-pressure", s.pressure);
-  setText("sankey-delivery", s.delivery);
-  setText("sankey-gap", s.gap);
+// ── Sankey SVG renderer ──
+function drawSankey(onb, evg, ver, exc){
+  const svg = document.getElementById("sankey-svg");
+  if(!svg) return;
 
-  const demandCapacity = document.getElementById("flow-demand-capacity");
-  const demandRisk = document.getElementById("flow-demand-risk");
-  const capacityDelivery = document.getElementById("flow-capacity-delivery");
-  const riskGap = document.getElementById("flow-risk-gap");
+  const vbH = 260;
+  const vbW = 320;
 
-  demandCapacity.setAttribute("d","M132 118 C210 70, 250 62, 292 58");
-  demandRisk.setAttribute("d","M132 140 C210 182, 250 194, 292 194");
-  capacityDelivery.setAttribute("d","M424 58 C472 58, 500 58, 468 58");
-  riskGap.setAttribute("d","M424 194 C472 194, 500 194, 468 194");
+  // Source splits into onboarded (top) and not-onboarded (bottom)
+  // Onboarded → Verified (top right)
+  // Not-onboarded → Exceptions (bottom right)
+  const srcY   = vbH / 2;        // 130 — source mid
+  const onbY   = vbH * 0.28;     // 73  — onboarded band centre
+  const evgY   = vbH * 0.78;     // 203 — not-onboarded band centre
+  const verY   = vbH * 0.22;     // 57  — verified centre
+  const excY   = vbH * 0.82;     // 213 — exceptions centre
 
-  demandCapacity.setAttribute("stroke-width", Math.max(14, s.capacity * .42));
-  demandRisk.setAttribute("stroke-width", Math.max(10, s.pressure * .55));
-  capacityDelivery.setAttribute("stroke-width", Math.max(12, s.delivery * .40));
-  riskGap.setAttribute("stroke-width", Math.max(10, s.gap * .45));
-}
+  const clamp = (v,mn,mx) => Math.max(mn, Math.min(mx, v));
+  const onbN = clamp(onb, 0, 100);
+  const evgN = clamp(evg, 0, 100);
+  const verN = clamp(ver, 0, 100);
+  const excN = clamp(exc, 0, 100);
 
-function updateExecutiveView(){
-  const state = DASHBOARD_STATE[activeFilter];
+  const scale = 46 / 100;
+  const onbH = Math.max(4, onbN * scale);
+  const evgH = Math.max(4, evgN * scale);
+  const verH = Math.max(4, verN * scale);
+  const excH = Math.max(4, excN * scale);
 
-  setText("hero-label", state.heroLabel);
-  setText("hero-title", state.heroTitle);
-  setText("hero-text", state.heroText);
-  setText("active-scenario", state.label);
-  setText("planning-horizon", state.horizon);
-  setText("primary-constraint", state.constraint);
-  setText("decision-posture", state.posture);
-  setText("kpi-accuracy", state.accuracy);
-  setText("kpi-accuracy-sub", state.accuracySub);
-  setText("kpi-cost", state.cost);
-  setText("kpi-cost-sub", state.costSub);
-  setText("kpi-capacity", state.capacity);
-  setText("kpi-capacity-sub", state.capacitySub);
-  setText("kpi-band", state.band);
-  setText("kpi-band-sub", state.bandSub);
-  setText("chart-story-value", state.storyValue);
-  setText("chart-signal-value", state.signalValue);
-  setText("sankey-story", state.sankeyStory);
+  // X coords — start at left edge, end at right edge
+  const x0 = 8;    // source left
+  const x1 = 120;  // split point
+  const x2 = 200;  // merge/second split
+  const x3 = 312;  // output right
 
-  drawCompositeChart(state.chart);
-  drawSankey(state.sankey);
-}
-
-function renderCards(){
-  const q = searchInput.value.trim().toLowerCase();
-
-  const filtered = SCENARIOS.filter(item => {
-    const matchesFilter = activeFilter === "all" || item.category === activeFilter;
-    const searchable = `${item.label} ${item.title} ${item.desc} ${item.horizon} ${item.meta}`.toLowerCase();
-    const matchesSearch = !q || searchable.includes(q);
-    return matchesFilter && matchesSearch;
-  });
-
-  cardGrid.innerHTML = "";
-
-  if(!filtered.length){
-    cardGrid.innerHTML = `
-      <div class="placeholder">
-        <div class="placeholder-title">No matching forecast views</div>
-        <div class="placeholder-sub">Adjust the search or scenario filter</div>
-      </div>
-    `;
-    return;
+  function ribbon(xa, yac, hac, xb, ybc, hbc, colour, alpha){
+    const top0 = yac - hac, bot0 = yac + hac;
+    const top1 = ybc - hbc, bot1 = ybc + hbc;
+    const cx = (xa + xb) / 2;
+    return `<path d="M${xa},${top0} C${cx},${top0} ${cx},${top1} ${xb},${top1}
+                     L${xb},${bot1} C${cx},${bot1} ${cx},${bot0} ${xa},${bot0} Z"
+              fill="${colour}" opacity="${alpha}"/>`;
   }
 
-  filtered.forEach(item => {
+  let html = "";
+
+  // Source → split
+  html += ribbon(x0, srcY, onbH, x1, onbY, onbH, "#6b8fa8", 0.48);
+  html += ribbon(x0, srcY, evgH, x1, evgY, evgH, "#c49a55", 0.38);
+  // Onboarded → Verified
+  html += ribbon(x1, onbY, onbH, x2, verY, verH, "#5f9a78", 0.46);
+  html += ribbon(x2, verY, verH, x3, verY, verH, "#5f9a78", 0.40);
+  // Not-onboarded → Exceptions
+  html += ribbon(x1, evgY, evgH, x2, excY, excH, "#b4685d", 0.42);
+  html += ribbon(x2, excY, excH, x3, excY, excH, "#b4685d", 0.36);
+
+  // Right-edge labels
+  html += `<text x="${x3+4}" y="${verY+4}" font-family="DM Mono" font-size="9" fill="rgba(245,242,237,0.45)">Verified</text>`;
+  html += `<text x="${x3+4}" y="${excY+4}" font-family="DM Mono" font-size="9" fill="rgba(245,242,237,0.45)">Exceptions</text>`;
+  // Mid labels
+  html += `<text x="${x1+4}" y="${onbY - onbH - 5}" font-family="DM Mono" font-size="9" fill="rgba(245,242,237,0.32)">Onboarded</text>`;
+  html += `<text x="${x1+4}" y="${evgY + evgH + 12}" font-family="DM Mono" font-size="9" fill="rgba(245,242,237,0.32)">Not onboarded</text>`;
+
+  svg.innerHTML = html;
+}
+
+// ── Adjusted chart data from sliders ──
+function computeChartData(sc){
+  const d = getDefaults();
+  const onbFactor  = assumptions.onboard / d.onboard;
+  const frictDelta = (assumptions.friction - d.friction) / 10;
+  const failDelta  = (assumptions.failure  - d.failure)  / 100;
+
+  return {
+    onboard:   sc.chart.onboard.map(v=>Math.round(Math.min(220, v * onbFactor * (1 - frictDelta*0.6)))),
+    validated: sc.chart.validated.map((v,i)=>{
+      const onbAdj = Math.round(Math.min(220, sc.chart.onboard[i] * onbFactor * (1 - frictDelta*0.6)));
+      return Math.round(onbAdj * (1 - (assumptions.failure/100)));
+    }),
+    exceptions: sc.chart.exceptions.map((v,i)=>{
+      const onbAdj = Math.round(Math.min(220, sc.chart.onboard[i] * onbFactor * (1 - frictDelta*0.6)));
+      return Math.max(0, Math.round(onbAdj * (assumptions.audit/100)));
+    }),
+    coverage: sc.chart.coverage.map(v=>Math.round(Math.min(100, Math.max(5,
+      v + (assumptions.onboard-d.onboard)*0.5 - frictDelta*15 - failDelta*18
+    )))),
+    pressure: sc.chart.pressure.map(v=>Math.round(Math.min(100, Math.max(5,
+      v + frictDelta*20 + failDelta*15 + (assumptions.audit-d.audit)*0.8
+    ))))
+  };
+}
+
+// ── Computed savings (responsive to sliders) ──
+function computeSavings(sc, coverage){
+  const base = parseFloat(sc.savings.replace(/[^0-9.]/g,""));
+  const d = getDefaults();
+  const adj = base * (coverage / sc.coverage) * (1 - (assumptions.cost - d.cost)/400);
+  return "$" + adj.toFixed(1) + "M";
+}
+
+// ── Expand/collapse cards ──
+const expandBtn = document.getElementById("expand-btn");
+let cardsExpanded = false;
+
+expandBtn.addEventListener("click",()=>{
+  cardsExpanded = !cardsExpanded;
+  expandBtn.setAttribute("aria-expanded", cardsExpanded ? "true" : "false");
+  expandBtn.querySelector(".blink-dot").style.animationPlayState = cardsExpanded ? "paused" : "running";
+  expandBtn.childNodes[1].textContent = cardsExpanded ? "Collapse" : "Expand";
+  cardGrid.style.display = cardsExpanded ? "grid" : "none";
+});
+
+// ── Cards ──
+// Deliberate: Base Case shows all cards as a survey of the full suite.
+// Other scenarios show only their own cards. This is intentional.
+function renderCards(){
+  cardGrid.innerHTML = "";
+  const visible = CARDS.filter(c => c.scenario === activeScenario || activeScenario === "base");
+  const toShow = visible.length ? visible : CARDS;
+
+  toShow.forEach(item=>{
     const card = document.createElement("article");
     card.className = "card";
     card.tabIndex = 0;
-
     card.innerHTML = `
-      <div class="card-label">${item.label}</div>
+      <div class="card-tag ${item.chipClass}">${item.tag}</div>
       <h2 class="card-title">${item.title}</h2>
       <p class="card-desc">${item.desc}</p>
       <div class="card-metric">
@@ -1432,25 +1426,21 @@ function renderCards(){
         </div>
       </div>
       <div class="card-footer">
-        <span class="card-meta">${item.horizon}</span>
-        <span class="card-action">Open</span>
-      </div>
-    `;
-
-    card.addEventListener("click", () => showDetail(item));
-    card.addEventListener("keydown", e => {
-      if(e.key === "Enter" || e.key === " ") showDetail(item);
-    });
-
+        <span class="card-meta">${item.meta}</span>
+        <span class="card-action">Open ↗</span>
+      </div>`;
+    card.addEventListener("click",()=>showDetail(item));
+    card.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" ") showDetail(item); });
     cardGrid.appendChild(card);
   });
 }
 
+// ── Detail view ──
 function showDetail(item){
-  detailLabel.innerHTML = chip(item.label, item.category);
-  detailTitle.textContent = item.title;
-  detailMeta.textContent = item.meta;
-  detailContent.innerHTML = item.content;
+  document.getElementById("detail-chip").innerHTML = `<span class="detail-chip ${item.chipClass}">${item.tag}</span>`;
+  document.getElementById("detail-title").textContent = item.title;
+  document.getElementById("detail-meta").textContent = item.meta;
+  document.getElementById("detail-content").innerHTML = item.content;
   mainView.classList.add("hidden");
   detailView.classList.add("active");
   window.scrollTo({top:0,behavior:"instant"});
@@ -1460,31 +1450,30 @@ function showMain(){
   detailView.classList.remove("active");
   mainView.classList.remove("hidden");
   window.scrollTo({top:0,behavior:"instant"});
-  updateExecutiveView();
 }
 
-document.querySelectorAll(".filter-pill").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".filter-pill").forEach(b => b.classList.remove("active"));
+backBtn.addEventListener("click", showMain);
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape" && detailView.classList.contains("active")) showMain();
+});
+
+// ── Scenario tabs ──
+document.querySelectorAll(".scenario-tab").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".scenario-tab").forEach(b=>b.classList.remove("active"));
     btn.classList.add("active");
-    activeFilter = btn.dataset.filter;
-    updateExecutiveView();
+    activeScenario = btn.dataset.scenario;
+    applyDefaults(); // resets to this scenario's defaults, not Base Case
+    updateDashboard();
     renderCards();
   });
 });
 
-searchInput.addEventListener("input", renderCards);
-backBtn.addEventListener("click", showMain);
+window.addEventListener("resize", updateDashboard);
 
-document.addEventListener("keydown", e => {
-  if(e.key === "Escape" && detailView.classList.contains("active")) showMain();
-});
-
-window.addEventListener("resize", () => updateExecutiveView());
-
-updateExecutiveView();
+// ── Init ──
+updateDashboard();
 renderCards();
 </script>
-
 </body>
 </html>
