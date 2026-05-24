@@ -5,549 +5,540 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Data Risk Assessment — Khaled Sanad</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-
 <style>
 :root{
-  --bg:#141414;
-  --surface:#1c1c1c;
-  --surface-alt:#222222;
-  --surface-hi:#282828;
-  --border:rgba(255,255,255,0.07);
-  --border-soft:rgba(255,255,255,0.04);
-  --text:#f5f2ed;
-  --text-sub:rgba(245,242,237,0.58);
-  --text-dim:rgba(245,242,237,0.28);
-  --accent:#b06050;
-  --accent-dim:rgba(176,96,80,0.11);
-  --accent-mid:rgba(176,96,80,0.25);
-  --green:#5f9a78;
-  --green-dim:rgba(95,154,120,0.12);
-  --amber:#c49a55;
-  --amber-dim:rgba(196,154,85,0.12);
-  --red:#b4685d;
-  --red-dim:rgba(180,104,93,0.12);
-  --purple:#8f7cae;
-  --blue:#6b8fa8;
-  --font-serif:'Cormorant Garamond', Georgia, serif;
+  --bg:#141414;--surface:#1c1c1c;--surface-alt:#222222;--surface-hi:#282828;
+  --border:rgba(255,255,255,0.07);--border-soft:rgba(255,255,255,0.04);
+  --text:#f5f2ed;--text-sub:rgba(245,242,237,0.58);--text-dim:rgba(245,242,237,0.28);
+  --accent:#b06050;--accent-dim:rgba(176,96,80,0.11);--accent-mid:rgba(176,96,80,0.25);
+  --green:#5f9a78;--green-dim:rgba(95,154,120,0.12);
+  --amber:#c49a55;--amber-dim:rgba(196,154,85,0.12);
+  --red:#b4685d;--red-dim:rgba(180,104,93,0.12);
+  --purple:#8f7cae;--blue:#6b8fa8;
+  --font-serif:'Cormorant Garamond',Georgia,serif;
   --font-mono:'DM Mono','Courier New',monospace;
-  --radius:4px;
-  --tr:160ms ease;
+  --radius:4px;--tr:160ms ease;
 }
-
 *{box-sizing:border-box;margin:0;padding:0}
-
 html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-mono);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;}
 
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font-mono);
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  -webkit-font-smoothing:antialiased;
-}
-
-header{
-  background:var(--surface);
-  border-bottom:1px solid var(--border);
-  padding:13px 2rem;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  position:sticky;
-  top:0;
-  z-index:100;
-}
-
-.artefact-name{
-  font-family:var(--font-serif);
-  font-weight:300;
-  font-size:1.1rem;
-  color:var(--text-sub);
-}
-
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:13px 2rem;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;}
+.artefact-name{font-family:var(--font-serif);font-weight:300;font-size:1.1rem;color:var(--text-sub);}
 .artefact-name strong{font-weight:400;color:var(--text)}
+.status-badge{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-mid);padding:.3rem .7rem;background:var(--accent-dim);border-radius:2px;}
 
-.status-badge{
-  font-size:.58rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--accent);
-  border:1px solid var(--accent-mid);
-  padding:.3rem .7rem;
-  background:var(--accent-dim);
-  border-radius:2px;
-}
+.page{max-width:1180px;width:100%;margin:0 auto;padding:2.5rem 2rem 5rem;flex:1;}
+.eyebrow{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem;}
 
-.page{
-  max-width:1180px;
-  width:100%;
-  margin:0 auto;
-  padding:2.5rem 2rem 5rem;
-  flex:1;
-}
-
-.eyebrow{
-  font-size:.55rem;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:.45rem;
-}
-
-.hero{
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  margin-bottom:1.5rem;
-}
-
-.panel{
-  background:var(--surface);
-  padding:1.6rem 1.8rem;
-}
-
-h1{
-  font-family:var(--font-serif);
-  font-weight:300;
-  font-size:clamp(1.8rem,4vw,2.8rem);
-  line-height:1.08;
-  margin-bottom:1rem;
-}
-
-.descriptor{
-  font-size:.72rem;
-  color:var(--text-sub);
-  line-height:1.8;
-  max-width:720px;
-}
-
-.signal-list{
-  display:flex;
-  flex-direction:column;
-  gap:.65rem;
-}
-
-.signal-row{
-  display:flex;
-  justify-content:space-between;
-  gap:1rem;
-  padding-bottom:.55rem;
-  border-bottom:1px solid var(--border-soft);
-  font-size:.64rem;
-}
-
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.5rem;}
+.panel{background:var(--surface);padding:1.6rem 1.8rem;}
+h1{font-family:var(--font-serif);font-weight:300;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.08;margin-bottom:1rem;}
+.descriptor{font-size:.72rem;color:var(--text-sub);line-height:1.8;max-width:720px;}
+.signal-list{display:flex;flex-direction:column;gap:.65rem;}
+.signal-row{display:flex;justify-content:space-between;gap:1rem;padding-bottom:.55rem;border-bottom:1px solid var(--border-soft);font-size:.64rem;}
 .signal-row:last-child{border-bottom:none}
-
 .signal-row span:first-child{color:var(--text-dim)}
 .signal-row span:last-child{color:var(--text-sub);text-align:right}
 
-.kpi-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  margin-bottom:1.5rem;
-}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.5rem;}
+.kpi{background:var(--surface);padding:1.15rem 1.25rem;}
+.kpi-label{font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.45rem;}
+.kpi-value{font-family:var(--font-serif);font-size:1.9rem;font-weight:300;line-height:1;margin-bottom:.35rem;}
+.kpi-value.red{color:var(--red)}.kpi-value.amber{color:var(--amber)}.kpi-value.green{color:var(--green)}.kpi-value.blue{color:var(--blue)}
+.kpi-sub{font-size:.58rem;color:var(--text-dim);}
 
-.kpi{
-  background:var(--surface);
-  padding:1.15rem 1.25rem;
-}
-
-.kpi-label{
-  font-size:.52rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  color:var(--text-dim);
-  margin-bottom:.45rem;
-}
-
-.kpi-value{
-  font-family:var(--font-serif);
-  font-size:1.9rem;
-  font-weight:300;
-  line-height:1;
-  margin-bottom:.35rem;
-}
-
-.kpi-value.red{color:var(--red)}
-.kpi-value.amber{color:var(--amber)}
-.kpi-value.green{color:var(--green)}
-.kpi-value.blue{color:var(--blue)}
-
-.kpi-sub{
-  font-size:.58rem;
-  color:var(--text-dim);
-}
-
-.visual-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  margin-bottom:1.5rem;
-}
-
-.section-title{
-  font-size:.55rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--text-dim);
-  margin-bottom:1rem;
-}
-
-.matrix{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:6px;
-}
-
-.cell{
-  aspect-ratio:1;
-  border:1px solid var(--border-soft);
-  background:rgba(255,255,255,.02);
-  position:relative;
-}
-
-.cell.low{background:var(--green-dim)}
-.cell.med{background:var(--amber-dim)}
-.cell.high{background:var(--red-dim)}
-.cell.critical{background:rgba(180,104,93,.24)}
-
-.dot{
-  position:absolute;
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background:var(--text);
-  box-shadow:0 0 0 4px rgba(245,242,237,.08);
-}
-
-.axis-note{
-  display:flex;
-  justify-content:space-between;
-  font-size:.55rem;
-  color:var(--text-dim);
-  margin-top:.8rem;
-}
-
-.risk-list{
-  display:flex;
-  flex-direction:column;
-  gap:.75rem;
-}
-
-.risk-row{
-  display:grid;
-  grid-template-columns:1fr 70px;
-  gap:1rem;
-  padding-bottom:.75rem;
-  border-bottom:1px solid var(--border-soft);
-}
-
-.risk-row:last-child{border-bottom:none}
-
-.risk-name{
-  font-size:.68rem;
-  color:var(--text);
-  margin-bottom:.25rem;
-}
-
-.risk-desc{
-  font-size:.6rem;
-  color:var(--text-dim);
-  line-height:1.55;
-}
-
-.risk-score{
-  font-family:var(--font-serif);
-  font-size:1.4rem;
-  text-align:right;
-}
-
-.risk-score.red{color:var(--red)}
-.risk-score.amber{color:var(--amber)}
-.risk-score.green{color:var(--green)}
-
-.domain-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1px;
-  background:var(--border);
-  border:1px solid var(--border);
-  margin-bottom:1.5rem;
-}
-
-.domain-card{
-  background:var(--surface);
-  padding:1.35rem 1.45rem;
-}
-
-.domain-title{
-  font-family:var(--font-serif);
-  font-size:1.25rem;
-  font-weight:400;
-  margin-bottom:.45rem;
-}
-
-.domain-copy{
-  font-size:.66rem;
-  color:var(--text-sub);
-  line-height:1.65;
+/* Visual row — heatmap + bullet charts */
+.visual-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.5rem;}
+.panel-inner{background:var(--surface);padding:1.4rem 1.6rem;}
+.section-title{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem;}
+.section-label-interactive{
+  display:flex;align-items:center;gap:.55rem;
   margin-bottom:.9rem;
-}
-
-.bar-track{
-  height:4px;
-  background:var(--border);
-  border-radius:3px;
-  overflow:hidden;
-}
-
-.bar-fill{
-  height:100%;
-  border-radius:3px;
-}
-
-.rec-box{
-  background:var(--accent-dim);
-  border:1px solid var(--accent-mid);
-  padding:1.5rem 1.75rem;
-}
-
-.rec-text{
-  font-size:.74rem;
+  font-size:.68rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
   color:var(--text-sub);
-  line-height:1.8;
+  font-weight:400;
+}
+.section-label-interactive .blink-ind{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--accent);flex-shrink:0;
+  animation:dotblink 1.5s ease-in-out infinite;
 }
 
+/* Heatmap */
+.matrix{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;}
+.cell{aspect-ratio:1;border:1px solid var(--border-soft);background:rgba(255,255,255,.02);position:relative;cursor:default;transition:filter var(--tr);}
+.cell.low{background:var(--green-dim)}.cell.med{background:var(--amber-dim)}.cell.high{background:var(--red-dim)}.cell.critical{background:rgba(180,104,93,.24)}
+.cell.has-risk{cursor:pointer}.cell.has-risk:hover{filter:brightness(1.5)}
+.dot{position:absolute;width:8px;height:8px;border-radius:50%;background:var(--text);box-shadow:0 0 0 3px rgba(245,242,237,.08);transition:transform var(--tr);}
+.cell.has-risk:hover .dot{transform:scale(1.4)}
+.dot.blink{animation:dotblink 1.5s ease-in-out infinite;}
+@keyframes dotblink{0%,100%{opacity:1;box-shadow:0 0 0 3px rgba(180,104,93,.2)}50%{opacity:.35;box-shadow:0 0 0 6px rgba(180,104,93,.04)}}
+.axis-note{display:flex;justify-content:space-between;font-size:.52rem;color:var(--text-dim);margin-top:.7rem;}
+
+/* Bullet charts */
+.bullet-section-title{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.9rem;}
+.bullet-list{display:flex;flex-direction:column;gap:.8rem;}
+.bullet-item{cursor:pointer;padding:.4rem .5rem;border-radius:3px;transition:background var(--tr);}
+.bullet-item:hover{background:var(--surface-hi)}
+.bullet-item.active{background:var(--surface-hi);outline:1px solid var(--accent-mid);}
+.bullet-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.3rem;}
+.bullet-label{font-size:.6rem;color:var(--text-sub);}
+.bullet-label.active-label{color:var(--accent)}
+.bullet-numbers{display:flex;gap:.5rem;align-items:baseline;}
+.bullet-score{font-family:var(--font-serif);font-size:1rem;font-weight:300;}
+.bullet-ctrl{font-size:.5rem;color:var(--text-dim);}
+.bullet-track{position:relative;height:16px;border-radius:2px;overflow:hidden;background:var(--bg);}
+.b-band-danger{position:absolute;top:0;bottom:0;left:0;width:50%;background:rgba(180,104,93,.2);}
+.b-band-caution{position:absolute;top:0;bottom:0;left:50%;width:25%;background:rgba(196,154,85,.14);}
+.b-band-ok{position:absolute;top:0;bottom:0;left:75%;width:25%;background:rgba(95,154,120,.1);}
+.b-bar{position:absolute;top:3px;bottom:3px;left:0;border-radius:1px;transition:width .5s ease;}
+.b-marker{position:absolute;top:1px;bottom:1px;width:2px;background:rgba(245,242,237,.65);border-radius:1px;}
+.bullet-footer{display:flex;justify-content:space-between;margin-top:.2rem;font-size:.46rem;color:var(--text-dim);}
+
+/* Expand panel */
+.bullet-expand{overflow:hidden;max-height:0;transition:max-height .3s ease;}
+.bullet-item.active .bullet-expand{max-height:300px;}
+.expand-inner{padding:.55rem .2rem 0;display:flex;flex-direction:column;gap:.4rem;}
+.expand-stats{display:flex;gap:.8rem;font-size:.52rem;color:var(--text-dim);flex-wrap:wrap;padding-bottom:.4rem;border-bottom:1px solid var(--border-soft);}
+.expand-risks{display:flex;flex-direction:column;gap:.3rem;}
+.expand-risk{display:flex;justify-content:space-between;font-size:.6rem;color:var(--text-sub);padding:.25rem .3rem;border-radius:2px;cursor:pointer;transition:background var(--tr);}
+.expand-risk:hover{background:var(--surface-alt)}
+.expand-risk-name{color:var(--text)}
+.expand-risk-score{font-family:var(--font-serif);font-size:.95rem;}
+
+/* Expandable risk rows */
+.risk-list-section{margin-bottom:1.5rem;}
+.risk-list{display:flex;flex-direction:column;}
+.risk-row{padding-bottom:.75rem;border-bottom:1px solid var(--border-soft);}
+.risk-row:last-child{border-bottom:none;padding-bottom:0}
+.risk-row.expandable{cursor:pointer;transition:background var(--tr);padding:.65rem .6rem;border-radius:3px;margin:0 -.6rem;}
+.risk-row.expandable:hover{background:var(--surface-hi)}
+.risk-row.expandable.open{background:var(--surface-hi)}
+.risk-main{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;}
+.risk-main-text{flex:1;}
+.risk-name{font-size:.68rem;color:var(--text);margin-bottom:.25rem;}
+.risk-desc{font-size:.6rem;color:var(--text-dim);line-height:1.55;}
+.risk-score{font-family:var(--font-serif);font-size:1.4rem;text-align:right;flex-shrink:0;}
+.risk-score.red{color:var(--red)}.risk-score.amber{color:var(--amber)}.risk-score.green{color:var(--green)}
+.risk-detail{overflow:hidden;max-height:0;transition:max-height .3s ease;}
+.risk-row.open .risk-detail{max-height:200px;}
+.risk-detail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:.65rem 0 .55rem;}
+.rd-cell{background:var(--surface);padding:.55rem .7rem;}
+.rd-label{font-size:.46rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.2rem;}
+.rd-val{font-family:var(--font-serif);font-size:1rem;font-weight:300;color:var(--text);}
+.rd-red{color:var(--red)}.rd-amber{color:var(--amber)}.rd-green{color:var(--green)}
+.rd-action{font-size:.62rem;color:var(--text-dim);line-height:1.65;padding:.1rem .2rem .4rem;}
+
+/* Domain grid */
+.domain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:1.5rem;}
+.domain-card{background:var(--surface);padding:1.35rem 1.45rem;}
+.domain-title{font-family:var(--font-serif);font-size:1.25rem;font-weight:400;margin-bottom:.45rem;}
+.domain-copy{font-size:.66rem;color:var(--text-sub);line-height:1.65;margin-bottom:.9rem;}
+.bar-track{height:4px;background:var(--border);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;}
+
+/* Rec box */
+.rec-box{border-left:3px solid var(--accent);background:var(--surface);padding:1.5rem 1.75rem;scroll-margin-top:5rem;}
+.rec-eyebrow{font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:.7rem;}
+.jump-btn{
+  font-family:var(--font-mono);
+  font-size:.58rem;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  background:none;
+  border:1px solid var(--border);
+  padding:.35rem .85rem;
+  border-radius:3px;
+  cursor:pointer;
+  text-decoration:none;
+  white-space:nowrap;
+  transition:color var(--tr),border-color var(--tr),background var(--tr);
+}
+.jump-btn:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-dim)}
+.rec-text{font-family:var(--font-serif);font-size:1.05rem;font-weight:300;line-height:1.78;color:var(--text-sub);}
 .rec-text strong{color:var(--text);font-weight:400}
 
-footer{
-  border-top:1px solid var(--border);
-  padding:1rem 2rem;
-  display:flex;
-  justify-content:space-between;
-  gap:1rem;
-  font-size:.6rem;
-  color:var(--text-dim);
-  letter-spacing:.12em;
-  text-transform:uppercase;
-}
+/* Tooltip */
+.tt{position:fixed;z-index:500;background:var(--surface-hi);border:1px solid var(--border);padding:.65rem .9rem;border-radius:var(--radius);font-size:.6rem;color:var(--text-sub);max-width:260px;pointer-events:none;opacity:0;transition:opacity var(--tr);line-height:1.6;}
+.tt.show{opacity:1}
+.tt-name{font-size:.64rem;color:var(--text);margin-bottom:.18rem;}
+.tt-score{font-family:var(--font-serif);font-size:1.05rem;font-weight:300;}
+
+footer{border-top:1px solid var(--border);padding:1rem 2rem;display:flex;justify-content:space-between;gap:1rem;font-size:.6rem;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;}
 
 @media(max-width:900px){
-  .hero,
-  .visual-grid{grid-template-columns:1fr}
-  .kpi-grid,
-  .domain-grid{grid-template-columns:repeat(2,1fr)}
+  .hero,.visual-row{grid-template-columns:1fr}
+  .kpi-grid,.domain-grid{grid-template-columns:repeat(2,1fr)}
 }
-
 @media(max-width:620px){
   header,footer{flex-direction:column;align-items:flex-start}
   .page{padding:2rem 1rem 4rem}
-  .kpi-grid,
-  .domain-grid{grid-template-columns:1fr}
+  .kpi-grid,.domain-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body>
+
+<div class="tt" id="tt"><div class="tt-name" id="tt-name"></div><div id="tt-body"></div></div>
 
 <header>
   <div class="artefact-name">Khaled Sanad: <strong>Data Risk Assessment</strong></div>
-  <span class="status-badge">Health Insurance Context</span>
+  <span class="status-badge">Provenance Platform · Asterion Grid</span>
 </header>
 
 <main class="page">
 
   <section class="hero">
     <div class="panel">
-      <div class="eyebrow">Enterprise Data Risk</div>
-      <h1>Member Data Risk Assessment for a large health insurance organisation.</h1>
-      <p class="descriptor">
-        Structured assessment of sensitive health, claims, provider, policy, and member-service data risks. The model translates exposure, likelihood, impact, control strength, and remediation urgency into an executive governance view for privacy, operations, technology, and compliance teams.
-      </p>
+      <div class="eyebrow">Platform Data Risk</div>
+      <h1>Data &amp; Evidence Risk — Critical Minerals Tracing.</h1>
+      <p class="descriptor">Evidence integrity, oracle inputs, residency, and access governance risks. Click any domain bullet or heatmap dot to explore.</p>
+      <a class="jump-btn" href="#recommendation" style="display:inline-block;margin-top:1rem">Recommended Action ↓</a>
     </div>
-
     <div class="panel">
       <div class="eyebrow">Assessment Context</div>
       <div class="signal-list">
-        <div class="signal-row"><span>Organisation type</span><span>National health insurer</span></div>
-        <div class="signal-row"><span>Primary exposure</span><span>Protected member and claims data</span></div>
-        <div class="signal-row"><span>Risk posture</span><span>High sensitivity, controlled uplift</span></div>
-        <div class="signal-row"><span>Assessment scope</span><span>Claims, policy, provider, app, call centre</span></div>
-        <div class="signal-row"><span>Decision signal</span><span>Prioritise identity and data lineage controls</span></div>
+        <div class="signal-row"><span>Organisation</span><span>Asterion Grid</span></div>
+        <div class="signal-row"><span>Primary exposure</span><span>Supplier evidence &amp; blockchain records</span></div>
+        <div class="signal-row"><span>Risk posture</span><span>High regulatory sensitivity, phased uplift</span></div>
+        <div class="signal-row"><span>Assessment scope</span><span>Evidence ingestion, oracle inputs, residency, access</span></div>
+        <div class="signal-row"><span>Decision signal</span><span>Evidence integrity &amp; residency controls first</span></div>
       </div>
     </div>
   </section>
 
   <section class="kpi-grid">
-    <div class="kpi">
-      <div class="kpi-label">Overall Risk</div>
-      <div class="kpi-value red">78</div>
-      <div class="kpi-sub">Weighted score out of 100</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Critical Findings</div>
-      <div class="kpi-value amber">7</div>
-      <div class="kpi-sub">Require executive ownership</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Control Coverage</div>
-      <div class="kpi-value blue">64%</div>
-      <div class="kpi-sub">Mapped to target state</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Remediation Window</div>
-      <div class="kpi-value green">90d</div>
-      <div class="kpi-sub">Priority uplift horizon</div>
-    </div>
+    <div class="kpi"><div class="kpi-label">Overall Risk</div><div class="kpi-value amber">71</div><div class="kpi-sub">Weighted score out of 100</div></div>
+    <div class="kpi"><div class="kpi-label">Critical Findings</div><div class="kpi-value amber">5</div><div class="kpi-sub">Require executive ownership</div></div>
+    <div class="kpi"><div class="kpi-label">Control Coverage</div><div class="kpi-value blue">58%</div><div class="kpi-sub">Mapped to target state</div></div>
+    <div class="kpi"><div class="kpi-label">Remediation Window</div><div class="kpi-value green">45d</div><div class="kpi-sub">Priority uplift horizon</div></div>
   </section>
 
-  <section class="visual-grid">
-    <div class="panel">
-      <div class="section-title">Likelihood × Impact Heatmap</div>
+  <div class="visual-row">
+    <div class="panel-inner">
+      <div class="section-title">Likelihood × Impact — hover dot for detail</div>
       <div class="matrix" id="risk-matrix"></div>
-      <div class="axis-note">
-        <span>Lower likelihood / impact</span>
-        <span>Higher likelihood / impact</span>
-      </div>
+      <div class="axis-note"><span>Low →</span><span>← High</span></div>
     </div>
+    <div class="panel-inner">
+      <div class="section-label-interactive"><span class="blink-ind"></span>Domain Exposure vs Control — click to expand</div>
+      <div class="bullet-list" id="bullet-list"></div>
+    </div>
+  </div>
 
-    <div class="panel">
-      <div class="section-title">Highest Priority Risks</div>
-      <div class="risk-list">
-        <div class="risk-row">
-          <div>
-            <div class="risk-name">Member identity matching errors</div>
-            <div class="risk-desc">Incorrect linking of policy, claims, and provider records may expose sensitive health details or distort service decisions.</div>
+  <div class="risk-list-section">
+    <div class="section-label-interactive"><span class="blink-ind"></span>Highest Priority Risks — click to expand</div>
+    <div class="risk-list">
+
+      <div class="risk-row expandable">
+        <div class="risk-main">
+          <div class="risk-main-text">
+            <div class="risk-name">Supplier evidence quality failures</div>
+            <div class="risk-desc">Incorrect or missing attestations anchored permanently — no correction path once committed to the blockchain.</div>
           </div>
-          <div class="risk-score red">91</div>
+          <div class="risk-score red">94</div>
         </div>
-
-        <div class="risk-row">
-          <div>
-            <div class="risk-name">Claims data lineage gaps</div>
-            <div class="risk-desc">Downstream analytics and operational reporting rely on transformations that are not fully traceable to source systems.</div>
+        <div class="risk-detail">
+          <div class="risk-detail-grid">
+            <div class="rd-cell"><div class="rd-label">Likelihood</div><div class="rd-val">5 / 5</div></div>
+            <div class="rd-cell"><div class="rd-label">Impact</div><div class="rd-val">5 / 5</div></div>
+            <div class="rd-cell"><div class="rd-label">Control maturity</div><div class="rd-val rd-red">Low</div></div>
+            <div class="rd-cell"><div class="rd-label">Owner</div><div class="rd-val">Platform Engineering</div></div>
           </div>
-          <div class="risk-score red">86</div>
-        </div>
-
-        <div class="risk-row">
-          <div>
-            <div class="risk-name">Over-permissioned service access</div>
-            <div class="risk-desc">Role profiles allow broader access to member records than required for specific service, claims, or complaint workflows.</div>
-          </div>
-          <div class="risk-score amber">74</div>
-        </div>
-
-        <div class="risk-row">
-          <div>
-            <div class="risk-name">Provider reference data drift</div>
-            <div class="risk-desc">Provider identifiers, network status, and billing attributes change faster than governance checks can reconcile.</div>
-          </div>
-          <div class="risk-score amber">69</div>
+          <div class="rd-action">Pre-submission schema validation before blockchain anchoring. Cross-reference against mine identifier and certification registries. Pass rate below 88% triggers governance escalation.</div>
         </div>
       </div>
+
+      <div class="risk-row expandable">
+        <div class="risk-main">
+          <div class="risk-main-text">
+            <div class="risk-name">Oracle and off-chain input integrity</div>
+            <div class="risk-desc">Inaccurate external data feeds — supplier APIs, customs systems, IoT sensors — become permanent immutable records.</div>
+          </div>
+          <div class="risk-score amber">62</div>
+        </div>
+        <div class="risk-detail">
+          <div class="risk-detail-grid">
+            <div class="rd-cell"><div class="rd-label">Likelihood</div><div class="rd-val">4 / 5</div></div>
+            <div class="rd-cell"><div class="rd-label">Impact</div><div class="rd-val">5 / 5</div></div>
+            <div class="rd-cell"><div class="rd-label">Control maturity</div><div class="rd-val rd-red">Low</div></div>
+            <div class="rd-cell"><div class="rd-label">Owner</div><div class="rd-val">Platform Engineering</div></div>
+          </div>
+          <div class="rd-action">Anomaly detection on submission patterns. Source diversity required for mine-of-origin and ESG submissions. Oracle incident response playbook before EU go-live.</div>
+        </div>
+      </div>
+
+      <div class="risk-row expandable">
+        <div class="risk-main">
+          <div class="risk-main-text">
+            <div class="risk-name">Jurisdictional data residency conflicts</div>
+            <div class="risk-desc">AU, SG, EU, US, and ME impose conflicting obligations on where evidence records can be stored, transferred, and accessed.</div>
+          </div>
+          <div class="risk-score amber">58</div>
+        </div>
+        <div class="risk-detail">
+          <div class="risk-detail-grid">
+            <div class="rd-cell"><div class="rd-label">Likelihood</div><div class="rd-val">3 / 5</div></div>
+            <div class="rd-cell"><div class="rd-label">Impact</div><div class="rd-val">5 / 5</div></div>
+            <div class="rd-cell"><div class="rd-label">Control maturity</div><div class="rd-val rd-amber">Medium</div></div>
+            <div class="rd-cell"><div class="rd-label">Owner</div><div class="rd-val">Legal + CRO</div></div>
+          </div>
+          <div class="rd-action">Jurisdictional data architecture decision required before Phase 2. Legal review of SCCs, adequacy decisions, and binding corporate rules by Q3 FY26. Board-level approval required.</div>
+        </div>
+      </div>
+
+      <div class="risk-row expandable">
+        <div class="risk-main">
+          <div class="risk-main-text">
+            <div class="risk-name">Blockchain immutability vs. right to erasure</div>
+            <div class="risk-desc">GDPR and equivalent regimes require deletion of personal data — directly conflicting with the platform's tamper-evident core guarantee.</div>
+          </div>
+          <div class="risk-score amber">78</div>
+        </div>
+        <div class="risk-detail">
+          <div class="risk-detail-grid">
+            <div class="rd-cell"><div class="rd-label">Likelihood</div><div class="rd-val">4 / 5</div></div>
+            <div class="rd-cell"><div class="rd-label">Impact</div><div class="rd-val">4 / 5</div></div>
+            <div class="rd-cell"><div class="rd-label">Control maturity</div><div class="rd-val rd-red">Low</div></div>
+            <div class="rd-cell"><div class="rd-label">Owner</div><div class="rd-val">Legal + Architecture</div></div>
+          </div>
+          <div class="rd-action">Off-chain personal data with on-chain hashes is the recommended architecture. Design authority review with legal sign-off required as pre-condition to EU go-live. Cannot be deferred.</div>
+        </div>
+      </div>
+
     </div>
-  </section>
+  </div>
 
   <section class="domain-grid">
     <div class="domain-card">
-      <div class="domain-title">Privacy Exposure</div>
-      <p class="domain-copy">Sensitive member health data requires tighter masking, purpose-based access, consent alignment, and evidence of appropriate use.</p>
-      <div class="bar-track"><div class="bar-fill" style="width:82%;background:var(--red)"></div></div>
+      <div class="domain-title">Evidence Integrity</div>
+      <p class="domain-copy">Supplier attestation quality, schema validation, and chain-of-custody completeness across all onboarded suppliers.</p>
+      <div class="bar-track"><div class="bar-fill" style="width:88%;background:var(--red)"></div></div>
     </div>
-
     <div class="domain-card">
-      <div class="domain-title">Operational Integrity</div>
-      <p class="domain-copy">Claims, policy, complaints, and provider workflows depend on clean reference data and consistent member matching.</p>
-      <div class="bar-track"><div class="bar-fill" style="width:76%;background:var(--amber)"></div></div>
+      <div class="domain-title">Oracle Dependency</div>
+      <p class="domain-copy">Reliability of external data feeds, APIs, IoT sensors, and certification registries that supply the platform.</p>
+      <div class="bar-track"><div class="bar-fill" style="width:85%;background:var(--red)"></div></div>
     </div>
-
     <div class="domain-card">
-      <div class="domain-title">Analytics Reliability</div>
-      <p class="domain-copy">Executive reporting and actuarial-style insights are weakened where lineage, definitions, and source refresh controls are incomplete.</p>
-      <div class="bar-track"><div class="bar-fill" style="width:68%;background:var(--blue)"></div></div>
+      <div class="domain-title">Regulatory Compliance</div>
+      <p class="domain-copy">Residency obligations, erasure rights, and retention schedules across five operating jurisdictions.</p>
+      <div class="bar-track"><div class="bar-fill" style="width:80%;background:var(--amber)"></div></div>
     </div>
-
-    <div class="domain-card">
-      <div class="domain-title">Third-Party Data</div>
-      <p class="domain-copy">Provider platforms, digital partners, and service vendors introduce additional sharing, retention, and reconciliation risks.</p>
-      <div class="bar-track"><div class="bar-fill" style="width:72%;background:var(--purple)"></div></div>
-    </div>
-
     <div class="domain-card">
       <div class="domain-title">Access Governance</div>
-      <p class="domain-copy">Role-based access needs stronger alignment to least privilege, segregation of duties, and high-risk query monitoring.</p>
-      <div class="bar-track"><div class="bar-fill" style="width:79%;background:var(--red)"></div></div>
+      <p class="domain-copy">Least-privilege alignment, segregation of duties, and high-risk query monitoring across platform operations.</p>
+      <div class="bar-track"><div class="bar-fill" style="width:76%;background:var(--red)"></div></div>
     </div>
-
+    <div class="domain-card">
+      <div class="domain-title">Third-Party Risk</div>
+      <p class="domain-copy">Data sharing, retention, and reconciliation risks introduced by cloud providers, integration partners, and vendors.</p>
+      <div class="bar-track"><div class="bar-fill" style="width:68%;background:var(--purple)"></div></div>
+    </div>
     <div class="domain-card">
       <div class="domain-title">Remediation Confidence</div>
-      <p class="domain-copy">Most risks are addressable through ownership, lineage documentation, access reviews, and staged control uplift.</p>
-      <div class="bar-track"><div class="bar-fill" style="width:64%;background:var(--green)"></div></div>
+      <p class="domain-copy">Most risks are addressable in 90 days. Architectural decisions and legal sign-off are the binding constraints.</p>
+      <div class="bar-track"><div class="bar-fill" style="width:62%;background:var(--green)"></div></div>
     </div>
   </section>
 
-  <section class="rec-box">
-    <div class="eyebrow">Recommended Action</div>
+  <section class="rec-box" id="recommendation">
+    <div class="rec-eyebrow">Recommended Action</div>
     <p class="rec-text">
-      <strong>Prioritise member identity, access governance, and claims-data lineage first.</strong> These risks combine high sensitivity with high operational dependency. The first 90 days should focus on narrowing privileged access, documenting end-to-end claims transformations, validating member-record matching logic, and creating evidence packs for privacy, audit, and executive risk committees. Lower-severity reference-data issues should be sequenced after the core protected-data controls are stabilised.
+      <strong>Evidence integrity, oracle controls, and data residency architecture are the 90-day priority.</strong> These risks combine high regulatory sensitivity with high operational dependency across all five platform regions. Immutability versus erasure must be resolved before EU go-live — it cannot be retrofitted.
     </p>
   </section>
 
 </main>
 
 <footer>
-  <span>Khaled Sanad — Portfolio</span>
-  <span>Health Insurance · Data Risk · Governance</span>
+  <span>Khaled Sanad · Portfolio</span>
+  <span>Asterion Grid · Data Risk · Provenance Platform</span>
 </footer>
 
 <script>
-const matrix = document.getElementById("risk-matrix");
+// ── Tooltip ──
+const tt = document.getElementById("tt");
+const ttName = document.getElementById("tt-name");
+const ttBody = document.getElementById("tt-body");
+function showTT(e, name, body){
+  ttName.textContent = name;
+  ttBody.innerHTML = body;
+  tt.classList.add("show");
+  moveTT(e);
+}
+function moveTT(e){
+  const x = Math.min(e.clientX + 14, window.innerWidth - 230);
+  const y = Math.min(e.clientY - 8, window.innerHeight - 110);
+  tt.style.left = x + "px";
+  tt.style.top  = y + "px";
+}
+function hideTT(){ tt.classList.remove("show"); }
+document.addEventListener("mousemove", e => { if(tt.classList.contains("show")) moveTT(e); });
 
-const risks = [
-  {x:4,y:5,label:"Identity matching"},
-  {x:5,y:4,label:"Claims lineage"},
-  {x:4,y:4,label:"Access scope"},
-  {x:3,y:4,label:"Provider data"},
-  {x:5,y:3,label:"Vendor sharing"},
-  {x:2,y:3,label:"Reporting drift"},
-  {x:3,y:2,label:"Retention rules"}
+// ── Risk data ──
+const RISKS = [
+  {x:5,y:5,label:"Evidence quality",score:94,desc:"Incorrect attestations anchored permanently — no correction path.",color:"var(--red)",action:"Pre-submission schema validation before anchoring. Cross-reference against mine identifier and certification registries. Pass rate below 88% triggers governance escalation."},
+  {x:4,y:4,label:"Immutability vs erasure",score:78,desc:"GDPR erasure rights conflict with blockchain immutability.",color:"var(--red)",action:"Off-chain personal data with on-chain hashes. Design authority review with legal sign-off before EU go-live."},
+  {x:2,y:5,label:"Oracle integrity",score:62,desc:"Inaccurate external data feeds become permanent immutable records.",color:"var(--amber)",action:"Anomaly detection on submission patterns. Source diversity for high-value attestations. Oracle incident playbook before EU go-live."},
+  {x:3,y:3,label:"Data residency",score:58,desc:"Conflicting storage and transfer obligations across five jurisdictions.",color:"var(--amber)",action:"Jurisdictional architecture decision before Phase 2. Legal review of SCCs and adequacy decisions by Q3 FY26."},
+  {x:4,y:2,label:"Access governance",score:52,desc:"Role profiles allow broader access than operational workflows require.",color:"var(--amber)",action:"Role review against least-privilege within 30 days. High-risk query alerting. Segregate evidence validation from audit reporting."},
+  {x:2,y:3,label:"Evidence lineage",score:46,desc:"Transformation pathway from submission to anchored record not fully auditable.",color:"var(--green)",action:"End-to-end lineage documentation for all transformation stages. Any record traceable to raw submission within minutes."},
+  {x:5,y:1,label:"Vendor sharing",score:38,desc:"Cloud providers and integration partners introduce uncontrolled retention risks.",color:"var(--green)",action:"DPA review for all third-party vendors within 60 days. Minimum deletion requirements in all new and renewed contracts."},
+  {x:1,y:4,label:"Retention gaps",score:32,desc:"Retention schedules not consistently defined across five jurisdictions.",color:"var(--green)",action:"Unified retention schedule mapping record types to jurisdictional obligations by Q4 FY26."}
 ];
 
+// ── Heatmap ──
+const matrixEl = document.getElementById("risk-matrix");
 for(let y=5;y>=1;y--){
   for(let x=1;x<=5;x++){
     const cell = document.createElement("div");
-    const score = x * y;
-
+    const score = x*y;
     cell.className = "cell";
-    if(score <= 6) cell.classList.add("low");
-    else if(score <= 12) cell.classList.add("med");
-    else if(score <= 18) cell.classList.add("high");
+    if(score<=6) cell.classList.add("low");
+    else if(score<=12) cell.classList.add("med");
+    else if(score<=18) cell.classList.add("high");
     else cell.classList.add("critical");
-
-    const matches = risks.filter(r => r.x === x && r.y === y);
-    matches.forEach((r,i) => {
+    const matches = RISKS.filter(r=>r.x===x&&r.y===y);
+    if(matches.length) cell.classList.add("has-risk");
+    matches.forEach((r,i)=>{
       const dot = document.createElement("div");
       dot.className = "dot";
-      dot.title = r.label;
-      dot.style.left = `${34 + i * 18}%`;
-      dot.style.top = "42%";
+      if(r.score >= 80) dot.classList.add("blink");
+      dot.style.left = `${28 + i*20}%`;
+      dot.style.top = "35%";
       cell.appendChild(dot);
     });
-
-    matrix.appendChild(cell);
+    if(matches.length){
+      cell.addEventListener("mouseenter", e => showTT(e,
+        matches[0].label,
+        `<span class="tt-score" style="color:${matches[0].color}">${matches[0].score}</span> / 100<br><span style="color:var(--text-sub)">${matches[0].desc}</span><br><br><span style="color:var(--text-dim);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase">Action</span><br>${matches[0].action}`
+        + (matches.length > 1 ? `<br><br><span style="color:var(--text-dim)">Also: ${matches[1].label} · ${matches[1].score}</span>` : "")
+      ));
+      cell.addEventListener("mouseleave", hideTT);
+    }
+    matrixEl.appendChild(cell);
   }
 }
-</script>
 
+// ── Bullet chart data ──
+const DOMAINS = [
+  {label:"Evidence Integrity", exposure:88, control:42, target:80, color:"var(--red)",
+   risks:[{name:"Evidence quality",score:94},{name:"Evidence lineage",score:46}],
+   action:"Pre-submission schema validation. End-to-end lineage documentation within 60 days."},
+  {label:"Oracle Dependency", exposure:74, control:48, target:80, color:"var(--amber)",
+   risks:[{name:"Oracle integrity",score:62}],
+   action:"Anomaly detection immediately. Source diversity for Phase 2. Incident playbook before EU go-live."},
+  {label:"Regulatory Compliance", exposure:70, control:55, target:80, color:"var(--amber)",
+   risks:[{name:"Data residency",score:58},{name:"Immutability vs erasure",score:78},{name:"Retention gaps",score:32}],
+   action:"Erasure architecture decision first. Residency architecture second. Retention schedules by Q4 FY26."},
+  {label:"Access Governance", exposure:65, control:60, target:80, color:"var(--amber)",
+   risks:[{name:"Access governance",score:52}],
+   action:"30-day role review. High-risk query alerting. Segregation of duties."},
+  {label:"Third-Party Risk", exposure:55, control:62, target:80, color:"var(--green)",
+   risks:[{name:"Vendor sharing",score:38}],
+   action:"DPA reviews in 60 days. Vendor risk assessment programme before Phase 2."},
+  {label:"Remediation Confidence", exposure:62, control:75, target:80, color:"var(--green)",
+   risks:[{name:"Retention gaps",score:32}],
+   action:"Schema validation, oracle detection, role review, and erasure decision achievable in 45 days."}
+];
+
+const bulletList = document.getElementById("bullet-list");
+let activeBullet = null;
+
+DOMAINS.forEach((d,i)=>{
+  const gap = d.target - d.control;
+  const gapColor = gap > 15 ? "var(--red)" : gap > 5 ? "var(--amber)" : "var(--green)";
+  const scoreColor = d.exposure >= 75 ? "var(--red)" : d.exposure >= 60 ? "var(--amber)" : "var(--green)";
+
+  const risksHtml = d.risks.map(r=>`
+    <div class="expand-risk">
+      <span class="expand-risk-name">${r.name}</span>
+      <span class="expand-risk-score" style="color:${r.score>=80?"var(--red)":r.score>=65?"var(--amber)":"var(--green)"}">${r.score}</span>
+    </div>`).join("");
+
+  const el = document.createElement("div");
+  el.className = "bullet-item";
+  el.innerHTML = `
+    <div class="bullet-header">
+      <span class="bullet-label">${d.label}</span>
+      <div class="bullet-numbers">
+        <span class="bullet-score" style="color:${scoreColor}">${d.exposure}</span>
+        <span class="bullet-ctrl">ctrl ${d.control}%</span>
+      </div>
+    </div>
+    <div class="bullet-track">
+      <div class="b-band-danger"></div>
+      <div class="b-band-caution"></div>
+      <div class="b-band-ok"></div>
+      <div class="b-bar" style="width:${d.exposure}%;background:${d.color}"></div>
+      <div class="b-marker" style="left:${d.target}%"></div>
+    </div>
+    <div class="bullet-footer">
+      <span>Danger · Caution · Safe</span>
+      <span style="color:${gapColor}">gap ${gap>0?"+"+gap:gap}pp</span>
+    </div>
+    <div class="bullet-expand">
+      <div class="expand-inner">
+        <div class="expand-stats">
+          <span>${d.risks.length} risk${d.risks.length!==1?"s":""}</span>
+          <span style="color:${scoreColor}">exposure ${d.exposure}</span>
+          <span style="color:var(--text-sub)">control ${d.control}%</span>
+        </div>
+        <div class="expand-risks">${risksHtml}</div>
+        <div style="font-size:.58rem;color:var(--text-dim);padding-top:.4rem">${d.action}</div>
+      </div>
+    </div>`;
+
+  el.addEventListener("mouseenter", e=>{
+    if(!el.classList.contains("active"))
+      showTT(e, d.label,
+        `<span style="color:var(--text-dim);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase">Exposure</span> — how severe this domain's risk is (0–100). Higher = more urgent.<br><span class="tt-score" style="color:${scoreColor}">${d.exposure}</span><br><br>`+
+        `<span style="color:var(--text-dim);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase">Control coverage</span> — how much of the risk is currently mitigated by existing controls.<br><span style="color:var(--green)">${d.control}%</span><br><br>`+
+        `<span style="color:var(--text-dim);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase">Gap to target</span> — how far control coverage is from the 80% target.<br><span style="color:${gapColor}">${gap>0?"+"+gap:gap} percentage points</span>`
+      );
+  });
+  el.addEventListener("mouseleave", hideTT);
+  el.addEventListener("click", ()=>{
+    hideTT();
+    const isActive = el.classList.contains("active");
+    document.querySelectorAll(".bullet-item").forEach(b=>{
+      b.classList.remove("active");
+      b.querySelector(".bullet-label").classList.remove("active-label");
+    });
+    activeBullet = isActive ? null : i;
+    if(!isActive){
+      el.classList.add("active");
+      el.querySelector(".bullet-label").classList.add("active-label");
+    }
+  });
+
+  bulletList.appendChild(el);
+});
+
+// ── Expandable risk rows ──
+const expandableRows = document.querySelectorAll(".risk-row.expandable");
+expandableRows.forEach(row => {
+  row.addEventListener("click", () => {
+    const isOpen = row.classList.contains("open");
+    expandableRows.forEach(r => r.classList.remove("open"));
+    if(!isOpen) row.classList.add("open");
+  });
+});
+// Open first risk row by default
+if(expandableRows[0]) expandableRows[0].classList.add("open");
+
+// Open Evidence Integrity bullet (first) by default
+const firstBullet = bulletList.querySelector(".bullet-item");
+if(firstBullet){
+  firstBullet.classList.add("active");
+  firstBullet.querySelector(".bullet-label").classList.add("active-label");
+  activeBullet = 0;
+}
+</script>
 </body>
 </html>
