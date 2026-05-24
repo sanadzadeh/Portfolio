@@ -1,0 +1,24 @@
+/* Shared design tokens — Khaled Sanad Portfolio */
+:root {
+  --bg:           #141414;
+  --surface:      #1c1c1c;
+  --surface-alt:  #222222;
+  --surface-hi:   #282828;
+  --border:       rgba(255,255,255,0.07);
+  --border-soft:  rgba(255,255,255,0.04);
+  --text:         #f5f2ed;
+  --text-sub:     rgba(245,242,237,0.58);
+  --text-dim:     rgba(245,242,237,0.28);
+  --green:        #5f9a78;
+  --green-dim:    rgba(95,154,120,0.12);
+  --amber:        #c49a55;
+  --amber-dim:    rgba(196,154,85,0.12);
+  --red:          #b4685d;
+  --red-dim:      rgba(180,104,93,0.12);
+  --blue:         #6b8fa8;
+  --purple:       #8f7cae;
+  --font-serif:   'Cormorant Garamond', Georgia, serif;
+  --font-mono:    'DM Mono', 'Courier New', monospace;
+  --radius:       4px;
+  --tr:           160ms ease;
+}
