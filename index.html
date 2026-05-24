@@ -385,14 +385,15 @@
 
   let overlayOpen = false;
 
-  function openOverlay(href, title) {
-    overlayFrame.src = href;
-    overlayTitle.textContent = title;
-    overlay.classList.add("active");
-    document.body.style.overflow = "hidden";
-    overlayOpen = true;
-    history.pushState({ overlay: true }, "");
-  }
+function openOverlay(href, title) {
+  const absoluteUrl = new URL(href, window.location.href).href;
+  overlayFrame.src = absoluteUrl;
+  overlayTitle.textContent = title;
+  overlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+  overlayOpen = true;
+  history.pushState({ overlay: true }, "");
+}
 
   function closeOverlay() {
     overlay.classList.remove("active");
@@ -401,14 +402,14 @@
     overlayTitle.textContent = "";
     overlayFrame.src = "";
   }
-/*
+
   document.querySelectorAll("a.tile").forEach(tile => {
     tile.addEventListener("click", e => {
       e.preventDefault();
       openOverlay(tile.getAttribute("href"), tile.getAttribute("data-title"));
     });
   });
-*/
+
   document.getElementById("cvBtn").addEventListener("click", e => {
     e.preventDefault();
     openOverlay("cv.html", "Curriculum Vitae");
