@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blockchain Settlement Deployment — Khaled Sanad</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg:#0f1214;
-  --surface:#171b1e;
-  --surface-alt:#202428;
-  --surface-hi:#232a2f;
-  --border:rgba(232,236,240,.08);
-  --border-soft:rgba(232,236,240,.045);
-  --ink:#f4f3ef;
-  --ink-2:rgba(244,243,239,.72);
-  --ink-3:rgba(244,243,239,.43);
+  --bg:#141414;
+  --surface:#1c1c1c;
+  --surface-alt:#222222;
+  --surface-hi:#282828;
+  --border:rgba(255,255,255,0.07);
+  --border-soft:rgba(255,255,255,0.04);
+  --ink:#f5f2ed;
+  --ink-2:rgba(245,242,237,0.55);
+  --ink-3:rgba(245,242,237,0.25);
   --accent:#93a9b2;
   --accent-dim:rgba(145,166,174,.12);
   --accent-mid:rgba(145,166,174,.28);
@@ -29,7 +29,7 @@
   --blue:#7d97b2;
   --blue-dim:rgba(125,151,178,.13);
   --font-serif:'Cormorant Garamond', Georgia, serif;
-  --font-sans:'Instrument Sans', 'Segoe UI', 'Aptos', system-ui, sans-serif;
+  --font-mono:'DM Mono', 'Courier New', monospace;
   --radius:6px;
   --tr:160ms ease;
 }
@@ -37,12 +37,9 @@
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:var(--font-sans);
+  font-family:var(--font-mono);
   font-weight:400;
-  background:
-    radial-gradient(circle at 12% 0%, rgba(145,166,174,.07), transparent 32%),
-    radial-gradient(circle at 100% 20%, rgba(125,151,178,.05), transparent 28%),
-    var(--bg);
+  background:var(--bg);
   color:var(--ink);
   min-height:100vh;
   display:flex;
@@ -53,7 +50,7 @@ body{
 }
 
 .site-header{
-  background:rgba(23,26,29,.92);
+  background:rgba(20,20,20,.92);
   backdrop-filter:blur(12px);
   border-bottom:1px solid var(--border);
   padding:14px 2rem;
@@ -182,8 +179,8 @@ body{
 }
 
 footer{
-  font-family:var(--font-sans);
-  font-weight:500;
+  font-family:var(--font-mono);
+  font-weight:400;
   letter-spacing:.055em;
   text-transform:uppercase;
 }
@@ -192,8 +189,8 @@ footer{
 .card-title,
 .kpi-label,
 .risk-filter-btn{
-  font-family:var(--font-sans);
-  font-weight:500;
+  font-family:var(--font-mono);
+  font-weight:400;
   letter-spacing:.01em;
   text-transform:none;
 }
@@ -204,7 +201,7 @@ footer{
 }
 
 .prog-badge{
-  font-size:.54rem;
+  font-size:.56rem;
   color:var(--accent);
   border:1px solid var(--accent-mid);
   background:var(--accent-dim);
@@ -225,7 +222,7 @@ footer{
 }
 
 .folder-tab{
-  font-size:.74rem;
+  font-size:.76rem;
   color:var(--ink-3);
   background:var(--surface);
   border:1px solid var(--border);
@@ -307,7 +304,7 @@ footer{
 }
 
 .card-title{
-  font-size:.74rem;
+  font-size:.76rem;
   color:var(--ink-3);
   margin-bottom:.9rem;
 }
@@ -329,7 +326,7 @@ footer{
 }
 
 .kpi-label{
-  font-size:.66rem;
+  font-size:.68rem;
   color:var(--ink-3);
   margin-bottom:.4rem;
 }
@@ -413,7 +410,7 @@ footer{
 }
 
 .gauge-explainer-title{
-  font-size:.74rem;
+  font-size:.76rem;
   font-weight:500;
   letter-spacing:.01em;
   color:var(--ink-3);
@@ -620,7 +617,7 @@ footer{
 }
 
 .gantt-table th{
-  font-size:.7rem;
+  font-size:.72rem;
   letter-spacing:.01em;
   text-transform:none;
   color:var(--ink-2);
@@ -802,7 +799,7 @@ footer{
 }
 
 .risk-table th{
-  font-size:.7rem;
+  font-size:.72rem;
   letter-spacing:.075em;
   text-transform:uppercase;
   color:var(--ink-3);
@@ -840,7 +837,7 @@ footer{
 }
 
 .risk-filter-btn{
-  font-size:.72rem;
+  font-size:.74rem;
   color:var(--ink-3);
   background:transparent;
   border:1px solid var(--border);
@@ -877,7 +874,7 @@ footer{
 }
 
 .budget-row.header{
-  font-size:.7rem;
+  font-size:.72rem;
   letter-spacing:.075em;
   text-transform:uppercase;
   color:var(--ink-3);
