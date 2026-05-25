@@ -292,8 +292,10 @@
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
-    header { padding: 2rem 2rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 1rem; }
-    .header-meta { text-align: left; }
+    header { padding: 2rem 2rem 1.5rem; flex-direction: row; align-items: center; gap: 1rem; }
+    .header-left { flex-shrink: 0; }
+    .header-meta { text-align: right; margin-left: auto; }
+    .nav-pills { flex-direction: column; align-items: flex-end; margin-bottom: 0; gap: 0.35rem; }
     .page { grid-template-columns: 1fr; }
     aside { position: static; border-right: none; border-bottom: 1px solid var(--border); padding: 2rem; }
     main { padding: 2rem; }
@@ -304,12 +306,27 @@
   .nav-pills {
     display: none;
     gap: 0.5rem;
-    margin-bottom: 0.75rem;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
   @media (max-width: 900px) {
-    .nav-pills { display: flex; }
+    .nav-pills { display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+  .blink-dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: blink 1.4s ease-in-out infinite;
+    vertical-align: baseline;
+    margin: 0 0.3em;
+    position: relative;
+    top: -0.15em;
   }
   .nav-pill {
     font-family: 'DM Mono', monospace;
@@ -343,7 +360,7 @@
 <header>
   <div class="header-left">
     <a class="back-link" href="index.html">← Portfolio</a>
-    <h1>Khaled Sanad<br><em>Curriculum Vitae</em></h1>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.15rem;line-height:1.75;letter-spacing:0.01em;">Khaled Sanad — <span style="color:var(--gold);">Curriculum Vitae</span></h1>
   </div>
   <div class="header-meta">
     <div class="nav-pills">
