@@ -72,6 +72,10 @@
     align-items: flex-end;
   }
 
+  /* contact-desktop: shown inside header-name on desktop only */
+  .contact-desktop { display: block; }
+  .contact-mobile  { display: none; }
+
   .back-link {
     font-size: 0.6rem;
     letter-spacing: 0.2em;
@@ -318,12 +322,15 @@
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
-    header { padding: 2rem 2rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-    .header-bottom { width: 100%; gap: 1rem; }
+    header { padding: 2rem 2rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+    .header-bottom { width: 100%; justify-content: space-between; align-items: flex-end; }
+    .contact-desktop { display: none; }
+    .contact-mobile  { display: block; }
     .page { grid-template-columns: 1fr; }
     aside { position: static; border-right: none; border-bottom: 1px solid var(--border); padding: 2rem; }
     main { padding: 2rem; }
     .role { grid-template-columns: 1fr; gap: 0.5rem; }
+    #section-skills, #section-experience, #section-credentials { scroll-margin-top: 220px; }
   }
 
   .cv-short { display: none; }
@@ -482,13 +489,18 @@
         <span class="cv-short">Khaled Sanad<span class="blink-dot"></span></span>
       </h1>
     </div>
-    <div class="contact-line">
+    <div class="contact-line contact-desktop">
       <a href="mailto:k.sanad@gmail.com">k.sanad@gmail.com</a><br>
       <a href="https://linkedin.com/in/sanad" target="_blank" rel="noopener">linkedin.com/in/sanad</a><br>
       Sydney, Australia
     </div>
   </div>
   <div class="header-bottom">
+    <div class="contact-line contact-mobile">
+      <a href="mailto:k.sanad@gmail.com">k.sanad@gmail.com</a><br>
+      <a href="https://linkedin.com/in/sanad" target="_blank" rel="noopener">linkedin.com/in/sanad</a><br>
+      Sydney, Australia
+    </div>
     <div class="nav-pills">
       <a class="nav-pill" href="#section-experience">Experience</a>
       <a class="nav-pill" href="#section-credentials">Credentials</a>
