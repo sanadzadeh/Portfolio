@@ -37,13 +37,20 @@
     padding: 3rem 5rem 2rem;
     border-bottom: 1px solid var(--border);
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    flex-direction: column;
+    gap: 0.5rem;
     opacity: 0;
     animation: rise 0.7s ease 0.1s forwards;
   }
 
-  .header-left {}
+  .header-name { margin-bottom: 0.1rem; }
+
+  .header-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
 
   .back-link {
     font-size: 0.6rem;
@@ -74,9 +81,7 @@
     font-weight: 300;
   }
 
-  .header-meta {
-    text-align: right;
-  }
+  .header-meta { text-align: right; }
 
   .contact-line {
     font-size: 0.62rem;
@@ -292,10 +297,8 @@
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
-    header { padding: 2rem 2rem 1.5rem; flex-direction: row; align-items: center; gap: 1rem; }
-    .header-left { flex-shrink: 0; }
-    .header-meta { text-align: right; margin-left: auto; }
-    .nav-pills { flex-direction: column; align-items: flex-end; margin-bottom: 0; gap: 0.35rem; }
+    header { padding: 2rem 2rem 1.5rem; gap: 1rem; }
+    .header-bottom { gap: 1rem; }
     .page { grid-template-columns: 1fr; }
     aside { position: static; border-right: none; border-bottom: 1px solid var(--border); padding: 2rem; }
     main { padding: 2rem; }
@@ -305,12 +308,13 @@
   /* ── Nav pills ── */
   .nav-pills {
     display: none;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.35rem;
     justify-content: flex-end;
   }
   @media (max-width: 900px) {
-    .nav-pills { display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; }
+    .nav-pills { display: flex; }
   }
   @keyframes blink {
     0%, 100% { opacity: 1; }
@@ -358,20 +362,19 @@
 <body>
 
 <header>
-  <div class="header-left">
+  <div class="header-name">
     <a class="back-link" href="index.html">← Portfolio</a>
-    <h1 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.15rem;line-height:1.75;letter-spacing:0.01em;">Khaled Sanad — <span style="color:var(--gold);">Curriculum Vitae</span></h1>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.15rem;line-height:1.3;letter-spacing:0.01em;">Khaled Sanad<br><span style="color:var(--gold);">Curriculum Vitae</span></h1>
   </div>
-  <div class="header-meta">
-    <div class="nav-pills">
-      <a class="nav-pill" href="#section-skills">Skills</a>
-      <a class="nav-pill" href="#section-experience">Experience</a>
-      <a class="nav-pill" href="#section-credentials">Credentials</a>
-    </div>
+  <div class="header-bottom">
     <div class="contact-line">
       <a href="mailto:k.sanad@gmail.com">k.sanad@gmail.com</a><br>
       <a href="https://linkedin.com/in/sanad" target="_blank" rel="noopener">linkedin.com/in/sanad</a><br>
       Sydney, Australia
+    </div>
+    <div class="nav-pills">
+      <a class="nav-pill" href="#section-skills">Skills</a>
+      <a class="nav-pill" href="#section-experience">Experience</a>
     </div>
   </div>
 </header>
