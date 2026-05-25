@@ -37,13 +37,15 @@
     padding: 3rem 5rem 2rem;
     border-bottom: 1px solid var(--border);
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
     opacity: 0;
     animation: rise 0.7s ease 0.1s forwards;
   }
 
-  .header-name { margin-bottom: 0.1rem; }
+  .header-name { flex-shrink: 0; }
 
   .header-bottom {
     display: flex;
@@ -297,7 +299,7 @@
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
-    header { padding: 2rem 2rem 1.5rem; gap: 1rem; }
+    header { padding: 2rem 2rem 1.5rem; flex-direction: column; gap: 0.5rem; }
     .header-bottom { gap: 1rem; }
     .page { grid-template-columns: 1fr; }
     aside { position: static; border-right: none; border-bottom: 1px solid var(--border); padding: 2rem; }
@@ -364,7 +366,7 @@
 <header>
   <div class="header-name">
     <a class="back-link" href="index.html">← Portfolio</a>
-    <h1 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.15rem;line-height:1.3;letter-spacing:0.01em;">Khaled Sanad<br><span style="color:var(--gold);">Curriculum Vitae</span></h1>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.6rem;line-height:1.3;letter-spacing:0.01em;">Khaled Sanad<br><span style="color:var(--gold);">Curriculum Vitae</span></h1>
   </div>
   <div class="header-bottom">
     <div class="contact-line">
