@@ -34,6 +34,10 @@
 
   /* ── Header ── */
   header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
     padding: 3rem 5rem 2rem;
     border-bottom: 1px solid var(--border);
     display: flex;
@@ -74,6 +78,7 @@
     font-size: clamp(2rem, 4vw, 3rem);
     letter-spacing: 0.01em;
     line-height: 1;
+    text-align: left;
     color: var(--text);
   }
 
@@ -299,12 +304,19 @@
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
-    header { padding: 2rem 2rem 1.5rem; flex-direction: column; gap: 0.5rem; }
-    .header-bottom { gap: 1rem; }
+    header { padding: 2rem 2rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .header-bottom { width: 100%; gap: 1rem; }
     .page { grid-template-columns: 1fr; }
     aside { position: static; border-right: none; border-bottom: 1px solid var(--border); padding: 2rem; }
     main { padding: 2rem; }
     .role { grid-template-columns: 1fr; gap: 0.5rem; }
+  }
+
+  .cv-short { display: none; }
+  .cv-full  { display: inline; }
+  @media (max-width: 900px) {
+    .cv-short { display: inline; }
+    .cv-full  { display: none; }
   }
 
   /* ── Nav pills ── */
@@ -354,6 +366,64 @@
     background: var(--gold-dim);
   }
 
+
+  /* ── Portfolio section ── */
+  .portfolio-section {
+    margin-bottom: 3rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .portfolio-intro {
+    font-size: 0.67rem;
+    line-height: 1.85;
+    color: var(--text-sub);
+    margin-bottom: 1.75rem;
+    max-width: 620px;
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .portfolio-item {
+    background: var(--bg);
+    padding: 1.4rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .portfolio-item-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 1.05rem;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .portfolio-item-desc {
+    font-size: 0.63rem;
+    line-height: 1.8;
+    color: var(--text-sub);
+    flex: 1;
+  }
+
+  .portfolio-item-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 600px) {
+    .portfolio-grid { grid-template-columns: 1fr; }
+  }
+
   @media print {
     body { background: white; color: #111; }
     header, aside, main { padding: 1.5rem; }
@@ -366,7 +436,10 @@
 <header>
   <div class="header-name">
     <a class="back-link" href="index.html">← Portfolio</a>
-    <h1 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.6rem;line-height:1.3;letter-spacing:0.01em;">Khaled Sanad<br><span style="color:var(--gold);">Curriculum Vitae</span></h1>
+    <h1 class="cv-title" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.6rem;line-height:1.3;letter-spacing:0.01em;text-align:left;">
+      <span class="cv-full">Khaled Sanad<br><span style="color:var(--gold);">Curriculum Vitae</span></span>
+      <span class="cv-short">Khaled Sanad<span class="blink-dot"></span></span>
+    </h1>
   </div>
   <div class="header-bottom">
     <div class="contact-line">
@@ -375,8 +448,8 @@
       Sydney, Australia
     </div>
     <div class="nav-pills">
-      <a class="nav-pill" href="#section-skills">Skills</a>
       <a class="nav-pill" href="#section-experience">Experience</a>
+      <a class="nav-pill" href="#section-credentials">Credentials</a>
     </div>
   </div>
 </header>
@@ -391,8 +464,10 @@
       <div class="skill-group">
         <div class="skill-group-title">Analytics & AI</div>
         <div class="skill-item">Python · SQL · PySpark</div>
+        <div class="skill-item">HTML · CSS · JavaScript</div>
         <div class="skill-item">LLMs · Generative AI</div>
         <div class="skill-item">Agentic AI · Machine Learning</div>
+        <div class="skill-item">Claude · Cursor · Replit</div>
       </div>
       <div class="skill-group">
         <div class="skill-group-title">Visualisation & BI</div>
@@ -484,6 +559,46 @@
       </div>
     </div>
 
+
+    <div class="portfolio-section">
+      <div class="section-label">Portfolio</div>
+      <div class="portfolio-intro">A suite of browser-native analytical and strategic tools built with HTML, CSS, and JavaScript — demonstrating applied capability across forecasting, risk, governance, and decision-making.</div>
+
+      <div class="portfolio-grid">
+
+        <div class="portfolio-item">
+          <div class="portfolio-item-title">Forecasting Dashboard</div>
+          <div class="portfolio-item-desc">Multi-scenario enterprise planning workspace modelling demand, capacity, and investment futures. Features live Sankey flow diagrams, assumption sliders, and executive interpretation panels.</div>
+        </div>
+
+        <div class="portfolio-item">
+          <div class="portfolio-item-title">Deployment Strategy Dashboard</div>
+          <div class="portfolio-item-desc">Transformation governance dashboard tracking workstreams, milestones, risks, budget, and delivery confidence across a phased programme rollout.</div>
+        </div>
+
+        <div class="portfolio-item">
+          <div class="portfolio-item-title">Decision Matrix</div>
+          <div class="portfolio-item-desc">Weighted-criteria evaluation tool for high-stakes strategic choices. Transparent scoring across multiple options with radar chart comparison and conditional recommendation logic.</div>
+        </div>
+
+        <div class="portfolio-item">
+          <div class="portfolio-item-title">Data Risk Assessment</div>
+          <div class="portfolio-item-desc">Structured risk identification and scoring framework mapping evidence integrity, oracle reliability, data residency, and access governance across a compliance platform.</div>
+        </div>
+
+        <div class="portfolio-item">
+          <div class="portfolio-item-title">Initiative Tracker</div>
+          <div class="portfolio-item-desc">Portfolio constellation view of active initiatives by status, owner, and strategic theme — with live filter states, workstream load scoring, and a decision queue for leadership review.</div>
+        </div>
+
+        <div class="portfolio-item">
+          <div class="portfolio-item-title">Business Case Builder</div>
+          <div class="portfolio-item-desc">Structured framework for framing investment justification — problem, options, costs, benefits, risks, and recommendation — outputting a clean executive summary view.</div>
+        </div>
+
+      </div>
+    </div>
+
     <div class="experience" id="section-experience">
       <div class="section-label">Experience</div>
 
@@ -504,14 +619,7 @@
             <li>Acted as strategic interface between business and technology, translating complex requirements into scalable, cloud-aligned solutions consistent with target-state architecture.</li>
             <li>Advanced modernisation and business outcome tracking using weighted progress metrics and governance frameworks, directly supporting investment and divestment decisions.</li>
           </ul>
-          <div class="role-skills">
-            <span class="skill-tag">Agentic AI</span>
-            <span class="skill-tag">Python</span>
-            <span class="skill-tag">Data Architecture</span>
-            <span class="skill-tag">Governance</span>
-            <span class="skill-tag">Forecasting</span>
-          </div>
-        </div>
+</div>
       </div>
 
       <!-- Role 2 -->
@@ -529,14 +637,7 @@
             <li>Transformed manual reporting packs into automated Power BI dashboards with dynamic filters, interactive visuals, and governance-ready outputs — partnering with ELT and domain stakeholders on design and logic.</li>
             <li>Authored a comprehensive data strategy and ensured reporting sustainability through access controls, SharePoint integration, and full documentation of schema, DAX logic, and model assumptions.</li>
           </ul>
-          <div class="role-skills">
-            <span class="skill-tag">Power BI</span>
-            <span class="skill-tag">DAX</span>
-            <span class="skill-tag">Data Modelling</span>
-            <span class="skill-tag">Agile</span>
-            <span class="skill-tag">Stakeholder Engagement</span>
-          </div>
-        </div>
+</div>
       </div>
 
       <!-- Role 3 -->
@@ -556,14 +657,7 @@
             <li>Developed training programmes for Power Query, Power BI, Excel, and SQL to upskill peers and align team capabilities with evolving business needs.</li>
             <li>Established cross-functional working groups to improve intelligence sharing and address operational challenges across divisions.</li>
           </ul>
-          <div class="role-skills">
-            <span class="skill-tag">SQL</span>
-            <span class="skill-tag">PySpark</span>
-            <span class="skill-tag">Power BI</span>
-            <span class="skill-tag">OSINT</span>
-            <span class="skill-tag">Risk Assessment</span>
-          </div>
-        </div>
+</div>
       </div>
 
       <!-- Role 4 -->
@@ -581,14 +675,7 @@
             <li>Developed methodologies for identifying evasion tactics in virtual and digital assets.</li>
             <li>Designed and implemented automated detection processes for sanctioned cryptocurrency wallets, ensuring compliance with evolving regulatory landscape.</li>
           </ul>
-          <div class="role-skills">
-            <span class="skill-tag">Sanctions</span>
-            <span class="skill-tag">AML/CTF</span>
-            <span class="skill-tag">Cryptocurrency</span>
-            <span class="skill-tag">SWIFT</span>
-            <span class="skill-tag">Compliance</span>
-          </div>
-        </div>
+</div>
       </div>
 
       <!-- Role 5 -->
@@ -606,13 +693,7 @@
             <li>Implemented controls to address unusual activities and mitigate risks associated with tax havens, offshore shell companies, and complex beneficial ownership structures.</li>
             <li>Reported on correspondent banking regulatory developments for the leadership team and relevant stakeholders.</li>
           </ul>
-          <div class="role-skills">
-            <span class="skill-tag">AML/CTF</span>
-            <span class="skill-tag">Transaction Monitoring</span>
-            <span class="skill-tag">Investigation</span>
-            <span class="skill-tag">Correspondent Banking</span>
-          </div>
-        </div>
+</div>
       </div>
 
       <!-- Role 6 -->
@@ -629,12 +710,7 @@
             <li>Provided strategic support to senior leadership including the CEO, compliance, and management teams on special projects, reporting, and stakeholder communications.</li>
             <li>Tested programmes and procedures to produce higher returns, minimising risk and maximising service outcomes with overall budget and resources in mind.</li>
           </ul>
-          <div class="role-skills">
-            <span class="skill-tag">Training</span>
-            <span class="skill-tag">Business Development</span>
-            <span class="skill-tag">Stakeholder Management</span>
-          </div>
-        </div>
+</div>
       </div>
 
     </div>
