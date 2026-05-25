@@ -49,12 +49,26 @@
     animation: rise 0.7s ease 0.1s forwards;
   }
 
-  .header-name { flex-shrink: 0; }
+  .header-name {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header-name-text { display: flex; flex-direction: column; }
+
+  @media (min-width: 901px) {
+    .header-name {
+      flex-direction: row;
+      align-items: flex-end;
+      gap: 2.5rem;
+    }
+  }
 
   .header-bottom {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: flex-end;
   }
 
@@ -263,7 +277,7 @@
   }
 
   .role-points li {
-    font-size: 0.67rem;
+    font-size: 0.75rem;
     line-height: 1.85;
     color: var(--text-sub);
     padding-left: 1rem;
@@ -407,7 +421,7 @@
   }
 
   .portfolio-item-desc {
-    font-size: 0.63rem;
+    font-size: 0.71rem;
     line-height: 1.8;
     color: var(--text-sub);
     flex: 1;
@@ -429,24 +443,52 @@
     header, aside, main { padding: 1.5rem; }
     .back-link { display: none; }
   }
+
+  .portfolio-section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-sub);
+    font-weight: 400;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .portfolio-label-link {
+    color: var(--text-sub);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(245,242,237,0.2);
+    padding-bottom: 0.05em;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .portfolio-label-link:hover {
+    color: var(--gold);
+    border-color: var(--gold-mid);
+  }
 </style>
 </head>
 <body>
 
 <header>
   <div class="header-name">
-    <a class="back-link" href="index.html">← Portfolio</a>
-    <h1 class="cv-title" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.6rem;line-height:1.3;letter-spacing:0.01em;text-align:left;">
-      <span class="cv-full">Khaled Sanad<br><span style="color:var(--gold);">Curriculum Vitae</span></span>
-      <span class="cv-short">Khaled Sanad<span class="blink-dot"></span></span>
-    </h1>
-  </div>
-  <div class="header-bottom">
+    <div class="header-name-text">
+      <a class="back-link" href="index.html">← Portfolio</a>
+      <h1 class="cv-title" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.6rem;line-height:1.3;letter-spacing:0.01em;text-align:left;">
+        <span class="cv-full">Khaled Sanad<br><span style="color:var(--gold);">Curriculum Vitae</span></span>
+        <span class="cv-short">Khaled Sanad<span class="blink-dot"></span></span>
+      </h1>
+    </div>
     <div class="contact-line">
       <a href="mailto:k.sanad@gmail.com">k.sanad@gmail.com</a><br>
       <a href="https://linkedin.com/in/sanad" target="_blank" rel="noopener">linkedin.com/in/sanad</a><br>
       Sydney, Australia
     </div>
+  </div>
+  <div class="header-bottom">
     <div class="nav-pills">
       <a class="nav-pill" href="#section-experience">Experience</a>
       <a class="nav-pill" href="#section-credentials">Credentials</a>
@@ -460,43 +502,37 @@
   <aside>
 
     <div class="aside-block" id="section-skills" style="scroll-margin-top: 160px;">
-      <div class="section-label">Technical</div>
+      <div class="section-label">Skills</div>
       <div class="skill-group">
-        <div class="skill-group-title">Analytics & AI</div>
+        <div class="skill-group-title">Engineering</div>
         <div class="skill-item">Python · SQL · PySpark</div>
         <div class="skill-item">HTML · CSS · JavaScript</div>
-        <div class="skill-item">LLMs · Generative AI</div>
-        <div class="skill-item">Agentic AI · Machine Learning</div>
-        <div class="skill-item">Claude · Cursor · Replit</div>
+        <div class="skill-item">Machine Learning</div>
       </div>
       <div class="skill-group">
-        <div class="skill-group-title">Visualisation & BI</div>
-        <div class="skill-item">Power BI · DAX</div>
-        <div class="skill-item">Enterprise Reporting</div>
-        <div class="skill-item">Executive Dashboards</div>
+        <div class="skill-group-title">AI & Automation</div>
+        <div class="skill-item">LLMs · Generative AI · Agentic AI</div>
+        <div class="skill-item">Claude · Cursor · Replit · Copilot</div>
       </div>
       <div class="skill-group">
-        <div class="skill-group-title">Data & Cloud</div>
+        <div class="skill-group-title">Data & Architecture</div>
         <div class="skill-item">Data Modelling & Architecture</div>
-        <div class="skill-item">Scalable Pipeline Design</div>
-        <div class="skill-item">Cloud-native Frameworks</div>
+        <div class="skill-item">Pipeline Design · Cloud Frameworks</div>
+        <div class="skill-item">Power BI · DAX</div>
       </div>
       <div class="skill-group">
-        <div class="skill-group-title">Programme Tools</div>
-        <div class="skill-item">MS Project · Clarity · Rally</div>
-        <div class="skill-item">MS 365 · Copilot</div>
-        <div class="skill-item">Agile · Governance · QA</div>
+        <div class="skill-group-title">Reporting & BI</div>
+        <div class="skill-item">Executive Dashboards</div>
+        <div class="skill-item">Enterprise Reporting · MS 365</div>
       </div>
-    </div>
-
-    <div class="aside-block">
-      <div class="section-label">Strategic</div>
-      <div class="skill-item" style="margin-bottom:0.5rem;">Executive Stakeholder Engagement</div>
-      <div class="skill-item" style="margin-bottom:0.5rem;">C-suite Communication</div>
-      <div class="skill-item" style="margin-bottom:0.5rem;">Regulatory Compliance</div>
-      <div class="skill-item" style="margin-bottom:0.5rem;">Transformation Delivery</div>
-      <div class="skill-item" style="margin-bottom:0.5rem;">Analytics to Decision Translation</div>
-      <div class="skill-item">Multi-disciplinary Problem Solving</div>
+      <div class="skill-group">
+        <div class="skill-group-title">Delivery</div>
+        <div class="skill-item">Agile · Governance · QA</div>
+        <div class="skill-item">MS Project · Clarity · Rally</div>
+        <div class="skill-item">Stakeholder Engagement</div>
+        <div class="skill-item">Regulatory Compliance</div>
+        <div class="skill-item">Transformation Delivery</div>
+      </div>
     </div>
 
     <div class="aside-block" id="section-credentials" style="scroll-margin-top: 160px;">
@@ -561,39 +597,39 @@
 
 
     <div class="portfolio-section">
-      <div class="section-label">Portfolio</div>
+      <div class="portfolio-section-label"><span class="blink-dot"></span><a href="https://sanadzadeh.github.io/Portfolio" target="_blank" rel="noopener" class="portfolio-label-link">Portfolio</a></div>
       <div class="portfolio-intro">A suite of browser-native analytical and strategic tools built with HTML, CSS, and JavaScript — demonstrating applied capability across forecasting, risk, governance, and decision-making.</div>
 
       <div class="portfolio-grid">
 
         <div class="portfolio-item">
           <div class="portfolio-item-title">Forecasting Dashboard</div>
-          <div class="portfolio-item-desc">Multi-scenario enterprise planning workspace modelling demand, capacity, and investment futures. Features live Sankey flow diagrams, assumption sliders, and executive interpretation panels.</div>
+          <div class="portfolio-item-desc">Multi-scenario planning with live Sankey diagrams and assumption sliders.</div>
         </div>
 
         <div class="portfolio-item">
           <div class="portfolio-item-title">Deployment Strategy Dashboard</div>
-          <div class="portfolio-item-desc">Transformation governance dashboard tracking workstreams, milestones, risks, budget, and delivery confidence across a phased programme rollout.</div>
+          <div class="portfolio-item-desc">Tracks workstreams, milestones, risks, and budget across a phased rollout.</div>
         </div>
 
         <div class="portfolio-item">
           <div class="portfolio-item-title">Decision Matrix</div>
-          <div class="portfolio-item-desc">Weighted-criteria evaluation tool for high-stakes strategic choices. Transparent scoring across multiple options with radar chart comparison and conditional recommendation logic.</div>
+          <div class="portfolio-item-desc">Weighted scoring across options with radar chart and conditional recommendation.</div>
         </div>
 
         <div class="portfolio-item">
           <div class="portfolio-item-title">Data Risk Assessment</div>
-          <div class="portfolio-item-desc">Structured risk identification and scoring framework mapping evidence integrity, oracle reliability, data residency, and access governance across a compliance platform.</div>
+          <div class="portfolio-item-desc">Scores evidence integrity, data residency, oracle reliability, and access governance.</div>
         </div>
 
         <div class="portfolio-item">
           <div class="portfolio-item-title">Initiative Tracker</div>
-          <div class="portfolio-item-desc">Portfolio constellation view of active initiatives by status, owner, and strategic theme — with live filter states, workstream load scoring, and a decision queue for leadership review.</div>
+          <div class="portfolio-item-desc">Initiative constellation with live filters, workstream load, and decision queue.</div>
         </div>
 
         <div class="portfolio-item">
           <div class="portfolio-item-title">Business Case Builder</div>
-          <div class="portfolio-item-desc">Structured framework for framing investment justification — problem, options, costs, benefits, risks, and recommendation — outputting a clean executive summary view.</div>
+          <div class="portfolio-item-desc">Frames problem, options, costs, and risks — outputs an executive summary.</div>
         </div>
 
       </div>
