@@ -300,6 +300,37 @@
     .role { grid-template-columns: 1fr; gap: 0.5rem; }
   }
 
+  /* ── Nav pills ── */
+  .nav-pills {
+    display: none;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  @media (max-width: 900px) {
+    .nav-pills { display: flex; }
+  }
+  .nav-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    background: transparent;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    white-space: nowrap;
+  }
+  .nav-pill:hover {
+    color: var(--gold);
+    border-color: rgba(201,169,110,0.4);
+    background: var(--gold-dim);
+  }
+
   @media print {
     body { background: white; color: #111; }
     header, aside, main { padding: 1.5rem; }
@@ -315,6 +346,11 @@
     <h1>Khaled Sanad<br><em>Curriculum Vitae</em></h1>
   </div>
   <div class="header-meta">
+    <div class="nav-pills">
+      <a class="nav-pill" href="#section-skills">Skills</a>
+      <a class="nav-pill" href="#section-experience">Experience</a>
+      <a class="nav-pill" href="#section-credentials">Credentials</a>
+    </div>
     <div class="contact-line">
       <a href="mailto:k.sanad@gmail.com">k.sanad@gmail.com</a><br>
       <a href="https://linkedin.com/in/sanad" target="_blank" rel="noopener">linkedin.com/in/sanad</a><br>
@@ -328,7 +364,7 @@
   <!-- ── Sidebar ── -->
   <aside>
 
-    <div class="aside-block">
+    <div class="aside-block" id="section-skills">
       <div class="section-label">Technical</div>
       <div class="skill-group">
         <div class="skill-group-title">Analytics & AI</div>
@@ -366,7 +402,7 @@
       <div class="skill-item">Multi-disciplinary Problem Solving</div>
     </div>
 
-    <div class="aside-block">
+    <div class="aside-block" id="section-credentials">
       <div class="section-label">Education</div>
       <div class="cert-item">
         <div class="edu-degree">Graduate Diploma in Education</div>
@@ -426,7 +462,7 @@
       </div>
     </div>
 
-    <div class="experience">
+    <div class="experience" id="section-experience">
       <div class="section-label">Experience</div>
 
       <!-- Role 1 -->
