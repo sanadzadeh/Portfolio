@@ -170,8 +170,8 @@
   }
   .tile.narrow .tile-footer,
   .tile.narrow .tile-desc { display: none; }
-  .extra-tile { display: none; animation: none !important; opacity: 1 !important; }
-  .grid.expanded .extra-tile { display: flex; }
+  .extra-tile { display: none; }
+  .grid.expanded .extra-tile { display: flex; opacity: 1; animation: none; }
 
   /* ── Overlay ── */
   .overlay {
@@ -392,7 +392,10 @@
   toggle.addEventListener("click", () => {
     const expanded = grid.classList.toggle("expanded");
     toggle.setAttribute("aria-expanded", expanded ? "true" : "false");
-    toggle.querySelector(".tile-title").textContent = expanded ? "..less" : "..more";
+    const titleEl = toggle.querySelector(".tile-title");
+    titleEl.innerHTML = expanded
+      ? '<span class="blink-dot"></span>..less'
+      : '<span class="blink-dot"></span>..more';
   });
 
   // Overlay
@@ -425,7 +428,9 @@ function openOverlay(href, title) {
     const tile = e.target.closest("a.tile");
     if (!tile) return;
     e.preventDefault();
-    openOverlay(tile.getAttribute("href"), tile.getAttribute("data-title"));
+    const href = tile.getAttribute("href");
+    const title = tile.getAttribute("data-title");
+    openOverlay(href, title);
   });
 
   document.getElementById("cvBtn").addEventListener("click", e => {
