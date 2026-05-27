@@ -421,11 +421,11 @@ function openOverlay(href, title) {
     overlayFrame.src = "";
   }
 
-  document.querySelectorAll("a.tile").forEach(tile => {
-    tile.addEventListener("click", e => {
-      e.preventDefault();
-      openOverlay(tile.getAttribute("href"), tile.getAttribute("data-title"));
-    });
+  document.querySelector(".grid").addEventListener("click", e => {
+    const tile = e.target.closest("a.tile");
+    if (!tile) return;
+    e.preventDefault();
+    openOverlay(tile.getAttribute("href"), tile.getAttribute("data-title"));
   });
 
   document.getElementById("cvBtn").addEventListener("click", e => {
