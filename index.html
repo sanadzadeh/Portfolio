@@ -170,8 +170,6 @@
   }
   .tile.narrow .tile-footer,
   .tile.narrow .tile-desc { display: none; }
-  .extra-tile { display: none; }
-  .grid.expanded .extra-tile { display: flex; opacity: 1; animation: none; }
 
   /* ── Overlay ── */
   .overlay {
@@ -237,8 +235,8 @@
   .tile:nth-child(4) { animation-delay: 0.79s; }
   .tile:nth-child(5) { animation-delay: 0.86s; }
   .tile:nth-child(6) { animation-delay: 0.93s; }
-  .tile:nth-child(7) { animation-delay: 1.0s; }
-  .tile:nth-child(8) { animation-delay: 1.07s; }
+  .extra-tile { display: none; opacity: 1 !important; animation: none !important; }
+  .grid.expanded .extra-tile { display: flex; }
   @media (max-width: 900px) {
     header { padding: 2.5rem 2rem 2rem; }
     .divider { margin: 0 2rem; }
@@ -424,13 +422,11 @@ function openOverlay(href, title) {
     overlayFrame.src = "";
   }
 
-  document.querySelector(".grid").addEventListener("click", e => {
-    const tile = e.target.closest("a.tile");
-    if (!tile) return;
-    e.preventDefault();
-    const href = tile.getAttribute("href");
-    const title = tile.getAttribute("data-title");
-    openOverlay(href, title);
+  document.querySelectorAll("a.tile").forEach(tile => {
+    tile.addEventListener("click", e => {
+      e.preventDefault();
+      openOverlay(tile.getAttribute("href"), tile.getAttribute("data-title"));
+    });
   });
 
   document.getElementById("cvBtn").addEventListener("click", e => {
